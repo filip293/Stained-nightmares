@@ -11,6 +11,7 @@ var dialogue_done1: bool = false
 var dialogue_done2: bool = false
 var dialogue_done3: bool = false
 
+
 # Called every frame
 func _process(delta):
 	var car_cutscene = $/root/Node3D/CarCutscene
@@ -30,7 +31,7 @@ func _process(delta):
 func _physics_process(delta) -> void:
 	if is_colliding():
 		var detected = get_collider()
-		if detected.has_method("get_prompt"):
+		if "Talk" in prompt.text:
 			if Input.is_action_just_pressed("interact"):
 				if dialogue_started1 == false and player.task.text == player.task2:
 					player.can_move = false
