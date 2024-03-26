@@ -1217,6 +1217,9 @@ light_indirect_energy = 0.0
 light_volumetric_fog_energy = 0.0
 omni_range = 3.573
 
+[node name="Tree_01" parent="Root Scene/RootNode" index="233"]
+transform = Transform3D(31.4925, -21.2314, 2.26384e-06, 0, 4.52768e-06, 37.9809, -21.2314, -31.4925, 4.52768e-06, -8.04095, 0.208822, -9.71673)
+
 [node name="StaticBody3D2" type="StaticBody3D" parent="Root Scene/RootNode/Trees" index="0"]
 transform = Transform3D(6.01022, 0.00553599, -4.56795e-08, -0.377077, 0.0882378, 1.43156e-09, 4.49512e-07, 2.07139e-10, 0.611962, -0.0818182, -0.377887, 0.000992592)
 physics_material_override = SubResource("PhysicsMaterial_od8pl")
