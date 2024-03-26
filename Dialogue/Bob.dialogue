@@ -11,7 +11,7 @@ Bob: Why don't you stick around and help for now, seeing as you don't have anyth
 	Bob: Great! 
 	Bob: I guess you can go ahead and start with cleaning the floors!
 	Bob: The mop is in the back.
-	set global.route = "Bob"
+	set global.route = "Help Bob"
 	set global.chosen = true
 	=> END
 - It’s alright, I’ll just stay at a hotel.
@@ -23,7 +23,7 @@ Bob: Why don't you stick around and help for now, seeing as you don't have anyth
 		Bob: Great! 
 		Bob: I guess you can go ahead and start with cleaning the floors!
 		Bob: The mop is in the back.
-		set global.route = "Bob"
+		set global.route = "Help Bob"
 		set global.chosen = true
 		=> END
 	- No, really, I'll be fine!

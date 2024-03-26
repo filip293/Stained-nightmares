@@ -40,8 +40,11 @@ func _physics_process(delta) -> void:
 					await DialogueManager.dialogue_ended
 					dialogue_started1 = false
 					dialogue_done1 = true
-					player.task.text = player.task3
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 					player.can_move = true
+					if global.route == "Motel":
+						player.task.text = player.task3
+					else:
+						player.task.text = player.task3_2
 				else:
 					pass
