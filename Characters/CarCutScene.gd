@@ -1,0 +1,32 @@
+extends Node3D
+
+var Player: Camera3D
+var prompt: Label
+var in_car: bool = true
+var task: Label
+var creature = Node3D
+var Crosshair: TextureRect
+@onready var Cutscene = $/root/Node3D/Cutscene
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	Crosshair = $/root/Node3D/TextureRect
+	task = $/root/Node3D/Player/Tasks
+	Player = $/root/Node3D/Player/Neck/SpringArm/Camera
+	creature = $/root/Node3D/creature2
+	prompt = $Label
+	prompt.text = ""
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if in_car and Input.is_action_pressed("interact") and Cutscene.MenuStatus == false:
+		Player.make_current()
+		in_car = false
+		Crosshair.visible = true
+		prompt.text = ""
+		task.text = "Task 1:" + "\n Go to the laundromat"
+
+func _on_animation_player_animation_finished(Car):
+	prompt.text = "Press E to exit"
+	creature.visible = false
+	

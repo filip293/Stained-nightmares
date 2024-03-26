@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dk8877mnkqgsv"
+path="res://.godot/imported/Car Sputters and Dies SFX.mp3-0d925ed4e144b2d85b7a4f2366722410.mp3str"
+
+[deps]
+
+source_file="res://Characters/Car Sputters and Dies SFX.mp3"
+dest_files=["res://.godot/imported/Car Sputters and Dies SFX.mp3-0d925ed4e144b2d85b7a4f2366722410.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

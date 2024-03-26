@@ -1,0 +1,35 @@
+~ start
+
+Bob: [[Why, hello there youngin'!|Hey there buster!|Greetings my young friend!]]
+Bob: What brings you here?
+You: My car broke down while I was driving through this town.
+You: Could you help me?
+Bob: Oh, that's just terrible! 
+Bob: I can tow it with my tow-truck that's in the back, but you'll have to help me in return.
+Bob: Why don't you stick around and help for now, seeing as you don't have anything to do?
+- Yeah, sure. Why not.
+	Bob: Great! 
+	Bob: I guess you can go ahead and start with cleaning the floors!
+	Bob: The mop is in the back.
+	set global.route = "Bob"
+	set global.chosen = true
+	=> END
+- It’s alright, I’ll just stay at a hotel.
+	Bob: I wouldn't do that if I were you...
+	Bob: Rumors have been going around about a mysterious figure that comes out around this time of night.
+	Bob: People have gone missing, but no ones been found. 
+	Bob: Why don't you reconsider?
+	- Yeah... sure man.
+		Bob: Great! 
+		Bob: I guess you can go ahead and start with cleaning the floors!
+		Bob: The mop is in the back.
+		set global.route = "Bob"
+		set global.chosen = true
+		=> END
+	- No, really, I'll be fine!
+		Bob: Alright, best of luck then.
+		Bob: There's a hotel nearby, feel free to check the map for directions.
+		Bob: But don't say I didn't warn you...
+		set global.route = "Motel"
+		set global.chosen = true
+=> END
