@@ -22,6 +22,7 @@ var current_task = 1				#used for task state
 var error_time: bool = false		#used for start of game area error
 var is_sprinting: bool = false		#used for state of sprinting
 var can_move: bool = true
+var monster_on_screen: bool = false
 
 var Crosshair: TextureRect
 
@@ -43,6 +44,9 @@ func _ready():
 	task.text = ""
 
 func _process(delta):
+	if monster_on_screen == true:
+		print("onscreen")
+	
 	if !Input.is_action_pressed("sprint") and sprintcooldown < 2:
 		sprintcooldown += 0.2
 
@@ -158,3 +162,6 @@ func _on_store_body_exited(body):
 
 func _on_timer_timeout():
 	error_time = true
+	
+func get_prompt() -> String:			#Add prompt player for monster detect
+	return "Player"

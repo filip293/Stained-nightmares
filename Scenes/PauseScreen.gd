@@ -46,3 +46,7 @@ func _on_button_Continue_pressed():
 	task.visible = true
 	get_tree().paused = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+func _on_visible_on_screen_notifier_monster():
+	pass # Replace with function body.

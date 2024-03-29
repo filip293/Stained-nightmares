@@ -49,7 +49,3 @@ func _physics_process(delta) -> void:
 						player.task.text = player.task3_2
 				else:
 					pass
-					
-	if is_colliding():
-		if "Door" in prompt.text:
-			print("door")
