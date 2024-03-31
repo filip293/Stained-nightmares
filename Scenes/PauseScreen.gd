@@ -34,9 +34,6 @@ func _unhandled_input(event: InputEvent) -> void:
 				task.visible = true
 				get_tree().paused = false
 				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-				
-		#if event.is_action_pressed("esc") and in_menu == true:
-			#pause_scr.visible = true
 
 
 func _on_button_esc_pressed():
