@@ -37,6 +37,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			if pause_scr.visible == false:
 				enter_pause()
 			elif pause_scr.visible == true:
+				in_menu = false
+				pause_scr.visible = false
+				Crosshair.visible = true
+				esc_pressed.visible = true
+				task.visible = true
+				get_tree().paused = false
+				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 				exit_pause()
 
 func _on_button_esc_pressed():
