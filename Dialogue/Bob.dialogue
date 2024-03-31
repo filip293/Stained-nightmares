@@ -14,7 +14,7 @@ Bob: Why don't you stick around and help for now, seeing as you don't have anyth
 	set global.route = "Help Bob"
 	set global.chosen = true
 	=> END
-- It’s alright, I’ll just stay at a hotel.
+- It’s alright, I’ll just stay at a motel.
 	Bob: I wouldn't do that if I were you...
 	Bob: Rumors have been going around about a mysterious figure that comes out around this time of night.
 	Bob: People have gone missing, but no ones been found. 
@@ -28,7 +28,7 @@ Bob: Why don't you stick around and help for now, seeing as you don't have anyth
 		=> END
 	- No, really, I'll be fine!
 		Bob: Alright, best of luck then.
-		Bob: There's a hotel nearby, feel free to check the map for directions.
+		Bob: There's a motel nearby, feel free to check the map for directions.
 		Bob: But don't say I didn't warn you...
 		set global.route = "Motel"
 		set global.chosen = true
