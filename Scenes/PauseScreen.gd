@@ -8,7 +8,6 @@ var in_menu: bool = false
 var pause_scr: Node2D
 
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pause_scr = $/root/Node3D/PauseScreen

@@ -139,8 +139,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 		var rotation_to_apply_on_x_axis = (-event.relative.y * mouse_sensitivity);
 		
-		if (camera_rot.x + rotation_to_apply_on_x_axis < -70):
-			camera_rot.x = -70
+		if (camera_rot.x + rotation_to_apply_on_x_axis < -90):
+			camera_rot.x = -90
 		elif (camera_rot.x + rotation_to_apply_on_x_axis > 70):
 			camera_rot.x = 70
 		else:
