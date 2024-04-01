@@ -39,7 +39,7 @@ func _on_button_pressed():
 	button_pressed = true
 	$Button.visible = false
 	$Quit.visible = false
-	$/root/Node3D/Player.visible = false
+	$/root/Node3D/Player/Metla.visible = false
 	$/root/Node3D/CarCutscene/Smoke.visible = false
 	$/root/Node3D/CarCutscene/AnimationPlayer.play("Car")
 	is_done = false

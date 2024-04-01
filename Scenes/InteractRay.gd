@@ -4,12 +4,16 @@ extends RayCast3D
 @onready var prompt = $/root/Node3D/CarCutscene/Label
 @onready var Cutscene = $/root/Node3D/Cutscene
 @onready var player = $/root/Node3D/Player
+@onready var metlacam = $/root/Node3D/Player/Metla
+@onready var metlabob = $/root/Node3D/Metla/Metla
+@onready var metlapromp = $/root/Node3D/Metla
 var dialogue_started1: bool = false
 var dialogue_started2: bool = false
 var dialogue_started3: bool = false
 var dialogue_done1: bool = false
 var dialogue_done2: bool = false
 var dialogue_done3: bool = false
+var metla_inhand: bool = false
 
 
 # Called every frame
@@ -49,3 +53,17 @@ func _physics_process(delta) -> void:
 						player.task.text = player.task3_2
 				else:
 					pass
+		
+		if "Pick up broom" in prompt.text:
+			if Input.is_action_just_pressed("interact"):
+				metlabob.visible = false
+				metlacam.visible = true
+				metla_inhand = true
+				metlapromp.prompt_message = "Leave the broom"
+		
+		if "Leave the broom" in prompt.text:
+			if Input.is_action_just_pressed("interact"):
+				metlabob.visible = true
+				metlacam.visible = false
+				metla_inhand = false
+				metlapromp.prompt_message = "Pick up broom"
