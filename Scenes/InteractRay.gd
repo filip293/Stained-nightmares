@@ -7,6 +7,10 @@ extends RayCast3D
 @onready var metlacam = $/root/Node3D/Player/Metla
 @onready var metlabob = $/root/Node3D/Metla/Metla
 @onready var metlapromp = $/root/Node3D/Metla
+@onready var doorprompt = $/root/Node3D/Motel2/Door_02/Door
+@onready var KEY = $/root/Node3D/Key
+var GuyBob: StaticBody3D
+var havekey: bool = false
 var dialogue_started1: bool = false
 var dialogue_started2: bool = false
 var dialogue_started3: bool = false
@@ -14,7 +18,12 @@ var dialogue_done1: bool = false
 var dialogue_done2: bool = false
 var dialogue_done3: bool = false
 var metla_inhand: bool = false
+var donewithroomcheck: bool = false
+var route1: bool = false
 
+func _ready():
+	KEY.visible = false
+	GuyBob = $/root/Node3D/Guy
 # Called every frame
 func _process(delta):
 	var car_cutscene = $/root/Node3D/CarCutscene
@@ -29,6 +38,36 @@ func _process(delta):
 		# Check if the detected object has the 'get_prompt' method
 		if detected.has_method("get_prompt"):
 			prompt.text = detected.get_prompt()
+			
+	if global.route == "Get the broom":
+		route1 = true
+		if route1 == true:
+			if $/root/Node3D/Root_Scene/RootNode/Terrain_01/StaticBody3D != null:
+				$/root/Node3D/Root_Scene/RootNode/Terrain_01/StaticBody3D.free()
+
+	if donewithroomcheck == false and "Key" in prompt.text:
+		prompt.text = ""
+	elif donewithroomcheck == true:
+		if GuyBob != null:
+			KEY.visible = true
+			GuyBob.free()
+		
+	if "door" in prompt.text and havekey == true:
+		doorprompt.prompt_message = "Open door"
+	else:
+		doorprompt.prompt_message = "Locked"
+		
+	if "Closed" in prompt.text and player.task.text == player.task3:
+		$/root/Node3D/Root_Scene/RootNode/Terrain_01/StaticBody3D.free()
+		prompt.text = ""
+		donewithroomcheck = true
+		player.can_move = false
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		DialogueManager.show_dialogue_balloon(load("res://Dialogue/HotelRoom.dialogue"), "start")
+		await DialogueManager.dialogue_ended
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		player.can_move = true
+		player.task.text = player.task4
 		
 func _physics_process(delta) -> void:
 	if is_colliding():

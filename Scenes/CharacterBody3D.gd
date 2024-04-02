@@ -30,8 +30,8 @@ var monster_on_screen: bool = false
 var task2 = "Task 2: \n Talk to Bob"
 var task3 = "Task 3: \n Go to the motel"
 var task3_2 = "Task 3: \n Sweep the floors"
-var task5 = "Talk to Bob"
-var task6 = "Talk to Bob"
+var task4 = "Task 4: \n Ask Bob for help"
+var task4_2 = "Task 4: \n Leave the broom"
 
 
 
