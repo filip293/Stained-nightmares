@@ -1,6 +1,7 @@
 extends Node3D
 
 var Player: Camera3D
+var Player2: CharacterBody3D
 var prompt: Label
 var in_car: bool = true
 var task: Label
@@ -12,10 +13,12 @@ var Crosshair: TextureRect
 func _ready():
 	Crosshair = $/root/Node3D/TextureRect
 	task = $/root/Node3D/Player/Tasks
+	Player2 = $/root/Node3D/Player
 	Player = $/root/Node3D/Player/Neck/SpringArm/Camera
 	creature = $/root/Node3D/creature2
 	prompt = $Label
 	prompt.text = ""
+	Player2.visible = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -29,4 +32,5 @@ func _process(delta):
 func _on_animation_player_animation_finished(Car):
 	prompt.text = "Press E to exit"
 	creature.visible = false
+	Player2.visible = true
 	
