@@ -26,6 +26,7 @@ var error_time: bool = false		#used for start of game area error
 var is_sprinting: bool = false		#used for state of sprinting
 var can_move: bool = true
 var monster_on_screen: bool = false
+var in_store: bool = false
 
 var task2 = "Task 2: \n Talk to Bob"
 var task3 = "Task 3: \n Go to the motel"
@@ -146,13 +147,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			neck.rotation_degrees = camera_rot
 
 func _on_store_body_entered(body):
+	in_store = true
 	if times_in_store == 0 and error_time == true:
 		task.text = task2
 		times_in_store += 1
 		current_task += 1
 
 func _on_store_body_exited(body):
-	print("exit")
+	in_store = false
 
 func _on_timer_timeout():
 	error_time = true

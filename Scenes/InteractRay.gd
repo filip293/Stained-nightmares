@@ -21,10 +21,12 @@ var metla_inhand: bool = false
 var donewithroomcheck: bool = false
 var route1: bool = false
 var freed: bool = false
+var hasPlayedSound: bool = false
 
 func _ready():
 	KEY.visible = false
 	GuyBob = $/root/Node3D/Guy
+	$/root/Node3D/Root_Scene/Label3D.visible = false
 # Called every frame
 func _process(delta):
 	var car_cutscene = $/root/Node3D/CarCutscene
@@ -46,6 +48,11 @@ func _process(delta):
 			if $/root/Node3D/Root_Scene/RootNode/Terrain_01/StaticBody3D != null:
 				$/root/Node3D/Root_Scene/RootNode/Terrain_01/StaticBody3D.free()
 				freed = true
+				
+	if player.in_store == true and player.task.text == player.task4 and donewithroomcheck == true and hasPlayedSound == false:
+		$/root/Node3D/Root_Scene/RootNode/DoorsWood_01/AudioStreamPlayer.play()
+		$/root/Node3D/Root_Scene/Label3D.visible = true
+		hasPlayedSound = true
 
 	if donewithroomcheck == false and "Key" in prompt.text:
 		prompt.text = ""
