@@ -15,11 +15,9 @@ var dialogue_done2: bool = false
 var dialogue_done3: bool = false
 var metla_inhand: bool = false
 
-
 # Called every frame
 func _process(delta):
 	var car_cutscene = $/root/Node3D/CarCutscene
-	
 	# Check if the player is in the car
 	if car_cutscene.in_car == false:
 		prompt.text = ""
@@ -76,3 +74,8 @@ func _physics_process(delta) -> void:
 				metlacam.visible = false
 				metla_inhand = false
 				metlapromp.prompt_message = "Pick up broom"
+				
+		if Input.is_action_pressed("interact") and metla_inhand == true:
+			$/root/Node3D/Player/MetlaSweep.play("Sweep")
+		else:
+			$/root/Node3D/Player/MetlaSweep.pause()
