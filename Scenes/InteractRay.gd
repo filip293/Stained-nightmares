@@ -20,6 +20,7 @@ var dialogue_done3: bool = false
 var metla_inhand: bool = false
 var donewithroomcheck: bool = false
 var route1: bool = false
+var freed: bool = false
 
 func _ready():
 	KEY.visible = false
@@ -41,9 +42,10 @@ func _process(delta):
 			
 	if global.route == "Get the broom":
 		route1 = true
-		if route1 == true:
+		if route1 == true and freed == false:
 			if $/root/Node3D/Root_Scene/RootNode/Terrain_01/StaticBody3D != null:
 				$/root/Node3D/Root_Scene/RootNode/Terrain_01/StaticBody3D.free()
+				freed = true
 
 	if donewithroomcheck == false and "Key" in prompt.text:
 		prompt.text = ""
