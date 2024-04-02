@@ -1,5 +1,6 @@
 extends Node3D
 
+@onready var Cutscene = $/root/Node3D/Cutscene
 var Player: Camera3D
 var Player2: CharacterBody3D
 var prompt: Label
@@ -7,7 +8,6 @@ var in_car: bool = true
 var task: Label
 var creature = Node3D
 var Crosshair: TextureRect
-@onready var Cutscene = $/root/Node3D/Cutscene
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

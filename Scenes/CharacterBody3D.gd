@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+@onready var neck := $Neck
+@onready var camera := $Neck/SpringArm/Camera
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var speed = 4.0							#used for speed
@@ -11,21 +13,19 @@ var footstep_running_interval = 0.26	#used for footstep interval while sprinting
 var sprintcooldown = 2
 var sprint_cooldown = 5				#used for cooldown of sprinting
 var times_in_store = 0				#used for times entered in area 3D
+var current_task = 1				#used for task state
 
 var footstep_left_sound: AudioStreamPlayer3D
 var footstep_right_sound: AudioStreamPlayer3D
 var sprint_cooldown_bar = ProgressBar
 var task: Label
+var Crosshair: TextureRect
 
 var is_right_foot = true
-var current_task = 1				#used for task state
 var error_time: bool = false		#used for start of game area error
 var is_sprinting: bool = false		#used for state of sprinting
 var can_move: bool = true
 var monster_on_screen: bool = false
-
-var Crosshair: TextureRect
-
 
 var task2 = "Task 2: \n Talk to Bob"
 var task3 = "Task 3: \n Go to the motel"
@@ -82,7 +82,6 @@ func get_input():
 				$Neck/AnimationPlayer.play("intense head bob")
 			else:
 				$Neck/AnimationPlayer.stop()
-	
 		elif !Input.is_action_pressed("sprint"):
 			if input.y>0 or input.x>0:
 				$Neck/AnimationPlayer.play("head bob")
@@ -103,8 +102,10 @@ func _physics_process(delta):
 	var moving_right = Input.get_action_strength("move_right") > 0
 	var moving_backward = Input.get_action_strength("move_backward") > 0
 	var moving_left = Input.get_action_strength("move_left") > 0
+	
 	var moving = moving_forward or moving_right or moving_left or moving_backward
 	var sprinting = sprint and (moving_forward or moving_right or moving_left or moving_backward) and sprint_cooldown > 1
+	
 	if can_move == true:
 		if sprinting:
 			footstep_timer += delta
@@ -126,9 +127,7 @@ func _physics_process(delta):
 				is_right_foot = !is_right_foot
 	if can_move == false:
 		pass
-		
-@onready var neck := $Neck
-@onready var camera := $Neck/SpringArm/Camera
+
 
 func _unhandled_input(event: InputEvent) -> void:
 
@@ -136,7 +135,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		self.rotate_y(deg_to_rad(event.relative.x * mouse_sensitivity * -1))
 		
 		var camera_rot = neck.rotation_degrees
-		
 		var rotation_to_apply_on_x_axis = (-event.relative.y * mouse_sensitivity);
 		
 		if (camera_rot.x + rotation_to_apply_on_x_axis < -90):
@@ -145,20 +143,16 @@ func _unhandled_input(event: InputEvent) -> void:
 			camera_rot.x = 70
 		else:
 			camera_rot.x += rotation_to_apply_on_x_axis;
-		
-		neck.rotation_degrees = camera_rot
-			
+			neck.rotation_degrees = camera_rot
+
 func _on_store_body_entered(body):
-	print("instore")
 	if times_in_store == 0 and error_time == true:
 		task.text = task2
 		times_in_store += 1
 		current_task += 1
-		print(times_in_store)
 
 func _on_store_body_exited(body):
 	print("exit")
-
 
 func _on_timer_timeout():
 	error_time = true
