@@ -29,7 +29,7 @@ var Crosshair: TextureRect
 
 var task2 = "Task 2: \n Talk to Bob"
 var task3 = "Task 3: \n Go to the motel"
-var task3_2 = "Task 3: \n Help Bob"
+var task3_2 = "Task 3: \n Sweep the floors"
 var task5 = "Talk to Bob"
 var task6 = "Talk to Bob"
 

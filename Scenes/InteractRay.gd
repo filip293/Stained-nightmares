@@ -51,6 +51,15 @@ func _physics_process(delta) -> void:
 						player.task.text = player.task3
 					else:
 						player.task.text = player.task3_2
+				
+				elif dialogue_done1 == true and player.task.text == player.task3_2:
+					player.can_move = false
+					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+					DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob_hold.dialogue"), "start")
+					await DialogueManager.dialogue_ended
+					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+					player.can_move = true
+				
 				else:
 					pass
 		
