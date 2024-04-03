@@ -91,7 +91,8 @@ func get_input():
 			else:
 				$Neck/AnimationPlayer.stop()
 	elif can_move == false: 
-		pass
+		velocity.x = 0
+		velocity.z = 0
 
 func _physics_process(delta):
 	velocity.y += -gravity * delta
@@ -161,3 +162,5 @@ func _on_timer_timeout():
 	
 func get_prompt() -> String:			#Add prompt player for monster detect
 	return "Player"
+
+	pass # Replace with function body.

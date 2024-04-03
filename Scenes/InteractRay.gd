@@ -84,6 +84,7 @@ func _process(delta):
 		donewithroomcheck = true
 		player.can_move = false
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		$/root/Node3D/Player/Neck/AnimationPlayer.stop()
 		DialogueManager.show_dialogue_balloon(load("res://Dialogue/HotelRoom.dialogue"), "start")
 		await DialogueManager.dialogue_ended
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -99,6 +100,7 @@ func _physics_process(delta) -> void:
 					player.can_move = false
 					dialogue_started1 = true
 					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+					$/root/Node3D/Player/Neck/AnimationPlayer.stop()
 					DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "start")
 					await DialogueManager.dialogue_ended
 					dialogue_started1 = false
@@ -113,6 +115,7 @@ func _physics_process(delta) -> void:
 				elif dialogue_done1 == true and player.task.text == player.task3_2:
 					player.can_move = false
 					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+					$/root/Node3D/Player/Neck/AnimationPlayer.stop()
 					DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob_hold.dialogue"), "start")
 					await DialogueManager.dialogue_ended
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
