@@ -9,6 +9,12 @@ extends RayCast3D
 @onready var metlapromp = $/root/Node3D/Metla
 @onready var doorprompt = $/root/Node3D/Motel2/Door_02/Door
 @onready var KEY = $/root/Node3D/Key
+var DustPatch1: StaticBody3D
+var DustPatch1Timer: Timer 
+var DustPatch2: StaticBody3D
+var DustPatch2Timer: Timer 
+var DustPatch3: StaticBody3D
+var DustPatch3Timer: Timer 
 var GuyBob: StaticBody3D
 var havekey: bool = false
 var dialogue_started1: bool = false
@@ -27,6 +33,12 @@ func _ready():
 	KEY.visible = false
 	GuyBob = $/root/Node3D/Guy
 	$/root/Node3D/Root_Scene/Label3D.visible = false
+	DustPatch1 = $/root/Node3D/DustPatch/DP1
+	DustPatch1Timer = $/root/Node3D/DustPatch/DP1/Timer
+	DustPatch2 = $/root/Node3D/DustPatch/DP2
+	DustPatch2Timer = $/root/Node3D/DustPatch/DP2/Timer
+	DustPatch3 = $/root/Node3D/DustPatch/DP3
+	DustPatch3Timer = $/root/Node3D/DustPatch/DP3/Timer
 # Called every frame
 func _process(delta):
 	var car_cutscene = $/root/Node3D/CarCutscene
@@ -124,6 +136,23 @@ func _physics_process(delta) -> void:
 				metlapromp.prompt_message = "Pick up broom"
 				
 		if Input.is_action_pressed("interact") and metla_inhand == true:
-			$/root/Node3D/Player/MetlaSweep.play("Sweep")
+			if "Clean up dust" in prompt.text:
+				DustPatch1Timer.start()
+				$/root/Node3D/Player/MetlaSweep.play("Sweep")
+				await DustPatch1Timer.timeout
+				DustPatch1.visible = false
+				DustPatch1.prompt = ""
+			elif "Clean up dust" in prompt.text:
+				DustPatch1Timer.start()
+				$/root/Node3D/Player/MetlaSweep.play("Sweep")
+				await DustPatch1Timer.timeout
+				DustPatch1.visible = false
+				DustPatch3.prompt = ""
+			elif "Clean up dust" in prompt.text:
+				DustPatch3Timer.start()
+				$/root/Node3D/Player/MetlaSweep.play("Sweep")
+				await DustPatch3Timer.timeout
+				DustPatch3.visible = false
+				DustPatch3.prompt = ""
 		else:
 			$/root/Node3D/Player/MetlaSweep.pause()
