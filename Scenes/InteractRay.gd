@@ -33,6 +33,7 @@ var dp1s: bool = false
 var dp2s: bool = false
 var dp3s: bool = false
 
+
 func _ready():
 	KEY.visible = false
 	GuyBob = $/root/Node3D/Guy
@@ -125,6 +126,12 @@ func _physics_process(delta) -> void:
 				else:
 					pass
 		
+		if Input.is_action_just_pressed("interact"):
+				if "Key" in prompt.text and havekey == false:
+					$/root/Node3D/Key.free()
+					havekey = true
+					$/root/Node3D/Motel2/Door_02/Door/CollisionShape3D.free()
+		
 		if "Pick up broom" in prompt.text:
 			if Input.is_action_just_pressed("interact"):
 				metlabob.visible = false
@@ -177,3 +184,7 @@ func _physics_process(delta) -> void:
 			$/root/Node3D/Player/MetlaSweep.pause()
 
 
+
+
+func _on_forest_sound_finished():
+	pass # Replace with function body. 		$/root/Node3D/Root_Scene/RootNode/Trees_03/ForestSound

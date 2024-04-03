@@ -6,6 +6,7 @@ extends RayCast3D
 var on_screen: bool = false
 var noise = AudioStreamPlayer
 var noise_playing: bool = false
+var noisedone: bool = false
 
 func _ready():
 	noise = $AudioStreamPlayer
@@ -29,3 +30,4 @@ func _on_visible_on_screen_notifier_3d_screen_exited():
 
 func _on_audio_stream_player_finished():
 	noise_playing = false
+	noisedone = true
