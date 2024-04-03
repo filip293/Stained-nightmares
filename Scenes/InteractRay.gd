@@ -28,6 +28,7 @@ var donewithroomcheck: bool = false
 var route1: bool = false
 var freed: bool = false
 var hasPlayedSound: bool = false
+var DustPatch1Clean: bool = false
 var dp1s: bool = false
 var dp2s: bool = false
 var dp3s: bool = false
@@ -51,7 +52,7 @@ func _process(delta):
 	if is_colliding():
 		var detected = get_collider()
 		# Check if the detected object has the 'get_prompt' method
-		if detected.has_method("get_prompt"):
+		if detected and detected.has_method("get_prompt"):
 			prompt.text = detected.get_prompt()
 			
 	if global.route == "Get the broom":
@@ -141,9 +142,10 @@ func _physics_process(delta) -> void:
 				DustPatch1Timer -= 0.05
 				if DustPatch1Timer < 0.1:
 					if DustPatch1 != null and dp1s == false:
+						dp1s = true
 						$/root/Node3D/Player/MetlaSweep.stop()
 						DustPatch1.free()
-						dp1s = true
+						
 				else:
 					pass
 			
