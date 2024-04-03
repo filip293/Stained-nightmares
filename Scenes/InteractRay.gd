@@ -9,6 +9,7 @@ extends RayCast3D
 @onready var metlapromp = $/root/Node3D/Metla
 @onready var doorprompt = $/root/Node3D/Motel2/Door_02/Door
 @onready var KEY = $/root/Node3D/Key
+var first_time: bool = true
 var SoundSweepPlaying: bool = false
 var DustPatch1: StaticBody3D
 var DustPatch1Timer = 10 
@@ -103,6 +104,7 @@ func _process(delta):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		player.can_move = true
 		player.task.text = player.task4
+		$/root/Node3D/Root_Scene/RootNode/Trees_03/ForestSound.play()
 	
 	if Input.is_action_just_released("interact") and SoundSweepPlaying:
 		if DustPatch1 != null:
@@ -212,6 +214,7 @@ func _physics_process(delta) -> void:
 				if "Key" in prompt.text and havekey == false:
 					$/root/Node3D/Key.free()
 					havekey = true
+					player.task.text = player.task5
 					$/root/Node3D/Motel2/Door_02/Door/CollisionShape3D.free()
 		
 		if "Pick up broom" in prompt.text:
@@ -281,7 +284,24 @@ func _physics_process(delta) -> void:
 			$/root/Node3D/Player/MetlaSweep.pause()
 
 
-
-
 func _on_forest_sound_finished():
-	pass # Replace with function body. 		$/root/Node3D/Root_Scene/RootNode/Trees_03/ForestSound
+		player.can_move = false
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		$/root/Node3D/Player/Neck/AnimationPlayer.stop()
+		DialogueManager.show_dialogue_balloon(load("res://Dialogue/HotelRoom.dialogue"), "forest")
+		await DialogueManager.dialogue_ended
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		player.can_move = true
+
+
+
+
+
+func _on_bathroom_body_entered(body):
+	pass # Replace with function body.
+
+
+func _on_main_room_body_entered(body):
+	if player.task.text == player.task5 and first_time == true:
+		player.task.text = player.task6
+		first_time = false
