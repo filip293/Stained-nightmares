@@ -10,11 +10,11 @@ extends RayCast3D
 @onready var doorprompt = $/root/Node3D/Motel2/Door_02/Door
 @onready var KEY = $/root/Node3D/Key
 var DustPatch1: StaticBody3D
-var DustPatch1Timer: Timer 
+var DustPatch1Timer = 10 
 var DustPatch2: StaticBody3D
-var DustPatch2Timer: Timer 
+var DustPatch2Timer = 20
 var DustPatch3: StaticBody3D
-var DustPatch3Timer: Timer 
+var DustPatch3Timer = 12
 var GuyBob: StaticBody3D
 var havekey: bool = false
 var dialogue_started1: bool = false
@@ -28,17 +28,17 @@ var donewithroomcheck: bool = false
 var route1: bool = false
 var freed: bool = false
 var hasPlayedSound: bool = false
+var dp1s: bool = false
+var dp2s: bool = false
+var dp3s: bool = false
 
 func _ready():
 	KEY.visible = false
 	GuyBob = $/root/Node3D/Guy
 	$/root/Node3D/Root_Scene/Label3D.visible = false
-	DustPatch1 = $/root/Node3D/DustPatch/DP1
-	DustPatch1Timer = $/root/Node3D/DustPatch/DP1/Timer
-	DustPatch2 = $/root/Node3D/DustPatch/DP2
-	DustPatch2Timer = $/root/Node3D/DustPatch/DP2/Timer
-	DustPatch3 = $/root/Node3D/DustPatch/DP3
-	DustPatch3Timer = $/root/Node3D/DustPatch/DP3/Timer
+	DustPatch1 = $/root/Node3D/Root_Scene/RootNode/DustPatch/DP1
+	DustPatch2 = $/root/Node3D/Root_Scene/RootNode/DustPatch/DP2
+	DustPatch3 = $/root/Node3D/Root_Scene/RootNode/DustPatch/DP3
 # Called every frame
 func _process(delta):
 	var car_cutscene = $/root/Node3D/CarCutscene
@@ -137,22 +137,38 @@ func _physics_process(delta) -> void:
 				
 		if Input.is_action_pressed("interact") and metla_inhand == true:
 			if "Clean up dust" in prompt.text:
-				DustPatch1Timer.start()
 				$/root/Node3D/Player/MetlaSweep.play("Sweep")
-				await DustPatch1Timer.timeout
-				DustPatch1.visible = false
-				DustPatch1.prompt = ""
-			elif "Clean up dust" in prompt.text:
-				DustPatch1Timer.start()
+				DustPatch1Timer -= 0.05
+				if DustPatch1Timer < 0.1:
+					if DustPatch1 != null and dp1s == false:
+						$/root/Node3D/Player/MetlaSweep.stop()
+						DustPatch1.free()
+						dp1s = true
+				else:
+					pass
+			
+			elif "Clеan up dust" in prompt.text:
 				$/root/Node3D/Player/MetlaSweep.play("Sweep")
-				await DustPatch1Timer.timeout
-				DustPatch1.visible = false
-				DustPatch3.prompt = ""
-			elif "Clean up dust" in prompt.text:
-				DustPatch3Timer.start()
+				DustPatch2Timer -= 0.05
+				if DustPatch2Timer < 0.1:
+					if DustPatch2 != null and dp2s == false:
+						$/root/Node3D/Player/MetlaSweep.stop()
+						DustPatch2.free()
+						dp2s = true
+				else:
+					pass
+			
+			elif "Clеаn up dust" in prompt.text:
 				$/root/Node3D/Player/MetlaSweep.play("Sweep")
-				await DustPatch3Timer.timeout
-				DustPatch3.visible = false
-				DustPatch3.prompt = ""
+				DustPatch3Timer -= 0.05
+				if DustPatch3Timer < 0.1:
+					if DustPatch3 != null and dp3s == false:
+						$/root/Node3D/Player/MetlaSweep.stop()
+						DustPatch3.free()
+						dp3s = true
+				else:
+					pass
 		else:
 			$/root/Node3D/Player/MetlaSweep.pause()
+
+
