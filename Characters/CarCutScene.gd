@@ -33,4 +33,7 @@ func _on_animation_player_animation_finished(Car):
 	prompt.text = "Press E to exit"
 	creature.visible = false
 	#Player2.visible = true    #REMOVE # WHEN GAME IS DONE
+	if Input.is_action_pressed("interact"):
+		$/root/Node3D/Player/AmbientNoise.play()
+	
 	

@@ -33,3 +33,34 @@ Bob: Why don't you stick around and help for now, seeing as you don't have anyth
 		set global.route = "Motel"
 		set global.chosen = true
 => END
+
+~ wait
+Bob: Come back to me once you've finished cleaning the floors. \nThe dust ain't gonna clean up itself ya know?
+=> END
+
+~ wait1
+Bob: The floors are looking spotless, go ahead and leave the broom where you found it and come back to me.
+=> END
+
+~ finished_sweeping
+Bob: Wow, good job. The floors are looking spotless! 
+Bob: Next, could you go ahead and collect the coins from the machines? 
+Bob: There’s a key to the machines and a bucket for the coins behind me somewhere.
+=> END
+
+~ wait2
+if global.bobannoyed <= 2
+	Bob: As I said, the bucket and keys are somewhere behind me, don't make me remind you again.
+	do global.bobannoyed += 1
+	=> END
+if global.bobannoyed >= 3 and global.bobannoyed <= 5
+	Bob: The bucket and keys are somewhere behind me, DON'T make me remind you again.
+	do global.bobannoyed += 1
+	=> END
+if global.bobannoyed >= 6 and global.bobannoyed <= 10
+	Bob: ...
+	do global.bobannoyed += 1
+	=> END
+if global.bobannoyed >= 11
+	Bob: insert angry bob noises here
+	=> END
