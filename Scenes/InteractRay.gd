@@ -52,6 +52,7 @@ func _ready():
 	DP1C = $/root/Node3D/Root_Scene/RootNode/DustPatch/DP1/CollisionShape3D
 	DP2C = $/root/Node3D/Root_Scene/RootNode/DustPatch/DP2/CollisionShape3D
 	DP3C = $/root/Node3D/Root_Scene/RootNode/DustPatch/DP3/CollisionShape3D
+	$/root/Node3D/Motel2/TV_04_004/AnimatedSprite3D.play()
 	
 # Called every frame
 func _process(delta):
@@ -75,7 +76,7 @@ func _process(delta):
 				$/root/Node3D/Root_Scene/RootNode/Terrain_01/StaticBody3D.free()
 				freed = true
 				
-	if player.in_store == true and player.task.text == player.task4 and donewithroomcheck == true and hasPlayedSound == false:
+	if player.in_store == true and player.tasks == player.task4 and donewithroomcheck == true and hasPlayedSound == false:
 		$/root/Node3D/Root_Scene/RootNode/DoorsWood_01/AudioStreamPlayer.play()
 		$/root/Node3D/Root_Scene/Label3D.visible = true
 		hasPlayedSound = true
@@ -92,7 +93,7 @@ func _process(delta):
 	else:
 		doorprompt.prompt_message = "Locked"
 		
-	if "Closed" in prompt.text and player.task.text == player.task3:
+	if "Closed" in prompt.text and player.tasks == player.task3:
 		$/root/Node3D/Root_Scene/RootNode/Terrain_01/StaticBody3D.free()
 		prompt.text = ""
 		donewithroomcheck = true
@@ -103,7 +104,7 @@ func _process(delta):
 		await DialogueManager.dialogue_ended
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		player.can_move = true
-		player.task.text = player.task4
+		player.tasks = player.task4
 		$/root/Node3D/Root_Scene/RootNode/Trees_03/ForestSound.play()
 	
 	if Input.is_action_just_released("interact") and SoundSweepPlaying:
@@ -116,10 +117,10 @@ func _process(delta):
 		SoundSweepPlaying = false
 	
 	if dp1s and dp2s and dp3s and !sweepfinish:
-				player.task.text = player.task4_2
+				player.tasks = player.task4_2
 				sweepfinish = true
 	
-	if player.task.text == player.task3_2 or player.task.text == player.task4_2:
+	if player.tasks == player.task3_2 or player.tasks == player.task4_2:
 		if DustPatch1 != null:
 			DustPatch1.set_collision_layer_value(2, true)
 		if DustPatch2 != null:
@@ -145,7 +146,7 @@ func _physics_process(delta) -> void:
 		var detected = get_collider()
 		if "Talk" in prompt.text:
 			if Input.is_action_just_pressed("interact"):
-				if dialogue_started1 == false and player.task.text == player.task2:
+				if dialogue_started1 == false and player.tasks == player.task2:
 					player.can_move = false
 					dialogue_started1 = true
 					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -157,11 +158,11 @@ func _physics_process(delta) -> void:
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 					player.can_move = true
 					if global.route == "Motel":
-						player.task.text = player.task3
+						player.tasks = player.task3
 					else:
-						player.task.text = player.task3_2
+						player.tasks = player.task3_2
 				
-				elif dialogue_done1 and player.task.text == player.task3_2 and !dip:
+				elif dialogue_done1 and player.tasks == player.task3_2 and !dip:
 					player.can_move = false
 					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 					$/root/Node3D/Player/Neck/AnimationPlayer.stop()
@@ -172,7 +173,7 @@ func _physics_process(delta) -> void:
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 					player.can_move = true
 				
-				elif dialogue_done1 and player.task.text == player.task4_2 and !dip:
+				elif dialogue_done1 and player.tasks == player.task4_2 and !dip:
 					dip = true
 					player.can_move = false
 					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -183,7 +184,7 @@ func _physics_process(delta) -> void:
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 					player.can_move = true
 				
-				elif dialogue_done1 == true and player.task.text == player.task5_2:
+				elif dialogue_done1 == true and player.tasks == player.task5_2:
 					player.can_move = false
 					dialogue_started2 = true
 					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -194,9 +195,9 @@ func _physics_process(delta) -> void:
 					dialogue_done2 = true
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 					player.can_move = true
-					player.task.text = player.task6_2
+					player.tasks = player.task6_2
 				
-				elif dialogue_done2 and player.task.text == player.task6_2 and !dip:
+				elif dialogue_done2 and player.tasks == player.task6_2 and !dip:
 					dip = true
 					player.can_move = false
 					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -214,7 +215,7 @@ func _physics_process(delta) -> void:
 				if "Key" in prompt.text and havekey == false:
 					$/root/Node3D/Key.free()
 					havekey = true
-					player.task.text = player.task5
+					player.tasks = player.task5
 					$/root/Node3D/Motel2/Door_02/Door/CollisionShape3D.free()
 		
 		if "Pick up broom" in prompt.text:
@@ -231,7 +232,7 @@ func _physics_process(delta) -> void:
 				metla_inhand = false
 				metlapromp.prompt_message = "Pick up broom"
 				if sweepfinish:
-					player.task.text = player.task5_2
+					player.tasks = player.task5_2
 				
 		if Input.is_action_pressed("interact") and metla_inhand == true:
 			if "Clean up dust" in prompt.text:
@@ -302,6 +303,10 @@ func _on_bathroom_body_entered(body):
 
 
 func _on_main_room_body_entered(body):
-	if player.task.text == player.task5 and first_time == true:
-		player.task.text = player.task6
+	if player.tasks == player.task5 and first_time == true:
+		player.tasks = player.task6
 		first_time = false
+
+
+func _on_animated_sprite_3d_animation_finished():
+	$/root/Node3D/Motel2/TV_04_004/AnimatedSprite3D.play()

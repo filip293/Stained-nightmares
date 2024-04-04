@@ -45,6 +45,18 @@ version_control/autoload_on_startup=true
 
 enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://Buttons/": "teal",
+"res://Characters/": "blue",
+"res://Dialogue/": "red",
+"res://Laundry/": "yellow",
+"res://Motel/": "yellow",
+"res://Music/": "gray",
+"res://Objects/": "teal"
+}
+
 [input]
 
 move_forward={

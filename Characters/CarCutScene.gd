@@ -12,7 +12,6 @@ var Crosshair: TextureRect
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Crosshair = $/root/Node3D/TextureRect
-	task = $/root/Node3D/Player/Tasks
 	Player2 = $/root/Node3D/Player
 	Player = $/root/Node3D/Player/Neck/SpringArm/Camera
 	creature = $/root/Node3D/creature2
@@ -27,7 +26,7 @@ func _process(delta):
 		in_car = false
 		Crosshair.visible = true
 		prompt.text = ""
-		task.text = "Task 1:" + "\n Go to the laundromat"
+		Player2.tasks = "Task 1:" + "\n Go to the laundromat"
 
 func _on_animation_player_animation_finished(Car):
 	prompt.text = "Press E to exit"

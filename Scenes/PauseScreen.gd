@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var Cutscene := $/root/Node3D/Cutscene
 @onready var Crosshair = $/root/Node3D/TextureRect
-@onready var task = $/root/Node3D/Player/Tasks
+@onready var Task = $/root/Node3D/Player/Task2
 var esc_pressed: Label
 var in_menu: bool = false
 var pause_scr: Node2D
@@ -18,7 +18,7 @@ func exit_pause() -> void:
 	pause_scr.visible = false
 	Crosshair.visible = true
 	esc_pressed.visible = true
-	task.visible = true
+	Task.visible = true
 	get_tree().paused = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
@@ -26,7 +26,7 @@ func enter_pause() -> void:
 	in_menu = true
 	pause_scr.visible = true
 	Crosshair.visible = false
-	task.visible = false
+	Task.visible = false
 	esc_pressed.visible = false
 	get_tree().paused = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

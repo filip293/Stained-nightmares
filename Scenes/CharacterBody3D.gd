@@ -14,11 +14,11 @@ var sprintcooldown = 2
 var sprint_cooldown = 5				#used for cooldown of sprinting
 var times_in_store = 0				#used for times entered in area 3D
 var current_task = 1				#used for task state
+var tasks = ""
 
 var footstep_left_sound: AudioStreamPlayer3D
 var footstep_right_sound: AudioStreamPlayer3D
 var sprint_cooldown_bar = ProgressBar
-var task: Label
 var Crosshair: TextureRect
 
 var is_right_foot = true
@@ -42,11 +42,9 @@ var task7_2 = ""
 
 func _ready():
 	sprint_cooldown_bar = $/root/Node3D/Player/sprint_cooldown_bar
-	task = $Tasks
 	footstep_left_sound = $FootstepLeftSound
 	footstep_right_sound = $FootstepRightSound
 	Crosshair = $/root/Node3D/TextureRect
-	task.text = ""
 
 func _process(delta):
 	if monster_on_screen == true:
@@ -154,7 +152,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_store_body_entered(body):
 	in_store = true
 	if times_in_store == 0 and error_time == true:
-		task.text = task2
+		tasks = task2
 		times_in_store += 1
 		current_task += 1
 
