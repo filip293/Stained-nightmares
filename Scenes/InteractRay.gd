@@ -9,6 +9,7 @@ extends RayCast3D
 @onready var metlapromp = $/root/Node3D/Metla
 @onready var doorprompt = $/root/Node3D/Motel2/Door_02/Door
 @onready var KEY = $/root/Node3D/Key
+var Bob_help = false
 var first_time: bool = true
 var SoundSweepPlaying: bool = false
 var DustPatch1: StaticBody3D
@@ -40,7 +41,12 @@ var dp1s: bool = false
 var dp2s: bool = false
 var dp3s: bool = false
 var sweepfinish: bool = false
-
+var In_bathroom: bool = false
+var first_short: bool = false
+var first: bool = true
+var lighttimer: bool = false
+var short_lighttimer = false
+var bobhelpplayed = false
 
 func _ready():
 	KEY.visible = false
@@ -53,6 +59,7 @@ func _ready():
 	DP2C = $/root/Node3D/Root_Scene/RootNode/DustPatch/DP2/CollisionShape3D
 	DP3C = $/root/Node3D/Root_Scene/RootNode/DustPatch/DP3/CollisionShape3D
 	$/root/Node3D/Motel2/TV_04_004/AnimatedSprite3D.play()
+	$/root/Node3D/BOBDEAD.visible = false
 	
 # Called every frame
 func _process(delta):
@@ -76,6 +83,32 @@ func _process(delta):
 				$/root/Node3D/Root_Scene/RootNode/Terrain_01/StaticBody3D.free()
 				freed = true
 				
+	if In_bathroom == true and first == true:
+		In_bathroom = false
+		first = false
+		$/root/Node3D/Motel2/Toilet_01_004/Bathroom/Light.start()
+		$/root/Node3D/Motel2/Lamps_02_014/OmniLight3D.visible = false
+	if lighttimer == true:
+		$/root/Node3D/Motel2/Lamps_02_014/OmniLight3D.visible = true
+		$/root/Node3D/Motel2/Toilet_01_004/Bathroom/ShorterTime.start()
+		lighttimer = false
+		if short_lighttimer == true and first_short == false:
+			$/root/Node3D/Motel2/Lamps_02_014/OmniLight3D.visible = false
+			$/root/Node3D/Motel2/Toilet_01_004/Bathroom/ShorterTime.start()
+			first_short = true
+			if short_lighttimer == true and first_short == true:
+				$/root/Node3D/BOBDEAD.visible = true
+				$/root/Node3D/Motel2/Lamps_02_014/OmniLight3D.visible = false
+				$/root/Node3D/Motel2/Toilet_01_004/Bathroom/ShorterTime.start()
+				$/root/Node3D/BOBDEAD/BobHelp/HelpMeTimer.start()
+				first_short = true
+				short_lighttimer = false
+		if Bob_help == true and bobhelpplayed == false:
+			$/root/Node3D/BOBDEAD/BobHelp.play()
+			Bob_help = false
+			bobhelpplayed = true
+	
+	
 	if player.in_store == true and player.tasks == player.task4 and donewithroomcheck == true and hasPlayedSound == false:
 		$/root/Node3D/Root_Scene/RootNode/DoorsWood_01/AudioStreamPlayer.play()
 		$/root/Node3D/Root_Scene/Label3D.visible = true
@@ -299,7 +332,9 @@ func _on_forest_sound_finished():
 
 
 func _on_bathroom_body_entered(body):
-	pass # Replace with function body.
+	if player.error_time == true:
+		In_bathroom = true
+	
 
 
 func _on_main_room_body_entered(body):
@@ -310,3 +345,15 @@ func _on_main_room_body_entered(body):
 
 func _on_animated_sprite_3d_animation_finished():
 	$/root/Node3D/Motel2/TV_04_004/AnimatedSprite3D.play()
+
+
+func _on_light_timeout():
+		lighttimer = true
+
+
+func _on_shorter_time_timeout():
+	short_lighttimer = true
+
+
+func _on_help_me_timer_timeout():
+	Bob_help = true
