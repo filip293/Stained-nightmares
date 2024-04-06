@@ -9,44 +9,41 @@ extends RayCast3D
 @onready var metlapromp = $/root/Node3D/Metla
 @onready var doorprompt = $/root/Node3D/Motel2/Door_02/Door
 @onready var KEY = $/root/Node3D/Key
-var Bob_help = false
-var first_time: bool = true
-var SoundSweepPlaying: bool = false
-var DustPatch1: StaticBody3D
+
+var optim = {
+	"dialogue_started": [false, false, false],
+	"dialogue_done": [false, false, false],
+	"DustPatchClean": [false, false, false, false]
+}
+
 var DustPatch1Timer = 10 
-var DustPatch2: StaticBody3D
 var DustPatch2Timer = 20
-var DustPatch3: StaticBody3D
 var DustPatch3Timer = 12
-var dip: bool = false
+var DustPatch1: StaticBody3D
+var DustPatch2: StaticBody3D
+var DustPatch3: StaticBody3D
 var DP1C: CollisionShape3D
 var DP2C: CollisionShape3D
 var DP3C: CollisionShape3D
 var MC: CollisionShape3D
 var GuyBob: StaticBody3D
-var havekey: bool = false
-var dialogue_started1: bool = false
-var dialogue_started2: bool = false
-var dialogue_started3: bool = false
-var dialogue_done1: bool = false
-var dialogue_done2: bool = false
-var dialogue_done3: bool = false
-var metla_inhand: bool = false
-var donewithroomcheck: bool = false
-var route1: bool = false
-var freed: bool = false
-var hasPlayedSound: bool = false
-var DustPatch1Clean: bool = false
-var dp1s: bool = false
-var dp2s: bool = false
-var dp3s: bool = false
-var sweepfinish: bool = false
-var In_bathroom: bool = false
-var first_short: bool = false
-var first: bool = true
-var lighttimer: bool = false
-var short_lighttimer = false
-var bobhelpplayed = false
+var havekey := false
+var metla_inhand := false
+var donewithroomcheck := false
+var route1 := false
+var freed := false
+var hasPlayedSound := false
+var sweepfinish := false
+var In_bathroom := false
+var first_short := false
+var first := true
+var lighttimer := false
+var short_lighttimer := false
+var bobhelpplayed := false
+var dip := false
+var Bob_help := false
+var first_time := true
+var SoundSweepPlaying := false
 
 func _ready():
 	KEY.visible = false
@@ -76,7 +73,7 @@ func _process(delta):
 		if detected and detected.has_method("get_prompt"):
 			prompt.text = detected.get_prompt()
 			
-	if global.route == "Get the broom":
+	if global.route == "BOB":
 		route1 = true
 		if route1 == true and freed == false:
 			if $/root/Node3D/Root_Scene/RootNode/Terrain_01/StaticBody3D != null:
@@ -149,7 +146,7 @@ func _process(delta):
 			$/root/Node3D/Root_Scene/RootNode/DustPatch/DP3/Sweeping.stop()
 		SoundSweepPlaying = false
 	
-	if dp1s and dp2s and dp3s and !sweepfinish:
+	if optim["DustPatchClean"][0] and optim["DustPatchClean"][1] and optim["DustPatchClean"][2] and !sweepfinish:
 				player.tasks = player.task4_2
 				sweepfinish = true
 	
@@ -179,15 +176,15 @@ func _physics_process(delta) -> void:
 		var detected = get_collider()
 		if "Talk" in prompt.text:
 			if Input.is_action_just_pressed("interact"):
-				if dialogue_started1 == false and player.tasks == player.task2:
+				if optim["dialogue_started"][0] == false and player.tasks == player.task2:
 					player.can_move = false
-					dialogue_started1 = true
+					optim["dialogue_started"][0] = true
 					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 					$/root/Node3D/Player/Neck/AnimationPlayer.stop()
 					DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "start")
 					await DialogueManager.dialogue_ended
-					dialogue_started1 = false
-					dialogue_done1 = true
+					optim["dialogue_started"][0] = false
+					optim["dialogue_done"][0] = true
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 					player.can_move = true
 					if global.route == "Motel":
@@ -195,7 +192,7 @@ func _physics_process(delta) -> void:
 					else:
 						player.tasks = player.task3_2
 				
-				elif dialogue_done1 and player.tasks == player.task3_2 and !dip:
+				elif optim["dialogue_done"][0] and player.tasks == player.task3_2 and !dip:
 					player.can_move = false
 					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 					$/root/Node3D/Player/Neck/AnimationPlayer.stop()
@@ -206,7 +203,7 @@ func _physics_process(delta) -> void:
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 					player.can_move = true
 				
-				elif dialogue_done1 and player.tasks == player.task4_2 and !dip:
+				elif optim["dialogue_done"][0] and player.tasks == player.task4_2 and !dip:
 					dip = true
 					player.can_move = false
 					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -217,20 +214,20 @@ func _physics_process(delta) -> void:
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 					player.can_move = true
 				
-				elif dialogue_done1 == true and player.tasks == player.task5_2:
+				elif optim["dialogue_done"][0] == true and player.tasks == player.task5_2:
 					player.can_move = false
-					dialogue_started2 = true
+					optim["dialogue_started"][1] = true
 					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 					$/root/Node3D/Player/Neck/AnimationPlayer.stop()
 					DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "finished_sweeping")
 					await DialogueManager.dialogue_ended
-					dialogue_started2 = false
-					dialogue_done2 = true
+					optim["dialogue_started"][1] = false
+					optim["dialogue_done"][1] = true
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 					player.can_move = true
 					player.tasks = player.task6_2
 				
-				elif dialogue_done2 and player.tasks == player.task6_2 and !dip:
+				elif optim["dialogue_done"][1] and player.tasks == player.task6_2 and !dip:
 					dip = true
 					player.can_move = false
 					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -275,8 +272,8 @@ func _physics_process(delta) -> void:
 					SoundSweepPlaying = true
 				DustPatch1Timer -= 0.05
 				if DustPatch1Timer < 0.1:
-					if DustPatch1 != null and dp1s == false:
-						dp1s = true
+					if DustPatch1 != null and optim["DustPatchClean"][0] == false:
+						optim["DustPatchClean"][0] = true
 						$/root/Node3D/Root_Scene/RootNode/DustPatch/DP1/Sweeping.stop()
 						$/root/Node3D/Player/MetlaSweep.stop()
 						DustPatch1.free()
@@ -291,11 +288,11 @@ func _physics_process(delta) -> void:
 					SoundSweepPlaying = true
 				DustPatch2Timer -= 0.05
 				if DustPatch2Timer < 0.1:
-					if DustPatch2 != null and dp2s == false:
+					if DustPatch2 != null and optim["DustPatchClean"][1] == false:
 						$/root/Node3D/Root_Scene/RootNode/DustPatch/DP2/Sweeping.stop()
 						$/root/Node3D/Player/MetlaSweep.stop()
 						DustPatch2.free()
-						dp2s = true
+						optim["DustPatchClean"][1] = true
 				else:
 					pass
 			
@@ -306,11 +303,11 @@ func _physics_process(delta) -> void:
 					SoundSweepPlaying = true
 				DustPatch3Timer -= 0.05
 				if DustPatch3Timer < 0.1:
-					if DustPatch3 != null and dp3s == false:
+					if DustPatch3 != null and optim["DustPatchClean"][2] == false:
 						$/root/Node3D/Root_Scene/RootNode/DustPatch/DP3/Sweeping.stop()
 						$/root/Node3D/Player/MetlaSweep.stop()
 						DustPatch3.free()
-						dp3s = true
+						optim["DustPatchClean"][2] = true
 				else:
 					pass
 		
@@ -326,10 +323,6 @@ func _on_forest_sound_finished():
 		await DialogueManager.dialogue_ended
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		player.can_move = true
-
-
-
-
 
 func _on_bathroom_body_entered(body):
 	if player.error_time == true:
