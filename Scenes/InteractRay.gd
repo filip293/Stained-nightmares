@@ -94,7 +94,6 @@ func _process(delta):
 			$/root/Node3D/Motel2/Toilet_01_004/Bathroom/ShorterTime.start()
 			first_short = true
 			if short_lighttimer == true and first_short == true:
-				$/root/Node3D/BOBDEAD.visible = true
 				$/root/Node3D/Motel2/Lamps_02_014/OmniLight3D.visible = false
 				$/root/Node3D/Motel2/Toilet_01_004/Bathroom/ShorterTime.start()
 				$/root/Node3D/BOBDEAD/BobHelp/HelpMeTimer.start()
@@ -102,6 +101,7 @@ func _process(delta):
 				short_lighttimer = false
 		if Bob_help == true and bobhelpplayed == false:
 			$/root/Node3D/BOBDEAD/BobHelp.play()
+			$/root/Node3D/BOBDEAD.visible = true
 			Bob_help = false
 			bobhelpplayed = true
 	
