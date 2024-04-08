@@ -34,7 +34,6 @@ var route1 := false
 var freed := false
 var hasPlayedSound := false
 var sweepfinish := false
-var In_bathroom := false
 var first_short := false
 var first := true
 var lighttimer := false
@@ -80,8 +79,8 @@ func _process(delta):
 				$/root/Node3D/Root_Scene/RootNode/Terrain_01/StaticBody3D.free()
 				freed = true
 				
-	if In_bathroom == true and first == true:
-		In_bathroom = false
+	if global.in_bathroom == true and first == true:
+		global.in_bathroom = false
 		first = false
 		$/root/Node3D/Motel2/Toilet_01_004/Bathroom/Light.start()
 		$/root/Node3D/Motel2/Lamps_02_014/OmniLight3D.visible = false
@@ -326,9 +325,11 @@ func _on_forest_sound_finished():
 
 func _on_bathroom_body_entered(body):
 	if player.error_time == true:
-		In_bathroom = true
-	
+		global.in_bathroom = true
 
+func _on_bathroom_body_exited(body):
+	if player.error_time == true:
+		global.in_bathroom = false
 
 func _on_main_room_body_entered(body):
 	if player.tasks == player.task5 and first_time == true:
@@ -350,3 +351,4 @@ func _on_shorter_time_timeout():
 
 func _on_help_me_timer_timeout():
 	Bob_help = true
+
