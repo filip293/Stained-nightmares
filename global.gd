@@ -3,6 +3,7 @@ extends Node
 var route: String
 var chosen: bool = false
 var bobannoyed = 0
+var in_bathroom := false
  
 # Called when the node enters the scene tree for the first time.
 func _ready():
