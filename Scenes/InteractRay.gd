@@ -95,13 +95,6 @@ func _process(delta):
 		$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = false
 		$/root/Node3D/Player/Task2/Timer.set_wait_time(0.1)
 		player.tasks = player.task7
-		#if Bob_help == true and bobhelpplayed == false:
-			#$/root/Node3D/BOBDEAD.visible = true
-			#$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = false
-			#$/root/Node3D/Player/Task2/Timer.set_wait_time(0.1)
-			#player.tasks = player.task7
-			#Bob_help = false
-			#bobhelpplayed = true
 	
 	
 	if player.in_store == true and player.tasks == player.task4 and donewithroomcheck == true and hasPlayedSound == false:
@@ -352,12 +345,3 @@ func _on_animated_sprite_3d_animation_finished():
 
 func _on_light_timeout():
 		lighttimer = true
-
-
-#func _on_shorter_time_timeout():
-	#short_lighttimer = true
-#
-#
-#func _on_help_me_timer_timeout():
-	#Bob_help = true
-
