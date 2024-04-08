@@ -324,6 +324,9 @@ func _physics_process(delta) -> void:
 			DialogueManager.show_dialogue_balloon(load("res://Dialogue/HotelRoom.dialogue"), "note")
 			player.tasks = player.task8
 			$/root/Node3D/Player/ScaryAmb.play()
+			var red = Color(0.7, 0.0, 0.0, 1.0)
+			$/root/Node3D/Player/Task2.set("modulate", red)
+
 
 func _on_forest_sound_finished():
 		player.can_move = false
