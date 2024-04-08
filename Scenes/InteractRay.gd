@@ -26,6 +26,10 @@ var DP1C: CollisionShape3D
 var DP2C: CollisionShape3D
 var DP3C: CollisionShape3D
 var MC: CollisionShape3D
+var CBGV1: StaticBody3D
+var CBGV2: StaticBody3D
+var CBGV3: StaticBody3D
+var CBGV4: StaticBody3D
 var GuyBob: StaticBody3D
 var havekey := false
 var metla_inhand := false
@@ -55,6 +59,10 @@ func _ready():
 	DP1C = $/root/Node3D/Root_Scene/RootNode/DustPatch/DP1/CollisionShape3D
 	DP2C = $/root/Node3D/Root_Scene/RootNode/DustPatch/DP2/CollisionShape3D
 	DP3C = $/root/Node3D/Root_Scene/RootNode/DustPatch/DP3/CollisionShape3D
+	CBGV1 = $/root/Node3D/Root_Scene/RootNode/Laundry_S/CBGV
+	CBGV2 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_001/CBGV
+	CBGV3 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_002/CBGV
+	CBGV4 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_003/CBGV
 	$/root/Node3D/Motel2/TV_04_004/AnimatedSprite3D.play()
 	$/root/Node3D/BOBDEAD.visible = false
 	$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = true
@@ -166,6 +174,25 @@ func _process(delta):
 			DustPatch3.set_collision_layer_value(2, false)
 		metlapromp.set_collision_layer_value(3, true)
 		metlapromp.set_collision_layer_value(2, false)
+		
+	if player.tasks == player.task7_2:
+		if CBGV1 != null:
+			CBGV1.visible = true
+		if CBGV2 != null:
+			CBGV2.visible = true
+		if CBGV3 != null:
+			CBGV3.visible = true
+		if CBGV4 != null:
+			CBGV4.visible = true
+	else:
+		if CBGV1 != null:
+			CBGV1.visible = false
+		if CBGV2 != null:
+			CBGV2.visible = false
+		if CBGV3 != null:
+			CBGV3.visible = false
+		if CBGV4 != null:
+			CBGV4.visible = false
 				
 func _physics_process(delta) -> void:
 	if is_colliding():
@@ -210,7 +237,7 @@ func _physics_process(delta) -> void:
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 					player.can_move = true
 				
-				elif optim["dialogue_done"][0] == true and player.tasks == player.task5_2:
+				elif optim["dialogue_done"][0] == true and optim["dialogue_started"][1] == false and player.tasks == player.task5_2:
 					player.can_move = false
 					optim["dialogue_started"][1] = true
 					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
