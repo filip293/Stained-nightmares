@@ -232,7 +232,7 @@ func _physics_process(delta) -> void:
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 					player.can_move = true
 				
-				elif optim["dialogue_done"][0] == true and player.tasks == player.task5_2:
+				elif optim["dialogue_done"][0] == true and optim["dialogue_started"][1] == false and player.tasks == player.task5_2:
 					player.can_move = false
 					optim["dialogue_started"][1] = true
 					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
