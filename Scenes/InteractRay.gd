@@ -83,30 +83,25 @@ func _process(delta):
 	if global.in_bathroom == true and first == true:
 		global.in_bathroom = false
 		first = false
+		$/root/Node3D/BOBDEAD/BobHelp.play()
 		$/root/Node3D/Motel2/Toilet_01_004/Bathroom/Light.start()
 		$/root/Node3D/Motel2/Lamps_02_014/OmniLight3D.visible = false
 	if lighttimer == true:
 		$/root/Node3D/Motel2/Lamps_02_014/OmniLight3D.visible = true
 		$/root/Node3D/Motel2/Toilet_01_004/Bathroom/ShorterTime.start()
+		$/root/Node3D/BOBDEAD/BobHelp/HelpMeTimer.start()
 		lighttimer = false
-		if short_lighttimer == true and first_short == false:
-			$/root/Node3D/Motel2/Lamps_02_014/OmniLight3D.visible = false
-			$/root/Node3D/Motel2/Toilet_01_004/Bathroom/ShorterTime.start()
-			first_short = true
-			if short_lighttimer == true and first_short == true:
-				$/root/Node3D/Motel2/Lamps_02_014/OmniLight3D.visible = false
-				$/root/Node3D/Motel2/Toilet_01_004/Bathroom/ShorterTime.start()
-				$/root/Node3D/BOBDEAD/BobHelp/HelpMeTimer.start()
-				first_short = true
-				short_lighttimer = false
-		if Bob_help == true and bobhelpplayed == false:
-			$/root/Node3D/BOBDEAD.visible = true
-			$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = false
-			$/root/Node3D/Player/Task2/Timer.set_wait_time(0.1)
-			$/root/Node3D/BOBDEAD/BobHelp.play()
-			player.tasks = player.task7
-			Bob_help = false
-			bobhelpplayed = true
+		$/root/Node3D/BOBDEAD.visible = true
+		$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = false
+		$/root/Node3D/Player/Task2/Timer.set_wait_time(0.1)
+		player.tasks = player.task7
+		#if Bob_help == true and bobhelpplayed == false:
+			#$/root/Node3D/BOBDEAD.visible = true
+			#$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = false
+			#$/root/Node3D/Player/Task2/Timer.set_wait_time(0.1)
+			#player.tasks = player.task7
+			#Bob_help = false
+			#bobhelpplayed = true
 	
 	
 	if player.in_store == true and player.tasks == player.task4 and donewithroomcheck == true and hasPlayedSound == false:
@@ -359,10 +354,10 @@ func _on_light_timeout():
 		lighttimer = true
 
 
-func _on_shorter_time_timeout():
-	short_lighttimer = true
-
-
-func _on_help_me_timer_timeout():
-	Bob_help = true
+#func _on_shorter_time_timeout():
+	#short_lighttimer = true
+#
+#
+#func _on_help_me_timer_timeout():
+	#Bob_help = true
 
