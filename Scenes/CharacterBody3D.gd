@@ -69,6 +69,9 @@ func _process(delta):
 		sprintcooldown -= 0.3
 	elif is_sprinting == false and sprint_cooldown < 5 and sprintcooldown > 0.5:
 		sprint_cooldown += 0.007
+		
+	if global.otherambient == true:
+		$/root/Node3D/Player/AmbientNoise.stop()
 
 func get_input():
 	var input = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")

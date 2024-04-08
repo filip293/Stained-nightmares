@@ -43,6 +43,7 @@ var dip := false
 var Bob_help := false
 var first_time := true
 var SoundSweepPlaying := false
+var light_done := false
 
 func _ready():
 	KEY.visible = false
@@ -57,6 +58,8 @@ func _ready():
 	$/root/Node3D/Motel2/TV_04_004/AnimatedSprite3D.play()
 	$/root/Node3D/BOBDEAD.visible = false
 	$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = true
+	$/root/Node3D/Root_Scene/RootNode/basket_002/Key.visible = false
+	$/root/Node3D/Root_Scene/RootNode/basket_002/Key/CollisionShape3D.disabled = true
 	
 # Called every frame
 func _process(delta):
@@ -86,15 +89,17 @@ func _process(delta):
 		$/root/Node3D/BOBDEAD/BobHelp.play()
 		$/root/Node3D/Motel2/Toilet_01_004/Bathroom/Light.start()
 		$/root/Node3D/Motel2/Lamps_02_014/OmniLight3D.visible = false
-	if lighttimer == true:
+	if lighttimer == true and light_done == false:
 		$/root/Node3D/Motel2/Lamps_02_014/OmniLight3D.visible = true
 		$/root/Node3D/Motel2/Toilet_01_004/Bathroom/ShorterTime.start()
 		$/root/Node3D/BOBDEAD/BobHelp/HelpMeTimer.start()
 		lighttimer = false
+		light_done = true
 		$/root/Node3D/BOBDEAD.visible = true
-		$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = false
 		$/root/Node3D/Player/Task2/Timer.set_wait_time(0.1)
-		player.tasks = player.task7
+		if $/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D != null:
+			$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = false
+			player.tasks = player.task7
 	
 	
 	if player.in_store == true and player.tasks == player.task4 and donewithroomcheck == true and hasPlayedSound == false:
@@ -307,14 +312,25 @@ func _physics_process(delta) -> void:
 			
 	if Input.is_action_just_pressed("interact"):
 		if "note" in prompt.text:
-			$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = true
 			$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D.visible = false
 			DialogueManager.show_dialogue_balloon(load("res://Dialogue/HotelRoom.dialogue"), "note")
 			player.tasks = player.task8
 			$/root/Node3D/Player/ScaryAmb.play()
 			var red = Color(0.7, 0.0, 0.0, 1.0)
+			global.otherambient = true
 			$/root/Node3D/Player/Task2.set("modulate", red)
-
+			$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.free()
+			$/root/Node3D/Root_Scene/RootNode/basket_002/Key.visible = true
+			$/root/Node3D/Root_Scene/RootNode/basket_002/Key/CollisionShape3D.disabled = false
+			$/root/Node3D/Root_Scene/RootNode/basket_002/StaticBody3D/CollisionShape3D.disabled = true
+			
+	if Input.is_action_just_pressed("interact"):
+		if "Car" in prompt.text:
+			$/root/Node3D/Root_Scene/RootNode/basket_002/Key.visible = false
+			$/root/Node3D/Root_Scene/RootNode/basket_002/Key/CollisionShape3D.disabled = true
+			player.tasks = player.task9
+			DialogueManager.show_dialogue_balloon(load("res://Dialogue/HotelRoom.dialogue"), "run")
+			
 
 func _on_forest_sound_finished():
 		player.can_move = false
@@ -344,4 +360,10 @@ func _on_animated_sprite_3d_animation_finished():
 
 
 func _on_light_timeout():
+	if light_done == false:
 		lighttimer = true
+
+
+func _on_scary_amb_finished():
+	if global.otherambient == true:
+		$/root/Node3D/Player/ScaryAmb.play()

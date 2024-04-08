@@ -17,3 +17,9 @@ You: SHIT... WHAT WAS THAT?!
 Note: [shake rate=20 level=10] KEY HIDDEN IN THE BASKET! HURRY! [/shake]
 
 => END
+
+~ run
+
+You: [shake rate=20 level=15] I HAVE TO GO TO THE SHEAD OUTSIDE OR TO THE CAR!!!! [/shake]
+
+=> END
