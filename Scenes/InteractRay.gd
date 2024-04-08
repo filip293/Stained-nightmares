@@ -56,6 +56,7 @@ func _ready():
 	DP3C = $/root/Node3D/Root_Scene/RootNode/DustPatch/DP3/CollisionShape3D
 	$/root/Node3D/Motel2/TV_04_004/AnimatedSprite3D.play()
 	$/root/Node3D/BOBDEAD.visible = false
+	$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = true
 	
 # Called every frame
 func _process(delta):
@@ -99,8 +100,11 @@ func _process(delta):
 				first_short = true
 				short_lighttimer = false
 		if Bob_help == true and bobhelpplayed == false:
-			$/root/Node3D/BOBDEAD/BobHelp.play()
 			$/root/Node3D/BOBDEAD.visible = true
+			$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = false
+			$/root/Node3D/Player/Task2/Timer.set_wait_time(0.1)
+			$/root/Node3D/BOBDEAD/BobHelp.play()
+			player.tasks = player.task7
 			Bob_help = false
 			bobhelpplayed = true
 	
@@ -312,7 +316,14 @@ func _physics_process(delta) -> void:
 		
 		else:
 			$/root/Node3D/Player/MetlaSweep.pause()
-
+			
+	if Input.is_action_just_pressed("interact"):
+		if "note" in prompt.text:
+			$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = true
+			$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D.visible = false
+			DialogueManager.show_dialogue_balloon(load("res://Dialogue/HotelRoom.dialogue"), "note")
+			player.tasks = player.task8
+			$/root/Node3D/Player/ScaryAmb.play()
 
 func _on_forest_sound_finished():
 		player.can_move = false
