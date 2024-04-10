@@ -503,6 +503,9 @@ func _physics_process(delta) -> void:
 			$/root/Node3D/Truck/Truck/Truck.disabled = false
 			$/root/Node3D/Truck/StaticBody3D/CollisionShape3D.disabled = true
 			
+	if Input.is_action_just_pressed("interact"):
+		if "Bell" in prompt.text:
+			$/root/Node3D/Root_Scene/RootNode/counter_bell/AudioStreamPlayer3D.play()
 			
 	if Input.is_action_just_pressed("interact"):
 		if "Truck" in prompt.text:
