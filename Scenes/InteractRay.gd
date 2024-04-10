@@ -523,6 +523,7 @@ func _physics_process(delta) -> void:
 		ShedCutscene = true
 		player.can_move = false
 		$/root/Node3D/Shed/Ca/Camera3D.make_current()
+		$/root/Node3D/Shed/Ca/OutOfBreath.play()
 		$/root/Node3D/Shed/Ca/AnimationPlayer.play("ShedEnding")
 		GoingEnding3 = false
 	if animedone1 == true and DoneDone == false:
