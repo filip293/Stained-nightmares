@@ -8,24 +8,24 @@ You: Maybe he'll help me out.
 
 ~ forest
 
-You: SHIT... WHAT WAS THAT?!
+You: WHAT [wait=0.3]THE [wait=0.3]FUCK [wait=0.5]WAS THAT!?
 
 => END
 
 ~ note
 
-Note: [shake rate=20 level=7]GO TO THE LAUNDROMAT! KEY HIDDEN IN THE BASKET! HURRY! [/shake]
+Note: [shake rate=20 level=7]GO TO THE LAUNDROMAT! KEY HIDDEN IN BASKET! HURRY! [/shake]
 
 => END
 
 ~ run
 
-You: [shake rate=20 level=12] I HAVE TO GO TO THE SHEAD OUTSIDE OR TO THE TRUCK!!!! [/shake]
+You: [shake rate=20 level=12]I HAVE TO GO TO THE SHED OUTSIDE OR TO THE TRUCK!!!! [/shake]
 
 => END
 
 ~ end3
 
-You: [shake rate=20 level=10] I MADE IT! FEW! I WAS GONNA DIE! [wait=3] wait... what was that?! [/shake]
+You: [shake rate=20 level=10] I MADE IT! PHEW! I WAS GONNA DIE! [wait=3]Wait... What was that?! [/shake]
 
 => END
