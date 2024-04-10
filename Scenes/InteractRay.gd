@@ -13,7 +13,8 @@ extends RayCast3D
 var optim = {
 	"dialogue_started": [false, false, false],
 	"dialogue_done": [false, false, false],
-	"DustPatchClean": [false, false, false, false]
+	"DustPatchClean": [false, false, false, false],
+	"Ending": [false, false, false]
 }
 
 var DustPatch1Timer = 10 
@@ -58,6 +59,7 @@ var JupscareTimeDone := false
 var JumscareDone := false
 var DoneDone := false
 var ShedCutscene := false
+var EndingDone := false
 
 func _ready():
 	KEY.visible = false
@@ -160,6 +162,21 @@ func _process(delta):
 		if DustPatch3 != null:
 			$/root/Node3D/Root_Scene/RootNode/DustPatch/DP3/Sweeping.stop()
 		SoundSweepPlaying = false
+		
+	if optim["Ending"][1] == true:
+		$/root/Node3D/EndingScreen.visible = true
+		$/root/Node3D/EndingScreen/EndingText.text = "ENDING 2/3"
+		$/root/Node3D/Player/ScaryAmb.set_volume_db(-10)
+		player.tasks = ""
+		$/root/Node3D/TextureRect.visible = false
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		
+	if optim["Ending"][2] == true:
+		$/root/Node3D/EndingScreen.visible = true
+		$/root/Node3D/EndingScreen/EndingText.text = "ENDING 3/3"
+		$/root/Node3D/TextureRect.visible = false
+		player.tasks = ""
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	
 	if optim["DustPatchClean"][0] and optim["DustPatchClean"][1] and optim["DustPatchClean"][2] and !sweepfinish:
 				player.tasks = player.task4_2
@@ -382,7 +399,11 @@ func _physics_process(delta) -> void:
 			$/root/Node3D/Truck/Waitfordrive.start()
 	if WaitCar == true and alreadyplayerd == false:
 		$/root/Node3D/Truck/Drive.play()
+		$/root/Node3D/Truck/Ending.start()
 		alreadyplayerd = true
+		
+	if EndingDone == true:
+		optim["Ending"][1] = true
 
 	if GoingEnding3 == true:
 		ShedCutscene = true
@@ -456,3 +477,15 @@ func _on_animation_player_animation2_finished(TurnToMonster):
 
 func _on_timerJumpscare_timeout():
 	JupscareTimeDone = true
+
+
+func _on_jumpscare_finished():
+	optim["Ending"][2] = true
+
+
+func _on_buttonQuit_pressed():
+	get_tree().quit()
+
+
+func _on_ending_timeout():
+	EndingDone = true
