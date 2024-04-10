@@ -19,7 +19,6 @@ func _process(delta):
 			var detected_word = detected.get_prompt()
 			if detected_word == "Player" and on_screen == true and noise_playing == false:
 				noise_playing = true
-				print("Player detected")
 				noise.play()
 
 func _on_visible_on_screen_notifier_3d_screen_entered():

@@ -51,9 +51,6 @@ func _ready():
 	
 
 func _process(delta):
-	if monster_on_screen == true:
-		print("onscreen")
-	
 	if !Input.is_action_pressed("sprint") and sprintcooldown < 2:
 		sprintcooldown += 0.2
 
@@ -179,3 +176,4 @@ func _on_ambient_noise_finished():
 		$/root/Node3D/Player/AmbientNoise.play()
 		
 	pass # Replace with function body.
+

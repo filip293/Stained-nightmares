@@ -7,6 +7,8 @@ extends StaticBody3D
 
 var in_range: bool = false
 
+
+
 func get_prompt():
 	var key_name = ""
 	var input_list = InputMap.get_actions()

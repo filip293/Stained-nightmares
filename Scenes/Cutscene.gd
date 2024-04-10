@@ -1,5 +1,7 @@
 extends Node3D
 
+@onready var Player = $/root/Node3D/Player
+
 var intro: AudioStreamPlayer
 var Car1: AudioStreamPlayer
 var Car2: AudioStreamPlayer
@@ -14,6 +16,7 @@ var Crosshair: TextureRect
 var Title: Label
 
 func _ready():
+	Player.can_move = false
 	intro = $Scary
 	Car1 = $/root/Node3D/CarCutscene/CarGo
 	Car2 = $/root/Node3D/CarCutscene/Beep
@@ -31,6 +34,7 @@ func _process(delta):
 	pass
 
 func _on_button_pressed():
+	Player.can_move = true
 	MenuStatus = false
 	Title.visible = false
 	Car.make_current()

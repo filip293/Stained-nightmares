@@ -48,6 +48,16 @@ var Bob_help := false
 var first_time := true
 var SoundSweepPlaying := false
 var light_done := false
+var alreadyplayerd := false
+var WaitCar := false
+var GoingEnding3 := false
+var HasTruckKey := false
+var animedone1 := false
+var animedone2 := false
+var JupscareTimeDone := false
+var JumscareDone := false
+var DoneDone := false
+var ShedCutscene := false
 
 func _ready():
 	KEY.visible = false
@@ -68,6 +78,7 @@ func _ready():
 	$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = true
 	$/root/Node3D/Root_Scene/RootNode/basket_002/Key.visible = false
 	$/root/Node3D/Root_Scene/RootNode/basket_002/Key/CollisionShape3D.disabled = true
+	$/root/Node3D/Truck/Truck/Truck.disabled = true
 	
 # Called every frame
 func _process(delta):
@@ -77,7 +88,6 @@ func _process(delta):
 		prompt.text = ""
 	else:
 		return
-		
 	if is_colliding():
 		var detected = get_collider()
 		# Check if the detected object has the 'get_prompt' method
@@ -109,7 +119,6 @@ func _process(delta):
 			$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = false
 			player.tasks = player.task7
 	
-	
 	if player.in_store == true and player.tasks == player.task4 and donewithroomcheck == true and hasPlayedSound == false:
 		$/root/Node3D/Root_Scene/RootNode/DoorsWood_01/AudioStreamPlayer.play()
 		$/root/Node3D/Root_Scene/Label3D.visible = true
@@ -121,6 +130,8 @@ func _process(delta):
 		if GuyBob != null:
 			KEY.visible = true
 			GuyBob.free()
+	if ShedCutscene == true:
+		$/root/Node3D/Player/ScaryAmb.set_volume_db(-10)
 		
 	if "door" in prompt.text and havekey == true:
 		doorprompt.prompt_message = "Open door"
@@ -353,11 +364,41 @@ func _physics_process(delta) -> void:
 			
 	if Input.is_action_just_pressed("interact"):
 		if "Car" in prompt.text:
+			HasTruckKey = true
 			$/root/Node3D/Root_Scene/RootNode/basket_002/Key.visible = false
 			$/root/Node3D/Root_Scene/RootNode/basket_002/Key/CollisionShape3D.disabled = true
 			player.tasks = player.task9
 			DialogueManager.show_dialogue_balloon(load("res://Dialogue/HotelRoom.dialogue"), "run")
+			$/root/Node3D/Truck/Truck/Truck.disabled = false
+			$/root/Node3D/Truck/StaticBody3D/CollisionShape3D.disabled = true
 			
+			
+	if Input.is_action_just_pressed("interact"):
+		if "Truck" in prompt.text:
+			$/root/Node3D/Truck/GetIntoCar.play()
+			$/root/Node3D/Truck/Truck/Truck.disabled = true
+			$/root/Node3D/Player.visible = false
+			$/root/Node3D/Truck/TruckCamera.make_current()
+			$/root/Node3D/Truck/Waitfordrive.start()
+	if WaitCar == true and alreadyplayerd == false:
+		$/root/Node3D/Truck/Drive.play()
+		alreadyplayerd = true
+
+	if GoingEnding3 == true:
+		ShedCutscene = true
+		player.can_move = false
+		$/root/Node3D/Shed/Ca/Camera3D.make_current()
+		$/root/Node3D/Shed/Ca/AnimationPlayer.play("ShedEnding")
+		GoingEnding3 = false
+	if animedone1 == true and DoneDone == false:
+		DialogueManager.show_dialogue_balloon(load("res://Dialogue/HotelRoom.dialogue"), "end3")
+		DoneDone = true
+		await DialogueManager.dialogue_ended
+		$/root/Node3D/Shed/Ca/AnimationPlayer.play("TurnToMonster")
+		$/root/Node3D/Shed/Ca/Jumpscare/Timer.start()
+	if JupscareTimeDone == true and JumscareDone == false:
+		JumscareDone = true
+		$/root/Node3D/Shed/Ca/Jumpscare.play()
 
 func _on_forest_sound_finished():
 		player.can_move = false
@@ -394,3 +435,24 @@ func _on_light_timeout():
 func _on_scary_amb_finished():
 	if global.otherambient == true:
 		$/root/Node3D/Player/ScaryAmb.play()
+
+
+func _on_waitfordrive_timeout():
+	WaitCar = true
+
+
+func _on_area_3d_body_entered(body):
+	if HasTruckKey == true:
+		GoingEnding3 = true
+
+
+func _on_animation_player_animation_finished(ShedEnding):
+	animedone1 = true
+
+
+func _on_animation_player_animation2_finished(TurnToMonster):
+	animedone2 = true
+
+
+func _on_timerJumpscare_timeout():
+	JupscareTimeDone = true
