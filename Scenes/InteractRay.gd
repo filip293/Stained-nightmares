@@ -428,6 +428,7 @@ func _physics_process(delta) -> void:
 			if Input.is_action_just_pressed("interact"):
 				CoinKey.free()
 				coinkey = true
+				player.tasks = player.task7_2
 				
 		if Input.is_action_pressed("interact") and metla_inhand == true:
 			if "Clean up dust" in prompt.text:
