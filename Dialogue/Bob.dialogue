@@ -44,17 +44,20 @@ Bob: The floors are looking spotless, go ahead and leave the broom where you fou
 
 ~ finished_sweeping
 Bob: Wow, good job. The floors are looking spotless! 
-Bob: Next, could you go ahead and collect the coins from the machines? 
-Bob: There’s a key to the machines and a bucket for the coins behind me somewhere.
+Bob: Next, could you go ahead and collect the coins from the machines?
+set global.bobgiveskey = true
+Bob: Here's the key to the machines. 
+Bob: There’s a basket for the coins next to me.
+Bob: My back is hurting quite a bit, come to the back and get it yourself. 
 => END
 
 ~ wait2
 if global.bobannoyed <= 2
-	Bob: As I said, the bucket and keys are somewhere behind me, don't make me remind you again.
+	Bob: As I said, my back's hurting, I cannot assist you any further.
 	do global.bobannoyed += 1
 	=> END
 if global.bobannoyed >= 3 and global.bobannoyed <= 5
-	Bob: The bucket and keys are somewhere behind me, DON'T make me remind you again.
+	Bob: Listen here [[youngin|youngster|trickster]]. I can't help you out here.
 	do global.bobannoyed += 1
 	=> END
 if global.bobannoyed >= 6 and global.bobannoyed <= 10
@@ -62,5 +65,6 @@ if global.bobannoyed >= 6 and global.bobannoyed <= 10
 	do global.bobannoyed += 1
 	=> END
 if global.bobannoyed >= 11
-	Bob: insert angry bob noises here
+	Bob: ALRIGHT, I'VE HAD ENOUGH OF YA.
+	set global.bobshotgun = true
 	=> END

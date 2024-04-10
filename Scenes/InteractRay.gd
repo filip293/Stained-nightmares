@@ -7,6 +7,11 @@ extends RayCast3D
 @onready var metlacam = $/root/Node3D/Player/Metla
 @onready var metlabob = $/root/Node3D/Metla/Metla
 @onready var metlapromp = $/root/Node3D/Metla
+@onready var coinbasket = $/root/Node3D/Root_Scene/RootNode/CoinBasket
+@onready var coinbasketbob = $/root/Node3D/Root_Scene/RootNode/CoinBasket/CoinBasket
+@onready var coinbasketcam = $/root/Node3D/Player/CoinBasket
+@onready var coinbasketpromp = $/root/Node3D/Root_Scene/RootNode/CoinBasket
+@onready var coinbasketcoll = $/root/Node3D/Root_Scene/RootNode/CoinBasket/CollisionShape3D
 @onready var doorprompt = $/root/Node3D/Motel2/Door_02/Door
 @onready var KEY = $/root/Node3D/Key
 
@@ -27,13 +32,33 @@ var DP1C: CollisionShape3D
 var DP2C: CollisionShape3D
 var DP3C: CollisionShape3D
 var MC: CollisionShape3D
+var CoinKey: StaticBody3D
 var CBGV1: StaticBody3D
+var CBGV1_1: StaticBody3D
+var CBGV1_2: StaticBody3D
+var CBGV1_3: StaticBody3D
+var CBGV1_4: StaticBody3D
 var CBGV2: StaticBody3D
+var CBGV2_1: StaticBody3D
+var CBGV2_2: StaticBody3D
+var CBGV2_3: StaticBody3D
+var CBGV2_4: StaticBody3D
 var CBGV3: StaticBody3D
+var CBGV3_1: StaticBody3D
+var CBGV3_2: StaticBody3D
+var CBGV3_3: StaticBody3D
+var CBGV3_4: StaticBody3D
 var CBGV4: StaticBody3D
+var CBGV4_1: StaticBody3D
+var CBGV4_2: StaticBody3D
+var CBGV4_3: StaticBody3D
+var CBGV4_4: StaticBody3D
 var GuyBob: StaticBody3D
 var havekey := false
 var metla_inhand := false
+var coinbasket_inhand := false
+var coinkey := false
+var coinbasketfull := false
 var donewithroomcheck := false
 var route1 := false
 var freed := false
@@ -62,6 +87,7 @@ var ShedCutscene := false
 var EndingDone := false
 
 func _ready():
+	coinbasketcam.visible = false
 	KEY.visible = false
 	GuyBob = $/root/Node3D/Guy
 	$/root/Node3D/Root_Scene/Label3D.visible = false
@@ -72,9 +98,26 @@ func _ready():
 	DP2C = $/root/Node3D/Root_Scene/RootNode/DustPatch/DP2/CollisionShape3D
 	DP3C = $/root/Node3D/Root_Scene/RootNode/DustPatch/DP3/CollisionShape3D
 	CBGV1 = $/root/Node3D/Root_Scene/RootNode/Laundry_S/CBGV
+	CBGV1_1 = $/root/Node3D/Root_Scene/RootNode/Laundry_S/CBGV/CoinBatch1
+	CBGV1_2 = $/root/Node3D/Root_Scene/RootNode/Laundry_S/CBGV/CoinBatch2
+	CBGV1_3 = $/root/Node3D/Root_Scene/RootNode/Laundry_S/CBGV/CoinBatch3
+	CBGV1_4 = $/root/Node3D/Root_Scene/RootNode/Laundry_S/CBGV/CoinBatch4
 	CBGV2 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_001/CBGV
+	CBGV2_1 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_001/CBGV/CoinBatch1
+	CBGV2_2 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_001/CBGV/CoinBatch2
+	CBGV2_3 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_001/CBGV/CoinBatch3
+	CBGV2_4 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_001/CBGV/CoinBatch4
 	CBGV3 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_002/CBGV
+	CBGV3_1 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_002/CBGV/CoinBatch1
+	CBGV3_2 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_002/CBGV/CoinBatch2
+	CBGV3_3 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_002/CBGV/CoinBatch3
+	CBGV3_4 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_002/CBGV/CoinBatch4
 	CBGV4 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_003/CBGV
+	CBGV4_1 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_003/CBGV/CoinBatch1
+	CBGV4_2 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_003/CBGV/CoinBatch2
+	CBGV4_3 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_003/CBGV/CoinBatch3
+	CBGV4_4 = $/root/Node3D/Root_Scene/RootNode/Laundry_S_003/CBGV/CoinBatch4
+	CoinKey = $/root/Node3D/Key2
 	$/root/Node3D/Motel2/TV_04_004/AnimatedSprite3D.play()
 	$/root/Node3D/BOBDEAD.visible = false
 	$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.disabled = true
@@ -192,35 +235,83 @@ func _process(delta):
 		metlapromp.set_collision_layer_value(2, true)
 	else:
 		if DustPatch1 != null:
-			DustPatch1.set_collision_layer_value(3, true)
 			DustPatch1.set_collision_layer_value(2, false)
 		if DustPatch2 != null:
-			DustPatch2.set_collision_layer_value(3, true)
 			DustPatch2.set_collision_layer_value(2, false)
 		if DustPatch3 != null:
-			DustPatch3.set_collision_layer_value(3, true)
 			DustPatch3.set_collision_layer_value(2, false)
-		metlapromp.set_collision_layer_value(3, true)
 		metlapromp.set_collision_layer_value(2, false)
 		
+	if player.tasks == player.task6_2 or player.tasks == player.task5_2:
+		if CoinKey != null:
+			CoinKey.visible = true
+			await global.animdone
+			CoinKey.set_collision_layer_value(2, true)
+	else:
+		if CoinKey != null:
+			CoinKey.visible = false
+			CoinKey.set_collision_layer_value(2, false)
+	
 	if player.tasks == player.task7_2:
+		if coinbasketcoll != null:
+			coinbasket.set_collision_layer_value(2, true)
+	else:
+		if coinbasketcoll != null:
+			coinbasket.set_collision_layer_value(2, false)
+	
+	if coinkey and coinbasket_inhand:
+		player.tasks = player.task8_2
+		
+	if player.tasks == player.task8_2:
 		if CBGV1 != null:
 			CBGV1.visible = true
+			CBGV1_1.set_collision_layer_value(2, true)
+			CBGV1_2.set_collision_layer_value(2, true)
+			CBGV1_3.set_collision_layer_value(2, true)
+			CBGV1_4.set_collision_layer_value(2, true)
 		if CBGV2 != null:
 			CBGV2.visible = true
+			CBGV2_1.set_collision_layer_value(2, true)
+			CBGV2_2.set_collision_layer_value(2, true)
+			CBGV2_3.set_collision_layer_value(2, true)
+			CBGV2_4.set_collision_layer_value(2, true)
 		if CBGV3 != null:
 			CBGV3.visible = true
+			CBGV3_1.set_collision_layer_value(2, true)
+			CBGV3_2.set_collision_layer_value(2, true)
+			CBGV3_3.set_collision_layer_value(2, true)
+			CBGV3_4.set_collision_layer_value(2, true)
 		if CBGV4 != null:
 			CBGV4.visible = true
+			CBGV4_1.set_collision_layer_value(2, true)
+			CBGV4_2.set_collision_layer_value(2, true)
+			CBGV4_3.set_collision_layer_value(2, true)
+			CBGV4_4.set_collision_layer_value(2, true)
 	else:
 		if CBGV1 != null:
 			CBGV1.visible = false
+			CBGV1_1.set_collision_layer_value(2, false)
+			CBGV1_2.set_collision_layer_value(2, false)
+			CBGV1_3.set_collision_layer_value(2, false)
+			CBGV1_4.set_collision_layer_value(2, false)
 		if CBGV2 != null:
 			CBGV2.visible = false
+			CBGV2_1.set_collision_layer_value(2, false)
+			CBGV2_2.set_collision_layer_value(2, false)
+			CBGV2_3.set_collision_layer_value(2, false)
+			CBGV2_4.set_collision_layer_value(2, false)
 		if CBGV3 != null:
 			CBGV3.visible = false
+			CBGV3_1.set_collision_layer_value(2, false)
+			CBGV3_2.set_collision_layer_value(2, false)
+			CBGV3_3.set_collision_layer_value(2, false)
+			CBGV3_4.set_collision_layer_value(2, false)
 		if CBGV4 != null:
 			CBGV4.visible = false
+			CBGV4_1.set_collision_layer_value(2, false)
+			CBGV4_2.set_collision_layer_value(2, false)
+			CBGV4_3.set_collision_layer_value(2, false)
+			CBGV4_4.set_collision_layer_value(2, false)
 				
 func _physics_process(delta) -> void:
 	if is_colliding():
@@ -314,6 +405,29 @@ func _physics_process(delta) -> void:
 				metlapromp.prompt_message = "Pick up broom"
 				if sweepfinish:
 					player.tasks = player.task5_2
+		
+		if "Grab coin basket" in prompt.text:
+			if Input.is_action_just_pressed("interact"):
+				coinbasketbob.visible = false
+				coinbasketcam.visible = true
+				coinbasket_inhand = true
+				coinbasketpromp.prompt_message = "Leave coin basket"
+		
+		if "Leave coin basket" in prompt.text:
+			if Input.is_action_just_pressed("interact"):
+				coinbasketbob.visible = true
+				coinbasketcam.visible = false
+				coinbasket_inhand = false
+				if coinbasketfull:
+					if coinbasketcoll != null:
+						coinbasketcoll.free()
+				elif !coinbasketfull:
+					coinbasketpromp.prompt_message = "Grab coin basket"
+		
+		if "Grab kеy" in prompt.text:
+			if Input.is_action_just_pressed("interact"):
+				CoinKey.free()
+				coinkey = true
 				
 		if Input.is_action_pressed("interact") and metla_inhand == true:
 			if "Clean up dust" in prompt.text:
