@@ -25,7 +25,7 @@ func _process(delta):
 	if in_car and Input.is_action_pressed("interact") and Cutscene.MenuStatus == false:
 		Player.make_current()
 		in_car = false
-		#Crosshair.visible = true
+		Crosshair.visible = true
 		prompt.text = ""
 		Player2.tasks = "Task 1:" + "\n Go to the laundromat"
 
