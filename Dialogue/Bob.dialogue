@@ -68,3 +68,7 @@ if global.bobannoyed >= 11
 	Bob: ALRIGHT, I'VE HAD ENOUGH OF YA.
 	set global.bobshotgun = true
 	=> END
+
+~ wait3
+Bob: The basket ain't gonna fill itself youngin. 
+=> END

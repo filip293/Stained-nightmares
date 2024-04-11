@@ -22,7 +22,7 @@ var optim = {
 	"DustPatchClean": [false, false, false, false],
 	"Ending": [false, false, false]
 }
-
+var CBCounter = 0
 var DustPatch1Timer = 10 
 var DustPatch2Timer = 20
 var DustPatch3Timer = 12
@@ -86,6 +86,7 @@ var JumscareDone := false
 var DoneDone := false
 var ShedCutscene := false
 var EndingDone := false
+var runonce := false
 
 func _ready():
 	coinbasketcam.visible = false
@@ -172,7 +173,6 @@ func _process(delta):
 		$/root/Node3D/Root_Scene/RootNode/DoorsWood_01/AudioStreamPlayer.play()
 		$/root/Node3D/Root_Scene/Label3D.visible = true
 		hasPlayedSound = true
-
 	if donewithroomcheck == false and "Key" in prompt.text:
 		prompt.text = ""
 	elif donewithroomcheck == true:
@@ -229,6 +229,9 @@ func _process(delta):
 				player.tasks = player.task4_2
 				sweepfinish = true
 	
+	if player.tasks == player.task8_2 and CBCounter == 16:
+		player.tasks = player.task9_2
+	
 	if player.tasks == player.task3_2 or player.tasks == player.task4_2:
 		if DustPatch1 != null:
 			DustPatch1.set_collision_layer_value(2, true)
@@ -249,7 +252,6 @@ func _process(delta):
 	if player.tasks == player.task6_2 or player.tasks == player.task5_2:
 		if CoinKey != null:
 			CoinKey.visible = true
-			await global.animdone
 			CoinKey.set_collision_layer_value(2, true)
 	else:
 		if CoinKey != null:
@@ -269,53 +271,85 @@ func _process(delta):
 	if player.tasks == player.task8_2:
 		if CBGV1 != null:
 			CBGV1.visible = true
-			CBGV1_1.set_collision_layer_value(2, true)
-			CBGV1_2.set_collision_layer_value(2, true)
-			CBGV1_3.set_collision_layer_value(2, true)
-			CBGV1_4.set_collision_layer_value(2, true)
+			if CBGV1_1 != null:
+				CBGV1_1.set_collision_layer_value(2, true)
+			if CBGV1_2 != null:
+				CBGV1_2.set_collision_layer_value(2, true)
+			if CBGV1_3 != null:
+				CBGV1_3.set_collision_layer_value(2, true)
+			if CBGV1_4 != null:
+				CBGV1_4.set_collision_layer_value(2, true)
 		if CBGV2 != null:
 			CBGV2.visible = true
-			CBGV2_1.set_collision_layer_value(2, true)
-			CBGV2_2.set_collision_layer_value(2, true)
-			CBGV2_3.set_collision_layer_value(2, true)
-			CBGV2_4.set_collision_layer_value(2, true)
+			if CBGV2_1 != null:
+				CBGV2_1.set_collision_layer_value(2, true)
+			if CBGV2_2 != null:
+				CBGV2_2.set_collision_layer_value(2, true)
+			if CBGV2_3 != null:
+				CBGV2_3.set_collision_layer_value(2, true)
+			if CBGV2_4 != null:
+				CBGV2_4.set_collision_layer_value(2, true)
 		if CBGV3 != null:
 			CBGV3.visible = true
-			CBGV3_1.set_collision_layer_value(2, true)
-			CBGV3_2.set_collision_layer_value(2, true)
-			CBGV3_3.set_collision_layer_value(2, true)
-			CBGV3_4.set_collision_layer_value(2, true)
+			if CBGV3_1 != null:
+				CBGV3_1.set_collision_layer_value(2, true)
+			if CBGV3_2 != null:
+				CBGV3_2.set_collision_layer_value(2, true)
+			if CBGV3_3 != null:
+				CBGV3_3.set_collision_layer_value(2, true)
+			if CBGV3_4 != null:
+				CBGV3_4.set_collision_layer_value(2, true)
 		if CBGV4 != null:
 			CBGV4.visible = true
-			CBGV4_1.set_collision_layer_value(2, true)
-			CBGV4_2.set_collision_layer_value(2, true)
-			CBGV4_3.set_collision_layer_value(2, true)
-			CBGV4_4.set_collision_layer_value(2, true)
+			if CBGV4_1 != null:
+				CBGV4_1.set_collision_layer_value(2, true)
+			if CBGV4_2 != null:
+				CBGV4_2.set_collision_layer_value(2, true)
+			if CBGV4_3 != null:
+				CBGV4_3.set_collision_layer_value(2, true)
+			if CBGV4_4 != null:
+				CBGV4_4.set_collision_layer_value(2, true)
 	else:
 		if CBGV1 != null:
 			CBGV1.visible = false
-			CBGV1_1.set_collision_layer_value(2, false)
-			CBGV1_2.set_collision_layer_value(2, false)
-			CBGV1_3.set_collision_layer_value(2, false)
-			CBGV1_4.set_collision_layer_value(2, false)
+			if CBGV1_1 != null:
+				CBGV1_1.set_collision_layer_value(2, false)
+			if CBGV1_2 != null:
+				CBGV1_2.set_collision_layer_value(2, false)
+			if CBGV1_3 != null:
+				CBGV1_3.set_collision_layer_value(2, false)
+			if CBGV1_4 != null:
+				CBGV1_4.set_collision_layer_value(2, false)
 		if CBGV2 != null:
 			CBGV2.visible = false
-			CBGV2_1.set_collision_layer_value(2, false)
-			CBGV2_2.set_collision_layer_value(2, false)
-			CBGV2_3.set_collision_layer_value(2, false)
-			CBGV2_4.set_collision_layer_value(2, false)
+			if CBGV2_1 != null:
+				CBGV2_1.set_collision_layer_value(2, false)
+			if CBGV2_2 != null:
+				CBGV2_2.set_collision_layer_value(2, false)
+			if CBGV2_3 != null:
+				CBGV2_3.set_collision_layer_value(2, false)
+			if CBGV2_4 != null:
+				CBGV2_4.set_collision_layer_value(2, false)
 		if CBGV3 != null:
 			CBGV3.visible = false
-			CBGV3_1.set_collision_layer_value(2, false)
-			CBGV3_2.set_collision_layer_value(2, false)
-			CBGV3_3.set_collision_layer_value(2, false)
-			CBGV3_4.set_collision_layer_value(2, false)
+			if CBGV3_1 != null:
+				CBGV3_1.set_collision_layer_value(2, false)
+			if CBGV3_2 != null:
+				CBGV3_2.set_collision_layer_value(2, false)
+			if CBGV3_3 != null:
+				CBGV3_3.set_collision_layer_value(2, false)
+			if CBGV3_4 != null:
+				CBGV3_4.set_collision_layer_value(2, false)
 		if CBGV4 != null:
 			CBGV4.visible = false
-			CBGV4_1.set_collision_layer_value(2, false)
-			CBGV4_2.set_collision_layer_value(2, false)
-			CBGV4_3.set_collision_layer_value(2, false)
-			CBGV4_4.set_collision_layer_value(2, false)
+			if CBGV4_1 != null:
+				CBGV4_1.set_collision_layer_value(2, false)
+			if CBGV4_2 != null:
+				CBGV4_2.set_collision_layer_value(2, false)
+			if CBGV4_3 != null:
+				CBGV4_3.set_collision_layer_value(2, false)
+			if CBGV4_4 != null:
+				CBGV4_4.set_collision_layer_value(2, false)
 				
 func _physics_process(delta) -> void:
 	if is_colliding():
@@ -384,6 +418,16 @@ func _physics_process(delta) -> void:
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 					player.can_move = true
 				
+				elif optim["dialogue_done"][1] and player.tasks == player.task8_2 and !dip:
+					dip = true
+					player.can_move = false
+					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+					$/root/Node3D/Player/Neck/AnimationPlayer.stop()
+					DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "wait3")
+					await DialogueManager.dialogue_ended
+					dip = false
+					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+					player.can_move = true
 				else:
 					pass
 		
@@ -401,13 +445,72 @@ func _physics_process(delta) -> void:
 				metla_inhand = true
 				metlapromp.prompt_message = "Leave the broom"
 				
-		if "Pick up coins" in prompt.text and "CB1" in OBJ_ID.text:
+		if "Pick up coins" in prompt.text:
 			if Input.is_action_just_pressed("interact"):
-				metlabob.visible = false
-				metlacam.visible = true
-				metla_inhand = true
-				metlapromp.prompt_message = "Leave the broom"
-		
+				if OBJ_ID.text == "CB1":
+					if CBGV1_1 != null:
+						CBGV1_1.free()
+					CBCounter += 1
+				if OBJ_ID.text == "CB2":
+					if CBGV1_2 != null:
+						CBGV1_2.free()
+					CBCounter += 1
+				if OBJ_ID.text == "CB3":
+					if CBGV1_3 != null:
+						CBGV1_3.free()
+					CBCounter += 1
+				if OBJ_ID.text == "CB4":
+					if CBGV1_4 != null:
+						CBGV1_4.free()
+					CBCounter += 1
+				if OBJ_ID.text == "CB5":
+					if CBGV2_1 != null:
+						CBGV2_1.free()
+					CBCounter += 1
+				if OBJ_ID.text == "CB6":
+					if CBGV2_2 != null:
+						CBGV2_2.free()
+					CBCounter += 1
+				if OBJ_ID.text == "CB7":
+					if CBGV2_3 != null:
+						CBGV2_3.free()
+					CBCounter += 1
+				if OBJ_ID.text == "CB8":
+					if CBGV2_4 != null:
+						CBGV2_4.free()
+					CBCounter += 1
+				if OBJ_ID.text == "CB9":
+					if CBGV3_1 != null:
+						CBGV3_1.free()
+					CBCounter += 1
+				if OBJ_ID.text == "CB10":
+					if CBGV3_2 != null:
+						CBGV3_2.free()
+					CBCounter += 1
+				if OBJ_ID.text == "CB11":
+					if CBGV3_3 != null:
+						CBGV3_3.free()
+					CBCounter += 1
+				if OBJ_ID.text == "CB12":
+					if CBGV3_4 != null:
+						CBGV3_4.free()
+					CBCounter += 1
+				if OBJ_ID.text == "CB13":
+					if CBGV4_1 != null:
+						CBGV4_1.free()
+					CBCounter += 1
+				if OBJ_ID.text == "CB14":
+					if CBGV4_2 != null:
+						CBGV4_2.free()
+					CBCounter += 1
+				if OBJ_ID.text == "CB15":
+					if CBGV4_3 != null:
+						CBGV4_3.free()
+					CBCounter += 1
+				if OBJ_ID.text == "CB16":
+					if CBGV4_4 != null:
+						CBGV4_4.free()
+					CBCounter += 1
 		if "Leave the broom" in prompt.text:
 			if Input.is_action_just_pressed("interact"):
 				metlabob.visible = true
@@ -444,50 +547,41 @@ func _physics_process(delta) -> void:
 		if Input.is_action_pressed("interact") and metla_inhand == true:
 			if "Clean up dust" in prompt.text:
 				$/root/Node3D/Player/MetlaSweep.play("Sweep")
-				if !SoundSweepPlaying:
-					$/root/Node3D/Root_Scene/RootNode/DustPatch/DP1/Sweeping.play()
-					SoundSweepPlaying = true
-				DustPatch1Timer -= 0.05
-				if DustPatch1Timer < 0.1:
-					if DustPatch1 != null and optim["DustPatchClean"][0] == false:
-						optim["DustPatchClean"][0] = true
-						$/root/Node3D/Root_Scene/RootNode/DustPatch/DP1/Sweeping.stop()
-						$/root/Node3D/Player/MetlaSweep.stop()
-						DustPatch1.free()
-						
+				if "DP1" in OBJ_ID.text:
+					if !SoundSweepPlaying:
+						$/root/Node3D/Root_Scene/RootNode/DustPatch/DP1/Sweeping.play()
+						SoundSweepPlaying = true
+					DustPatch1Timer -= 0.05
+					if DustPatch1Timer < 0.1:
+						if DustPatch1 != null and optim["DustPatchClean"][0] == false:
+							$/root/Node3D/Root_Scene/RootNode/DustPatch/DP1/Sweeping.stop()
+							$/root/Node3D/Player/MetlaSweep.stop()
+							DustPatch1.free()
+							optim["DustPatchClean"][0] = true
+				if "DP2" in OBJ_ID.text:
+					if !SoundSweepPlaying:
+						$/root/Node3D/Root_Scene/RootNode/DustPatch/DP2/Sweeping.play()
+						SoundSweepPlaying = true
+					DustPatch2Timer -= 0.05
+					if DustPatch2Timer < 0.1:
+						if DustPatch2 != null and optim["DustPatchClean"][1] == false:
+							$/root/Node3D/Root_Scene/RootNode/DustPatch/DP2/Sweeping.stop()
+							$/root/Node3D/Player/MetlaSweep.stop()
+							DustPatch2.free()
+							optim["DustPatchClean"][1] = true
+				if "DP3" in OBJ_ID.text:
+					if !SoundSweepPlaying:
+						$/root/Node3D/Root_Scene/RootNode/DustPatch/DP3/Sweeping.play()
+						SoundSweepPlaying = true
+					DustPatch3Timer -= 0.05
+					if DustPatch3Timer < 0.1:
+						if DustPatch3 != null and optim["DustPatchClean"][2] == false:
+							$/root/Node3D/Root_Scene/RootNode/DustPatch/DP3/Sweeping.stop()
+							$/root/Node3D/Player/MetlaSweep.stop()
+							DustPatch3.free()
+							optim["DustPatchClean"][2] = true
 				else:
 					pass
-			
-			elif "Clеan up dust" in prompt.text:
-				$/root/Node3D/Player/MetlaSweep.play("Sweep")
-				if !SoundSweepPlaying:
-					$/root/Node3D/Root_Scene/RootNode/DustPatch/DP2/Sweeping.play()
-					SoundSweepPlaying = true
-				DustPatch2Timer -= 0.05
-				if DustPatch2Timer < 0.1:
-					if DustPatch2 != null and optim["DustPatchClean"][1] == false:
-						$/root/Node3D/Root_Scene/RootNode/DustPatch/DP2/Sweeping.stop()
-						$/root/Node3D/Player/MetlaSweep.stop()
-						DustPatch2.free()
-						optim["DustPatchClean"][1] = true
-				else:
-					pass
-			
-			elif "Clеаn up dust" in prompt.text:
-				$/root/Node3D/Player/MetlaSweep.play("Sweep")
-				if !SoundSweepPlaying:
-					$/root/Node3D/Root_Scene/RootNode/DustPatch/DP3/Sweeping.play()
-					SoundSweepPlaying = true
-				DustPatch3Timer -= 0.05
-				if DustPatch3Timer < 0.1:
-					if DustPatch3 != null and optim["DustPatchClean"][2] == false:
-						$/root/Node3D/Root_Scene/RootNode/DustPatch/DP3/Sweeping.stop()
-						$/root/Node3D/Player/MetlaSweep.stop()
-						DustPatch3.free()
-						optim["DustPatchClean"][2] = true
-				else:
-					pass
-		
 		else:
 			$/root/Node3D/Player/MetlaSweep.pause()
 			
