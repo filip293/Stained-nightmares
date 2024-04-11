@@ -14,6 +14,7 @@ extends RayCast3D
 @onready var coinbasketcoll = $/root/Node3D/Root_Scene/RootNode/CoinBasket/CollisionShape3D
 @onready var doorprompt = $/root/Node3D/Motel2/Door_02/Door
 @onready var KEY = $/root/Node3D/Key
+@onready var OBJ_ID = $/root/Node3D/CarCutscene/OBJ_ID
 
 var optim = {
 	"dialogue_started": [false, false, false],
@@ -138,7 +139,10 @@ func _process(delta):
 		# Check if the detected object has the 'get_prompt' method
 		if detected and detected.has_method("get_prompt"):
 			prompt.text = detected.get_prompt()
-			
+		
+		if detected and detected.has_method("get_object"):
+			OBJ_ID.text = detected.get_object()
+	
 	if global.route == "BOB":
 		route1 = true
 		if route1 == true and freed == false:
@@ -391,6 +395,13 @@ func _physics_process(delta) -> void:
 					$/root/Node3D/Motel2/Door_02/Door/CollisionShape3D.free()
 		
 		if "Pick up broom" in prompt.text:
+			if Input.is_action_just_pressed("interact"):
+				metlabob.visible = false
+				metlacam.visible = true
+				metla_inhand = true
+				metlapromp.prompt_message = "Leave the broom"
+				
+		if "Pick up coins" in prompt.text and "CB1" in OBJ_ID.text:
 			if Input.is_action_just_pressed("interact"):
 				metlabob.visible = false
 				metlacam.visible = true
