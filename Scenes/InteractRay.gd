@@ -22,7 +22,9 @@ var optim = {
 	"DustPatchClean": [false, false, false, false],
 	"Ending": [false, false, false]
 }
-var CBCounter = 0
+
+var donegoofed = 0.3
+var GenCBTimer = 1.7
 var DustPatch1Timer = 10 
 var DustPatch2Timer = 20
 var DustPatch3Timer = 12
@@ -56,6 +58,7 @@ var CBGV4_3: StaticBody3D
 var CBGV4_4: StaticBody3D
 var GuyBob: StaticBody3D
 var havekey := false
+var soundemptyingplaying := false
 var metla_inhand := false
 var coinbasket_inhand := false
 var coinkey := false
@@ -87,6 +90,7 @@ var DoneDone := false
 var ShedCutscene := false
 var EndingDone := false
 var runonce := false
+var broken := false
 
 func _ready():
 	coinbasketcam.visible = false
@@ -229,9 +233,6 @@ func _process(delta):
 				player.tasks = player.task4_2
 				sweepfinish = true
 	
-	if player.tasks == player.task8_2 and CBCounter == 16:
-		player.tasks = player.task9_2
-	
 	if player.tasks == player.task3_2 or player.tasks == player.task4_2:
 		if DustPatch1 != null:
 			DustPatch1.set_collision_layer_value(2, true)
@@ -258,14 +259,14 @@ func _process(delta):
 			CoinKey.visible = false
 			CoinKey.set_collision_layer_value(2, false)
 	
-	if player.tasks == player.task7_2:
+	if player.tasks == player.task7_2 or player.tasks == player.task10_2:
 		if coinbasketcoll != null:
 			coinbasket.set_collision_layer_value(2, true)
 	else:
 		if coinbasketcoll != null:
 			coinbasket.set_collision_layer_value(2, false)
 	
-	if coinkey and coinbasket_inhand:
+	if coinkey and coinbasket_inhand and !coinbasketfull:
 		player.tasks = player.task8_2
 		
 	if player.tasks == player.task8_2:
@@ -446,71 +447,192 @@ func _physics_process(delta) -> void:
 				metlapromp.prompt_message = "Leave the broom"
 				
 		if "Pick up coins" in prompt.text:
-			if Input.is_action_just_pressed("interact"):
+			if Input.is_action_pressed("interact"):
 				if OBJ_ID.text == "CB1":
-					if CBGV1_1 != null:
-						CBGV1_1.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Player/CoinBasket/Empty.play()
+						soundemptyingplaying = true
+					GenCBTimer -= 0.05
+					if GenCBTimer < 0.1:
+						if CBGV1_1 != null:
+							$/root/Node3D/Player/CoinBasket/Empty.stop()
+							soundemptyingplaying = false
+							CBGV1_1.free()
+							GenCBTimer = 1.7
 				if OBJ_ID.text == "CB2":
-					if CBGV1_2 != null:
-						CBGV1_2.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Player/CoinBasket/Empty.play()
+						soundemptyingplaying = true
+					GenCBTimer -= 0.05
+					if GenCBTimer < 0.1:
+						if CBGV1_2 != null:
+							$/root/Node3D/Player/CoinBasket/Empty.stop()
+							soundemptyingplaying = false
+							CBGV1_2.free()
+							GenCBTimer = 1.7
 				if OBJ_ID.text == "CB3":
-					if CBGV1_3 != null:
-						CBGV1_3.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Player/CoinBasket/Empty.play()
+						soundemptyingplaying = true
+					GenCBTimer -= 0.05
+					if GenCBTimer < 0.1:
+						if CBGV1_3 != null:
+							$/root/Node3D/Player/CoinBasket/Empty.stop()
+							soundemptyingplaying = false
+							CBGV1_3.free()
+							GenCBTimer = 1.7
 				if OBJ_ID.text == "CB4":
-					if CBGV1_4 != null:
-						CBGV1_4.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Player/CoinBasket/Empty.play()
+						soundemptyingplaying = true
+					GenCBTimer -= 0.05
+					if GenCBTimer < 0.1:
+						if CBGV1_4 != null:
+							$/root/Node3D/Player/CoinBasket/Empty.stop()
+							soundemptyingplaying = false
+							CBGV1_4.free()
+							GenCBTimer = 1.7
 				if OBJ_ID.text == "CB5":
-					if CBGV2_1 != null:
-						CBGV2_1.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Player/CoinBasket/Empty.play()
+						soundemptyingplaying = true
+					GenCBTimer -= 0.05
+					if GenCBTimer < 0.1:
+						if CBGV2_1 != null:
+							$/root/Node3D/Player/CoinBasket/Empty.stop()
+							soundemptyingplaying = false
+							CBGV2_1.free()
+							GenCBTimer = 1.7
 				if OBJ_ID.text == "CB6":
-					if CBGV2_2 != null:
-						CBGV2_2.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Root_Scene/RootNode/Laundry_S_001/CBGV/CoinBatch2/Bang.play()
+						soundemptyingplaying = true
+					donegoofed -= 0.02
+					if donegoofed < 0.1 and !broken:
+						broken = true
+						CBGV2_2.prompt_message = "Coin stash jammed"
+						if GuyBob != null:
+							GuyBob.free()
+						player.can_move = false
+						DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "bob_gone")
+						$/root/Node3D/Player/Neck/AnimationPlayer2.play("bobgone")
+						print ("1")
+						await DialogueManager.dialogue_ended
+						player.can_move = true
+						print ("2")
+						player.tasks = player.task9_2
 				if OBJ_ID.text == "CB7":
-					if CBGV2_3 != null:
-						CBGV2_3.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Player/CoinBasket/Empty.play()
+						soundemptyingplaying = true
+					GenCBTimer -= 0.05
+					if GenCBTimer < 0.1:
+						if CBGV2_3 != null:
+							$/root/Node3D/Player/CoinBasket/Empty.stop()
+							soundemptyingplaying = false
+							CBGV2_3.free()
+							GenCBTimer = 1.7
 				if OBJ_ID.text == "CB8":
-					if CBGV2_4 != null:
-						CBGV2_4.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Player/CoinBasket/Empty.play()
+						soundemptyingplaying = true
+					GenCBTimer -= 0.05
+					if GenCBTimer < 0.1:
+						if CBGV2_4 != null:
+							$/root/Node3D/Player/CoinBasket/Empty.stop()
+							soundemptyingplaying = false
+							CBGV2_4.free()
+							GenCBTimer = 1.7
 				if OBJ_ID.text == "CB9":
-					if CBGV3_1 != null:
-						CBGV3_1.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Player/CoinBasket/Empty.play()
+						soundemptyingplaying = true
+					GenCBTimer -= 0.05
+					if GenCBTimer < 0.1:
+						if CBGV3_1 != null:
+							$/root/Node3D/Player/CoinBasket/Empty.stop()
+							soundemptyingplaying = false
+							CBGV3_1.free()
+							GenCBTimer = 1.7
 				if OBJ_ID.text == "CB10":
-					if CBGV3_2 != null:
-						CBGV3_2.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Player/CoinBasket/Empty.play()
+						soundemptyingplaying = true
+					GenCBTimer -= 0.05
+					if GenCBTimer < 0.1:
+						if CBGV2_4 != null:
+							$/root/Node3D/Player/CoinBasket/Empty.stop()
+							soundemptyingplaying = false
+							CBGV3_2.free()
+							GenCBTimer = 1.7
 				if OBJ_ID.text == "CB11":
-					if CBGV3_3 != null:
-						CBGV3_3.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Player/CoinBasket/Empty.play()
+						soundemptyingplaying = true
+					GenCBTimer -= 0.05
+					if GenCBTimer < 0.1:
+						if CBGV3_3 != null:
+							$/root/Node3D/Player/CoinBasket/Empty.stop()
+							soundemptyingplaying = false
+							CBGV3_3.free()
+							GenCBTimer = 1.7
 				if OBJ_ID.text == "CB12":
-					if CBGV3_4 != null:
-						CBGV3_4.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Player/CoinBasket/Empty.play()
+						soundemptyingplaying = true
+					GenCBTimer -= 0.05
+					if GenCBTimer < 0.1:
+						if CBGV3_4 != null:
+							$/root/Node3D/Player/CoinBasket/Empty.stop()
+							soundemptyingplaying = false
+							CBGV3_4.free()
+							GenCBTimer = 1.7
 				if OBJ_ID.text == "CB13":
-					if CBGV4_1 != null:
-						CBGV4_1.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Player/CoinBasket/Empty.play()
+						soundemptyingplaying = true
+					GenCBTimer -= 0.05
+					print(GenCBTimer) 
+					if GenCBTimer < 0.1:
+						if CBGV4_1 != null:
+							$/root/Node3D/Player/CoinBasket/Empty.stop()
+							soundemptyingplaying = false
+							CBGV4_1.free()
+							GenCBTimer = 1.7
 				if OBJ_ID.text == "CB14":
-					if CBGV4_2 != null:
-						CBGV4_2.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Player/CoinBasket/Empty.play()
+						soundemptyingplaying = true
+					GenCBTimer -= 0.05
+					if GenCBTimer < 0.1:
+						if CBGV4_2 != null:
+							$/root/Node3D/Player/CoinBasket/Empty.stop()
+							soundemptyingplaying = false
+							CBGV4_2.free()
+							GenCBTimer = 1.7
 				if OBJ_ID.text == "CB15":
-					if CBGV4_3 != null:
-						CBGV4_3.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Player/CoinBasket/Empty.play()
+						soundemptyingplaying = true
+					GenCBTimer -= 0.05
+					if GenCBTimer < 0.1:
+						if CBGV4_3 != null:
+							$/root/Node3D/Player/CoinBasket/Empty.stop()
+							soundemptyingplaying = false
+							CBGV4_3.free()
+							GenCBTimer = 1.7
 				if OBJ_ID.text == "CB16":
-					if CBGV4_4 != null:
-						CBGV4_4.free()
-					CBCounter += 1
+					if !soundemptyingplaying:
+						$/root/Node3D/Player/CoinBasket/Empty.play()
+						soundemptyingplaying = true
+					GenCBTimer -= 0.05
+					if GenCBTimer < 0.1:
+						if CBGV4_4 != null:
+							$/root/Node3D/Player/CoinBasket/Empty.stop()
+							soundemptyingplaying = false
+							CBGV4_4.free()
+							GenCBTimer = 1.7
+		
 		if "Leave the broom" in prompt.text:
 			if Input.is_action_just_pressed("interact"):
 				metlabob.visible = true
@@ -535,6 +657,7 @@ func _physics_process(delta) -> void:
 				if coinbasketfull:
 					if coinbasketcoll != null:
 						coinbasketcoll.free()
+					player.tasks = player.task11_2
 				elif !coinbasketfull:
 					coinbasketpromp.prompt_message = "Grab coin basket"
 		
@@ -709,7 +832,6 @@ func _on_jumpscare_finished():
 
 func _on_buttonQuit_pressed():
 	get_tree().quit()
-
 
 func _on_ending_timeout():
 	EndingDone = true

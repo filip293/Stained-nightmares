@@ -42,7 +42,9 @@ var task7_2 = "Task 7: \n Get the basket"
 var task8 = "Task 8: \n Get the keys"
 var task8_2 = "Task 8: \n Empty the coin collectors"
 var task9 = "Task 9: \n RUN"
-var task9_2 = "Task 9: \n Find Bob"
+var task9_2 = "Task 9: \n Read the note Bob left"
+var task10_2 = "Task 10: \n Leave the coin basket"
+var task11_2 = "Task 11: \n idk man"
 
 func _ready():
 	sprint_cooldown_bar = $/root/Node3D/Player/sprint_cooldown_bar

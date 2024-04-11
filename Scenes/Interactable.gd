@@ -5,6 +5,7 @@ extends StaticBody3D
 @export var prompt_message = "Interactable"
 @export var prompt_action = "interact"
 @export var prompt_object = "obj"
+
 @onready var labelidentifier := $/root/Node3D/CarCutscene/OBJ_ID
 var in_range: bool = false
 

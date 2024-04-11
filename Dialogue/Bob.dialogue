@@ -72,3 +72,8 @@ if global.bobannoyed >= 11
 ~ wait3
 Bob: The basket ain't gonna fill itself youngin. 
 => END
+
+~ bob_gone
+You: What the? [next=1]
+You: Hey [[old man|Bob]], [wait=1]damn it, where is he now?
+=> END
