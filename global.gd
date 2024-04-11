@@ -18,6 +18,7 @@ func _ready():
 	var Bobanimplayer = $/root/Node3D/Guy/Bob/AnimationPlayer
 	var Keyanim = $/root/Node3D/Key2/AnimationPlayer
 	var Keyanimtimer = $/root/Node3D/Key2/Timer
+	$/root/Node3D/Guy/Shotgun_12.visible = false
 	pass # Replace with function body.
 
 
@@ -32,4 +33,7 @@ func _process(delta):
 	
 	if bobshotgun and !runonce2:
 		runonce2 = true
-		Bobanimplayer.play("shotgun")
+		#Bobanimplayer.play("shotgun")
+		
+		$/root/Node3D/Guy/Shotgun_12.visible = true
+		$/root/Node3D/Guy/Pow.play()
