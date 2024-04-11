@@ -259,13 +259,15 @@ func _process(delta):
 			CoinKey.visible = false
 			CoinKey.set_collision_layer_value(2, false)
 	
-	if player.tasks == player.task7_2 or player.tasks == player.task10_2:
+	if player.tasks == player.task7_2 or player.tasks == player.task9_2 or player.tasks == player.task10_2:
 		if coinbasketcoll != null:
 			coinbasket.set_collision_layer_value(2, true)
 	else:
 		if coinbasketcoll != null:
 			coinbasket.set_collision_layer_value(2, false)
-	
+	if coinbasketfull:
+		player.tasks = player.task9_2
+		
 	if coinkey and coinbasket_inhand and !coinbasketfull:
 		player.tasks = player.task8_2
 		
@@ -516,11 +518,9 @@ func _physics_process(delta) -> void:
 						player.can_move = false
 						DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "bob_gone")
 						$/root/Node3D/Player/Neck/AnimationPlayer2.play("bobgone")
-						print ("1")
 						await DialogueManager.dialogue_ended
 						player.can_move = true
-						print ("2")
-						player.tasks = player.task9_2
+						coinbasketfull = true
 				if OBJ_ID.text == "CB7":
 					if !soundemptyingplaying:
 						$/root/Node3D/Player/CoinBasket/Empty.play()
@@ -657,7 +657,7 @@ func _physics_process(delta) -> void:
 				if coinbasketfull:
 					if coinbasketcoll != null:
 						coinbasketcoll.free()
-					player.tasks = player.task11_2
+						player.tasks = player.task11_2
 				elif !coinbasketfull:
 					coinbasketpromp.prompt_message = "Grab coin basket"
 		
