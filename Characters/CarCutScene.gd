@@ -17,7 +17,7 @@ func _ready():
 	creature = $/root/Node3D/creature2
 	prompt = $Label
 	prompt.text = ""
-	Player2.visible = false   #REMOVE # WHEN GAME IS DONE
+	Player2.visible = false
 	Player2.can_move = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
