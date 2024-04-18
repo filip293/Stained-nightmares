@@ -13,6 +13,7 @@ config_version=5
 config/name="Stained Nightmares"
 run/main_scene="res://Scenes/Horror.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
+run/max_fps=60
 boot_splash/bg_color=Color(0.113725, 0.0823529, 0.227451, 1)
 boot_splash/image="res://SplashScreen.png"
 config/icon="res://icon.png"

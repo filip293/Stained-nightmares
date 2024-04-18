@@ -91,8 +91,13 @@ var ShedCutscene := false
 var EndingDone := false
 var runonce := false
 var broken := false
+var dead := false
+var pow_done := false
+var sound_played := false
 
 func _ready():
+	$/root/Node3D/Guy/Bob/Armature/Skeleton3D/Bobpow.play("RESET")
+	$/root/Node3D/Guy/Bob/Armature/Skeleton3D/Bobpow.play("Idle")
 	coinbasketcam.visible = false
 	KEY.visible = false
 	GuyBob = $/root/Node3D/Guy
@@ -130,9 +135,12 @@ func _ready():
 	$/root/Node3D/Root_Scene/RootNode/basket_002/Key.visible = false
 	$/root/Node3D/Root_Scene/RootNode/basket_002/Key/CollisionShape3D.disabled = true
 	$/root/Node3D/Truck/Truck/Truck.disabled = true
+	$/root/Node3D/Guy/Bob/Pow.visible = false
 	
 # Called every frame
 func _process(delta):
+
+	
 	var car_cutscene = $/root/Node3D/CarCutscene
 	# Check if the player is in the car
 	if car_cutscene.in_car == false:
@@ -155,6 +163,23 @@ func _process(delta):
 				$/root/Node3D/Root_Scene/RootNode/Terrain_01/StaticBody3D.free()
 				freed = true
 				
+	print($/root/Node3D/Guy/PowTime.get_time_left())
+	if global.bobshotgun == true and !global.runonce2:
+		global.runonce2 = true
+		$/root/Node3D/Guy/PowTime.start()
+		$/root/Node3D/Guy/Bob/Armature/Skeleton3D/Bobpow.play("Shotgon")
+		$/root/Node3D/Guy/Shotgun_12.visible = true
+	if pow_done == true and sound_played == false:
+		$/root/Node3D/Guy/Pow.play()
+		sound_played = true
+	if dead == true:
+			$/root/Node3D/EndingScreen.visible = true
+			$/root/Node3D/EndingScreen/EndingText.text = "Secret ending"
+			$/root/Node3D/TextureRect.visible = false
+			player.tasks = ""
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			dead = false
+			
 	if global.in_bathroom == true and first == true:
 		global.in_bathroom = false
 		first = false
@@ -835,3 +860,11 @@ func _on_buttonQuit_pressed():
 
 func _on_ending_timeout():
 	EndingDone = true
+
+
+func _on_pow_finished():
+	dead = true
+
+
+func _on_pow_time_timeout():
+	pow_done = true

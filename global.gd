@@ -30,10 +30,4 @@ func _process(delta):
 		$/root/Node3D/Key2/Timer.start()
 		await $/root/Node3D/Key2/Timer.timeout
 		animdone.emit()
-	
-	if bobshotgun and !runonce2:
-		runonce2 = true
-		#Bobanimplayer.play("shotgun")
-		
-		$/root/Node3D/Guy/Shotgun_12.visible = true
-		$/root/Node3D/Guy/Pow.play()
+
