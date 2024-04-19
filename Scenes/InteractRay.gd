@@ -96,7 +96,6 @@ var pow_done := false
 var sound_played := false
 
 func _ready():
-	$/root/Node3D/Guy/Bob/Armature/Skeleton3D/Bobpow.play("RESET")
 	$/root/Node3D/Guy/Bob/Armature/Skeleton3D/Bobpow.play("Idle")
 	coinbasketcam.visible = false
 	KEY.visible = false
