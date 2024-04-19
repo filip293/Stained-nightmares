@@ -162,7 +162,6 @@ func _process(delta):
 				$/root/Node3D/Root_Scene/RootNode/Terrain_01/StaticBody3D.free()
 				freed = true
 				
-	print($/root/Node3D/Guy/PowTime.get_time_left())
 	if global.bobshotgun == true and !global.runonce2:
 		global.runonce2 = true
 		$/root/Node3D/Guy/PowTime.start()
@@ -616,7 +615,6 @@ func _physics_process(delta) -> void:
 						$/root/Node3D/Player/CoinBasket/Empty.play()
 						soundemptyingplaying = true
 					GenCBTimer -= 0.05
-					print(GenCBTimer) 
 					if GenCBTimer < 0.1:
 						if CBGV4_1 != null:
 							$/root/Node3D/Player/CoinBasket/Empty.stop()
