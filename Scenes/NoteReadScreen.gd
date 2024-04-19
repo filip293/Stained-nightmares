@@ -7,9 +7,9 @@ extends Node2D
 @onready var OBJ_ID = $/root/Node3D/CarCutscene/OBJ_ID
 
 signal resume_after_disclaimer
-var in_menu := false
-var disc_shown := false
-var disc_showing := false
+var in_menu: bool = false
+var disc_shown: bool = false
+var disc_showing: bool = false
 var disc: Node2D
 var note: Node2D
 # Called when the node enters the scene tree for the first time.
@@ -26,7 +26,7 @@ func exit_notes() -> void:
 	Crosshair.visible = true
 	Task.visible = true
 	disc_showing = false
-	get_tree().paused = false
+	prompt.visible = true
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 func enter_notes() -> void:
@@ -34,7 +34,7 @@ func enter_notes() -> void:
 	note.visible = true
 	Crosshair.visible = false
 	Task.visible = false
-	get_tree().paused = true
+	prompt.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func enter_notes_first() -> void:
@@ -42,20 +42,22 @@ func enter_notes_first() -> void:
 	disc.visible = true
 	Crosshair.visible = false
 	Task.visible = false
-	get_tree().paused = true
 	disc_showing = true
+	prompt.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	await resume_after_disclaimer
 	note.visible = true
+	disc_shown = true
 
 func _process(delta) -> void:
 	if "Read note" in prompt.text and OBJ_ID.text == "note1":
-		if Input.is_action_just_pressed("interact") and !disc_shown and !in_menu:
+		if Input.is_action_just_pressed("interact") and !disc_shown and !in_menu and !disc_showing:
 			enter_notes_first()
-		if Input.is_action_just_pressed("interact") and disc_shown and !in_menu:
+		if Input.is_action_just_pressed("interact") and disc_shown and !in_menu and !disc_showing:
 			enter_notes()
-		if Input.is_action_just_pressed("interact") and in_menu:
+		if Input.is_action_just_pressed("esc") and in_menu:
 			exit_notes()
+		
 
 func _physics_process(delta) -> void:
 	if disc_showing:

@@ -3,6 +3,7 @@ extends Node2D
 @onready var Cutscene := $/root/Node3D/Cutscene
 @onready var Crosshair = $/root/Node3D/TextureRect
 @onready var Task = $/root/Node3D/Player/Task2
+var NRS: Node2D
 var esc_pressed: Label
 var in_menu: bool = false
 var pause_scr: Node2D
@@ -12,7 +13,8 @@ var pause_scr: Node2D
 func _ready():
 	pause_scr = $/root/Node3D/PauseScreen
 	esc_pressed = $/root/Node3D/CarCutscene/Label
-
+	NRS = $/root/Node3D/NoteReadScreen
+	
 func exit_pause() -> void:
 	in_menu = false
 	pause_scr.visible = false
@@ -33,7 +35,7 @@ func enter_pause() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
-		if event.is_action_pressed("esc") and Cutscene.MenuStatus == false:
+		if event.is_action_pressed("esc") and Cutscene.MenuStatus == false and NRS.in_menu == false:
 			if pause_scr.visible == false:
 				enter_pause()
 			elif pause_scr.visible == true:
