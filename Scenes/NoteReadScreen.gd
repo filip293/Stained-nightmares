@@ -12,17 +12,27 @@ var disc_shown: bool = false
 var disc_showing: bool = false
 var disc: Node2D
 var note: Node2D
+var note1: Sprite2D
+var note2: Sprite2D
 # Called when the node enters the scene tree for the first time.
 
 func _ready():
 	disc = $Disclaimer
 	note = $Notes
+	note1 = $Note1
+	note2 = $Note2
 	disc.visible = false
 	note.visible = false
+	note1.visible = false
+	note2.visible = false
 
 func exit_notes() -> void:
 	in_menu = false
 	note.visible = false
+	if note1.visible == true:
+		note1.visible = false
+	if note2.visible == true:
+		note2.visible = false
 	Crosshair.visible = true
 	Task.visible = true
 	disc_showing = false
@@ -32,6 +42,10 @@ func exit_notes() -> void:
 func enter_notes() -> void:
 	in_menu = true
 	note.visible = true
+	if global.route == "BOB":
+		note1.visible = true
+	elif global.route == "Motel":
+		note2.visible = true
 	Crosshair.visible = false
 	Task.visible = false
 	prompt.visible = false
