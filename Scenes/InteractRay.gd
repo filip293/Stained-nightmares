@@ -759,7 +759,7 @@ func _physics_process(delta) -> void:
 			$/root/Node3D/Root_Scene/RootNode/counter_bell/AudioStreamPlayer3D.play()
 			
 	if Input.is_action_just_pressed("interact"):
-		if "Truck" in prompt.text:
+		if "TRUCK" in prompt.text:
 			$/root/Node3D/Truck/GetIntoCar.play()
 			$/root/Node3D/Truck/Truck/Truck.disabled = true
 			$/root/Node3D/Player.visible = false
@@ -865,3 +865,7 @@ func _on_pow_finished():
 
 func _on_pow_time_timeout():
 	pow_done = true
+
+func _lights_off():
+	$/root/Node3D/Root_Scene/RootNode/lamp_001.visible = false
+	$/root/Node3D/Root_Scene/Label3D.visible = false
