@@ -3,7 +3,7 @@ extends HSlider
 
 func _ready() -> void:
 	value = Player.mouse_sensitivity
-
+	
 func _on_value_changed(value):
 	Player.mouse_sensitivity = value
 

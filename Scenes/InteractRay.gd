@@ -731,7 +731,7 @@ func _physics_process(delta) -> void:
 			$/root/Node3D/Player/MetlaSweep.pause()
 			
 	if Input.is_action_just_pressed("interact"):
-		if "note" in prompt.text:
+		if "note" in prompt.text and OBJ_ID.text == "note2":
 			$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D.visible = false
 			DialogueManager.show_dialogue_balloon(load("res://Dialogue/HotelRoom.dialogue"), "note")
 			player.tasks = player.task8
