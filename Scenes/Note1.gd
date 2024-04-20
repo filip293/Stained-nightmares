@@ -7,10 +7,7 @@ var zoom_step: Vector2
 
 func _ready():
 	zoom_step = Vector2(0.05, 0.05)
-	
-func _on_input_event(viewport, event, shape_idx):
-	if !lifted and Input.is_action_pressed("cam_drag"):
-		lifted = true
+
 		
 func _physics_process(delta):
 	if lifted:
@@ -26,6 +23,13 @@ func _physics_process(delta):
 				scale = Vector2(0.255, 0.255)
 			else:
 				scale -= zoom_step
+				
+	if !lifted and Input.is_action_pressed("cam_drag"):
+		lifted = true
+		print("1")
+	if lifted and Input.is_action_just_released("cam_drag"):
+		lifted = false
+		print("2")
 
 func _on_mouse_entered():
 	zoom_possible = true

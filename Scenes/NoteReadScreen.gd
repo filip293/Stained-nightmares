@@ -5,6 +5,7 @@ extends Node2D
 @onready var Crosshair = $/root/Node3D/TextureRect
 @onready var Task = $/root/Node3D/Player/Task2
 @onready var OBJ_ID = $/root/Node3D/CarCutscene/OBJ_ID
+@onready var player = $/root/Node3D/Player
 
 signal resume_after_disclaimer
 var in_menu: bool = false
@@ -14,6 +15,7 @@ var disc: Node2D
 var note: Node2D
 var note1: Sprite2D
 var note2: Sprite2D
+var text: Label
 # Called when the node enters the scene tree for the first time.
 
 func _ready():
@@ -21,10 +23,12 @@ func _ready():
 	note = $Notes
 	note1 = $Note1/Note
 	note2 = $Note2/Note
+	text = $Note2/Label
 	disc.visible = false
 	note.visible = false
 	note1.visible = false
 	note2.visible = false
+	text.visible = false
 
 func exit_notes() -> void:
 	in_menu = false
@@ -33,6 +37,7 @@ func exit_notes() -> void:
 		note1.visible = false
 	if note2.visible == true:
 		note2.visible = false
+		text.visible = false
 	Crosshair.visible = true
 	Task.visible = true
 	disc_showing = false
@@ -65,6 +70,7 @@ func enter_notes_first() -> void:
 		note1.visible = true
 	elif global.route == "Motel":
 		note2.visible = true
+		text.visible = true
 	disc_shown = true
 
 func _process(delta) -> void:
@@ -74,6 +80,25 @@ func _process(delta) -> void:
 		if Input.is_action_just_pressed("interact") and disc_shown and !in_menu and !disc_showing:
 			enter_notes()
 		if Input.is_action_just_pressed("esc") and in_menu:
+			exit_notes()
+			
+	if "note" in prompt.text and OBJ_ID.text == "note2":
+		if Input.is_action_just_pressed("interact") and !disc_shown and !in_menu and !disc_showing:
+			$/root/Node3D/Root_Scene/RootNode/basket_002/Key.visible = true
+			$/root/Node3D/Root_Scene/RootNode/basket_002/Key/CollisionShape3D.disabled = false
+			$/root/Node3D/Root_Scene/RootNode/basket_002/StaticBody3D/CollisionShape3D.disabled = true
+			enter_notes_first()
+		if Input.is_action_just_pressed("interact") and disc_shown and !in_menu and !disc_showing:
+			enter_notes()
+		if Input.is_action_just_pressed("esc") and in_menu:
+			if $/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D != null:
+				$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.free()
+			$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D.visible = false
+			$/root/Node3D/Player/ScaryAmb.play()
+			var red = Color(0.7, 0.0, 0.0, 1.0)
+			global.otherambient = true
+			$/root/Node3D/Player/Task2.set("modulate", red)
+			player.tasks = player.task8
 			exit_notes()
 		
 

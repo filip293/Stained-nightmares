@@ -731,20 +731,6 @@ func _physics_process(delta) -> void:
 			$/root/Node3D/Player/MetlaSweep.pause()
 			
 	if Input.is_action_just_pressed("interact"):
-		if "note" in prompt.text and OBJ_ID.text == "note2":
-			$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D.visible = false
-			DialogueManager.show_dialogue_balloon(load("res://Dialogue/HotelRoom.dialogue"), "note")
-			player.tasks = player.task8
-			$/root/Node3D/Player/ScaryAmb.play()
-			var red = Color(0.7, 0.0, 0.0, 1.0)
-			global.otherambient = true
-			$/root/Node3D/Player/Task2.set("modulate", red)
-			$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.free()
-			$/root/Node3D/Root_Scene/RootNode/basket_002/Key.visible = true
-			$/root/Node3D/Root_Scene/RootNode/basket_002/Key/CollisionShape3D.disabled = false
-			$/root/Node3D/Root_Scene/RootNode/basket_002/StaticBody3D/CollisionShape3D.disabled = true
-			
-	if Input.is_action_just_pressed("interact"):
 		if "Car" in prompt.text:
 			HasTruckKey = true
 			$/root/Node3D/Root_Scene/RootNode/basket_002/Key.visible = false
