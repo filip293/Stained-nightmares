@@ -19,8 +19,8 @@ var note2: Sprite2D
 func _ready():
 	disc = $Disclaimer
 	note = $Notes
-	note1 = $Note1
-	note2 = $Note2
+	note1 = $Note1/Note
+	note2 = $Note2/Note
 	disc.visible = false
 	note.visible = false
 	note1.visible = false
@@ -61,6 +61,10 @@ func enter_notes_first() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	await resume_after_disclaimer
 	note.visible = true
+	if global.route == "BOB":
+		note1.visible = true
+	elif global.route == "Motel":
+		note2.visible = true
 	disc_shown = true
 
 func _process(delta) -> void:
@@ -75,7 +79,7 @@ func _process(delta) -> void:
 
 func _physics_process(delta) -> void:
 	if disc_showing:
-		if Input.is_action_just_pressed("left_click"):
+		if Input.is_action_just_pressed("cam_drag"):
 			disc.visible = false
 			resume_after_disclaimer.emit()
 			
