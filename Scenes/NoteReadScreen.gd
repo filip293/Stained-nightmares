@@ -47,10 +47,11 @@ func exit_notes() -> void:
 func enter_notes() -> void:
 	in_menu = true
 	note.visible = true
-	if global.route == "BOB":
+	if OBJ_ID.text == "note1":
 		note1.visible = true
-	elif global.route == "Motel":
+	elif OBJ_ID.text == "note2":
 		note2.visible = true
+		text.visible = true
 	Crosshair.visible = false
 	Task.visible = false
 	prompt.visible = false
@@ -66,9 +67,9 @@ func enter_notes_first() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	await resume_after_disclaimer
 	note.visible = true
-	if global.route == "BOB":
+	if OBJ_ID.text == "note1":
 		note1.visible = true
-	elif global.route == "Motel":
+	elif OBJ_ID.text == "note2":
 		note2.visible = true
 		text.visible = true
 	disc_shown = true

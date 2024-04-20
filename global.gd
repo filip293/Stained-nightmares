@@ -13,6 +13,7 @@ var runonce2 := false
 var Keyanim: AnimationPlayer
 var Keyanimtimer: Timer
 signal animdone 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var Bobanimplayer = $/root/Node3D/Guy/Bob/AnimationPlayer

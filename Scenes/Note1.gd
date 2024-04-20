@@ -1,5 +1,6 @@
 extends Area2D
 
+@onready var NRS = $/root/Node3D/NoteReadScreen
 signal release
 var lifted = false
 var zoom_possible = false
@@ -10,9 +11,9 @@ func _ready():
 
 		
 func _physics_process(delta):
-	if lifted:
+	if NRS.in_menu and lifted:
 		global_position = lerp(global_position, get_global_mouse_position(), 25 * delta)
-	if zoom_possible:
+	if NRS.in_menu and zoom_possible:
 		if Input.is_action_just_pressed("cam_zoom_in"):
 			if scale >= Vector2(0.550, 0.550):
 				scale = Vector2(0.550, 0.550)
@@ -24,12 +25,10 @@ func _physics_process(delta):
 			else:
 				scale -= zoom_step
 				
-	if !lifted and Input.is_action_pressed("cam_drag"):
+	if NRS.in_menu and !lifted and Input.is_action_pressed("cam_drag"):
 		lifted = true
-		print("1")
-	if lifted and Input.is_action_just_released("cam_drag"):
+	if NRS.in_menu and lifted and Input.is_action_just_released("cam_drag"):
 		lifted = false
-		print("2")
 
 func _on_mouse_entered():
 	zoom_possible = true

@@ -26,10 +26,8 @@ func _physics_process(delta):
 				
 	if !lifted and Input.is_action_pressed("cam_drag"):
 		lifted = true
-		print("1")
 	if lifted and Input.is_action_just_released("cam_drag"):
 		lifted = false
-		print("2")
 
 func _on_mouse_entered():
 	zoom_possible = true
