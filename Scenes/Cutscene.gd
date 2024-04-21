@@ -1,7 +1,6 @@
 extends Node3D
 
 @onready var Player = $/root/Node3D/Player
-
 var intro: AudioStreamPlayer
 var Car1: AudioStreamPlayer
 var Car2: AudioStreamPlayer
