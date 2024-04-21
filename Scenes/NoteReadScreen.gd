@@ -43,7 +43,7 @@ func exit_notes() -> void:
 	disc_showing = false
 	prompt.visible = true
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
+
 func enter_notes() -> void:
 	in_menu = true
 	note.visible = true
@@ -81,6 +81,8 @@ func _process(delta) -> void:
 		if Input.is_action_just_pressed("interact") and disc_shown and !in_menu and !disc_showing:
 			enter_notes()
 		if Input.is_action_just_pressed("esc") and in_menu:
+			if player.tasks == player.task9_2:
+				player.tasks = player.task10_2
 			exit_notes()
 			
 	if "note" in prompt.text and OBJ_ID.text == "note2":
@@ -99,7 +101,8 @@ func _process(delta) -> void:
 			var red = Color(0.7, 0.0, 0.0, 1.0)
 			global.otherambient = true
 			$/root/Node3D/Player/Task2.set("modulate", red)
-			player.tasks = player.task8
+			if player.tasks == player.task7:
+				player.tasks = player.task8
 			exit_notes()
 		
 

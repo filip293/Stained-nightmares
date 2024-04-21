@@ -20,12 +20,12 @@ Note: [shake rate=20 level=7]GO TO THE LAUNDROMAT! KEY HIDDEN IN BASKET! HURRY! 
 
 ~ run
 
-You: [shake rate=20 level=12]I HAVE TO GO TO THE SHED OUTSIDE OR TO THE TRUCK!!!! [/shake]
+You: [shake rate=20 level=12]I HAVE TO GO TO THE SHED OUTSIDE, OR TO THE TRUCK!!! [/shake]
 
 => END
 
 ~ end3
 
-You: [shake rate=20 level=10] I MADE IT! PHEW! I WAS GONNA DIE! [wait=3]Wait... What was that?! [/shake]
+You: [shake rate=20 level=10] I MADE IT! PHEW! I WAS GONNA DIE! [/shake][wait=3]Wait... What was that?
 
 => END

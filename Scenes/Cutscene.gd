@@ -1,6 +1,9 @@
 extends Node3D
 
 @onready var Player = $/root/Node3D/Player
+@onready var ContinueButton = $Button
+@onready var QuitButton = $Quit
+@onready var BAS = $/root/Node3D/BrightnessAdjustScreen
 
 var intro: AudioStreamPlayer
 var Car1: AudioStreamPlayer
@@ -26,13 +29,25 @@ func _ready():
 	Title = $Title
 	secondary_camera = $SceneCam
 	Crosshair.visible = false
-	intro.play()
-	$AnimationPlayer.play("Scene")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	Title.visible = false
+	ContinueButton.visible = false
+	ContinueButton.disabled = true
+	QuitButton.visible = false
+	QuitButton.disabled = true
 
 func _process(delta):
 	pass
 
+func startgame():
+	Title.visible = true
+	ContinueButton.visible = true
+	ContinueButton.disabled = false
+	QuitButton.visible = true
+	QuitButton.disabled = false
+	intro.play()
+	$AnimationPlayer.play("Scene")
+	
 func _on_button_pressed():
 	Player.can_move = true
 	MenuStatus = false
@@ -73,3 +88,5 @@ func _on_car_no_go_timeout():
 		$/root/Node3D/CarCutscene/Smoke.visible = true
 		is_done2 = true
 		
+func _on_continue_pressed():
+	startgame()

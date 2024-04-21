@@ -15,6 +15,7 @@ extends RayCast3D
 @onready var doorprompt = $/root/Node3D/Motel2/Door_02/Door
 @onready var KEY = $/root/Node3D/Key
 @onready var OBJ_ID = $/root/Node3D/CarCutscene/OBJ_ID
+@onready var note1 = $/root/Node3D/Note1
 
 var optim = {
 	"dialogue_started": [false, false, false],
@@ -135,6 +136,7 @@ func _ready():
 	$/root/Node3D/Root_Scene/RootNode/basket_002/Key/CollisionShape3D.disabled = true
 	$/root/Node3D/Truck/Truck/Truck.disabled = true
 	$/root/Node3D/Guy/Bob/Pow.visible = false
+	note1.visible = false
 	
 # Called every frame
 func _process(delta):
@@ -256,6 +258,13 @@ func _process(delta):
 				player.tasks = player.task4_2
 				sweepfinish = true
 	
+	if broken:
+		if note1 != null:
+			note1.set_collision_layer_value(2, true)
+	else:
+		if note1 != null:
+			note1.set_collision_layer_value(2, false)
+			
 	if player.tasks == player.task3_2 or player.tasks == player.task4_2:
 		if DustPatch1 != null:
 			DustPatch1.set_collision_layer_value(2, true)
@@ -288,7 +297,8 @@ func _process(delta):
 	else:
 		if coinbasketcoll != null:
 			coinbasket.set_collision_layer_value(2, false)
-	if coinbasketfull:
+	
+	if coinbasketfull and player.tasks == player.task8_2:
 		player.tasks = player.task9_2
 		
 	if coinkey and coinbasket_inhand and !coinbasketfull:
@@ -536,14 +546,15 @@ func _physics_process(delta) -> void:
 					if donegoofed < 0.1 and !broken:
 						broken = true
 						CBGV2_2.prompt_message = "Coin stash jammed"
+						coinbasketfull = true
 						if GuyBob != null:
 							GuyBob.free()
 						player.can_move = false
+						note1.visible = true
 						DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "bob_gone")
 						$/root/Node3D/Player/Neck/AnimationPlayer2.play("bobgone")
 						await DialogueManager.dialogue_ended
 						player.can_move = true
-						coinbasketfull = true
 				if OBJ_ID.text == "CB7":
 					if !soundemptyingplaying:
 						$/root/Node3D/Player/CoinBasket/Empty.play()

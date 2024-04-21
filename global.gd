@@ -22,7 +22,6 @@ func _ready():
 	$/root/Node3D/Guy/Shotgun_12.visible = false
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if bobgiveskey and !runonce1:
