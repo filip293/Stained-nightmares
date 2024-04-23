@@ -96,6 +96,27 @@ var dead := false
 var pow_done := false
 var sound_played := false
 
+var save_file_path = "user://save/"
+
+
+func save():
+	var file = FileAccess.open(save_file_path, FileAccess.WRITE)
+	file.store_var(BRIGHTNESS HERE)
+	file.store_var(IF BRIGHTNESS ALREADY SET)
+	
+func load_data():
+	if FileAccess.file_exists(save_file_path):
+		var file = FileAccess.open(save_file_path, FileAccess.READ)
+		BRIGHTNESS HERE = file.get_var(BRIGHTNESS HERE)
+		IF BRIGHTNESS ALREADY SET = file.get_var(IF BRIGHTNESS ALREADY SET)\
+	else:
+		BRIGHTNESS HERE = default
+		IF BRIGHTNESS ALREADY SET = default
+		
+	#CALL save WHEN CUTSCENE IS DONE
+	#CALL load_data ON BEGINING
+		
+
 func _ready():
 	$/root/Node3D/Fusebox/Flicker.play("Flicker")
 	$/root/Node3D/CarCutscene/ShedCreatur2e2.visible = false
