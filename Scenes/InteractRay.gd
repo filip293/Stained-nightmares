@@ -21,7 +21,7 @@ var optim = {
 	"dialogue_started": [false, false, false],
 	"dialogue_done": [false, false, false],
 	"DustPatchClean": [false, false, false, false],
-	"Ending": [false, false, false]
+	"Ending": [false, false, false, false]
 }
 
 var donegoofed = 0.3
@@ -97,6 +97,9 @@ var pow_done := false
 var sound_played := false
 
 func _ready():
+	$/root/Node3D/Fusebox/Flicker.play("Flicker")
+	$/root/Node3D/CarCutscene/ShedCreatur2e2.visible = false
+	$/root/Node3D/CarCutscene/StaticBody3D/CollisionShape3D.disabled = true
 	$/root/Node3D/Guy/Bob/Armature/Skeleton3D/Bobpow.play("Idle")
 	coinbasketcam.visible = false
 	KEY.visible = false
@@ -241,7 +244,7 @@ func _process(delta):
 		
 	if optim["Ending"][1] == true:
 		$/root/Node3D/EndingScreen.visible = true
-		$/root/Node3D/EndingScreen/EndingText.text = "ENDING 2/3"
+		$/root/Node3D/EndingScreen/EndingText.text = "ENDING 2/4"
 		$/root/Node3D/Player/ScaryAmb.set_volume_db(-10)
 		player.tasks = ""
 		$/root/Node3D/TextureRect.visible = false
@@ -249,10 +252,14 @@ func _process(delta):
 		
 	if optim["Ending"][2] == true:
 		$/root/Node3D/EndingScreen.visible = true
-		$/root/Node3D/EndingScreen/EndingText.text = "ENDING 3/3"
+		$/root/Node3D/EndingScreen/EndingText.text = "ENDING 3/4"
 		$/root/Node3D/TextureRect.visible = false
 		player.tasks = ""
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		
+	if optim["Ending"][3] == true:
+		player.tasks = ""
+		$/root/Node3D/Player.visible = false
 	
 	if optim["DustPatchClean"][0] and optim["DustPatchClean"][1] and optim["DustPatchClean"][2] and !sweepfinish:
 				player.tasks = player.task4_2
@@ -744,7 +751,9 @@ func _physics_process(delta) -> void:
 	if Input.is_action_just_pressed("interact"):
 		if "Car" in prompt.text:
 			HasTruckKey = true
+			$/root/Node3D/CarCutscene/StaticBody3D/CollisionShape3D.disabled = false
 			$/root/Node3D/Root_Scene/RootNode/basket_002/Key.visible = false
+			$/root/Node3D/CarCutscene/StaticBody3D2/TempCollision.disabled = true
 			$/root/Node3D/Root_Scene/RootNode/basket_002/Key/CollisionShape3D.disabled = true
 			player.tasks = player.task9
 			DialogueManager.show_dialogue_balloon(load("res://Dialogue/HotelRoom.dialogue"), "run")
@@ -769,6 +778,30 @@ func _physics_process(delta) -> void:
 		
 	if EndingDone == true:
 		optim["Ending"][1] = true
+		
+	if Input.is_action_just_pressed("interact"):
+		if "Broken" in prompt.text:
+			$/root/Node3D/CarCutscene/StaticBody3D/CollisionShape3D.disabled = true
+			$/root/Node3D/CarCutscene/AnimationPlayer.play("CamGoBack")
+			optim["Ending"][3] = true
+			$/root/Node3D/CarCutscene/Car.make_current()
+			await get_tree().create_timer(5).timeout
+			$/root/Node3D/Player/FootstepLeftSound.play()
+			await get_tree().create_timer(2).timeout
+			$/root/Node3D/Player/FootstepRightSound.play()
+			await get_tree().create_timer(2).timeout
+			$/root/Node3D/Player/FootstepLeftSound.play()
+			await get_tree().create_timer(2).timeout
+			$/root/Node3D/Player/FootstepRightSound.play()
+			await get_tree().create_timer(5).timeout
+			$/root/Node3D/CarCutscene/Jumpscare2.play()
+			$/root/Node3D/CarCutscene/ShedCreatur2e2.visible = true
+			$/root/Node3D/CarCutscene/AnimationPlayer.play("Scare")
+			await get_tree().create_timer(0.6).timeout
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			$/root/Node3D/EndingScreen.visible = true
+			$/root/Node3D/EndingScreen/EndingText.text = "ENDING 4/4"
+			$/root/Node3D/Player/ScaryAmb.set_volume_db(-10)
 
 	if GoingEnding3 == true:
 		ShedCutscene = true
@@ -791,6 +824,7 @@ func _on_forest_sound_finished():
 		player.can_move = false
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		$/root/Node3D/Player/Neck/AnimationPlayer.stop()
+		await get_tree().create_timer(1).timeout
 		DialogueManager.show_dialogue_balloon(load("res://Dialogue/HotelRoom.dialogue"), "forest")
 		await DialogueManager.dialogue_ended
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

@@ -31,6 +31,7 @@ func _ready():
 	text.visible = false
 
 func exit_notes() -> void:
+	player.can_move = true
 	in_menu = false
 	note.visible = false
 	if note1.visible == true:
@@ -45,6 +46,7 @@ func exit_notes() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func enter_notes() -> void:
+	player.can_move = false
 	in_menu = true
 	note.visible = true
 	if OBJ_ID.text == "note1":
@@ -58,6 +60,7 @@ func enter_notes() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func enter_notes_first() -> void:
+	player.can_move = false
 	in_menu = true
 	disc.visible = true
 	Crosshair.visible = false
