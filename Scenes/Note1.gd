@@ -5,18 +5,18 @@ signal release
 var lifted = false
 var zoom_possible = false
 var zoom_step: Vector2
+var offset = Vector2(0, 0)
 
 func _ready():
 	zoom_step = Vector2(0.05, 0.05)
 
-		
 func _physics_process(delta):
 	if NRS.in_menu and lifted:
-		global_position = lerp(global_position, get_global_mouse_position(), 25 * delta)
+		position = get_global_mouse_position() - offset
 	if NRS.in_menu and zoom_possible:
 		if Input.is_action_just_pressed("cam_zoom_in"):
-			if scale >= Vector2(0.550, 0.550):
-				scale = Vector2(0.550, 0.550)
+			if scale >= Vector2(0.605, 0.605):
+				scale = Vector2(0.605, 0.605)
 			else:
 				scale += zoom_step
 		if Input.is_action_just_pressed("cam_zoom_out"):
@@ -24,14 +24,16 @@ func _physics_process(delta):
 				scale = Vector2(0.255, 0.255)
 			else:
 				scale -= zoom_step
-				
-	if NRS.in_menu and !lifted and Input.is_action_pressed("cam_drag"):
-		lifted = true
-	if NRS.in_menu and lifted and Input.is_action_just_released("cam_drag"):
-		lifted = false
 
 func _on_mouse_entered():
 	zoom_possible = true
 
 func _on_mouse_exited():
 	zoom_possible = false
+
+func _on_button_button_down():
+	lifted = true
+	offset = get_global_mouse_position() - global_position
+
+func _on_button_button_up():
+	lifted = false

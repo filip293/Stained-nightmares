@@ -13,8 +13,8 @@ var disc_shown: bool = false
 var disc_showing: bool = false
 var disc: Node2D
 var note: Node2D
-var note1: Sprite2D
-var note2: Sprite2D
+var note1: Node2D
+var note2: Node2D
 var text: Label
 # Called when the node enters the scene tree for the first time.
 
@@ -23,12 +23,10 @@ func _ready():
 	note = $Notes
 	note1 = $Note1/Note
 	note2 = $Note2/Note
-	text = $Note2/Label
 	disc.visible = false
 	note.visible = false
 	note1.visible = false
 	note2.visible = false
-	text.visible = false
 
 func exit_notes() -> void:
 	player.can_move = true
@@ -38,7 +36,6 @@ func exit_notes() -> void:
 		note1.visible = false
 	if note2.visible == true:
 		note2.visible = false
-		text.visible = false
 	Crosshair.visible = true
 	Task.visible = true
 	disc_showing = false
@@ -53,7 +50,6 @@ func enter_notes() -> void:
 		note1.visible = true
 	elif OBJ_ID.text == "note2":
 		note2.visible = true
-		text.visible = true
 	Crosshair.visible = false
 	Task.visible = false
 	prompt.visible = false
@@ -74,7 +70,6 @@ func enter_notes_first() -> void:
 		note1.visible = true
 	elif OBJ_ID.text == "note2":
 		note2.visible = true
-		text.visible = true
 	disc_shown = true
 
 func _process(delta) -> void:
