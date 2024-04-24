@@ -1,8 +1,7 @@
 extends HSlider
 
 @export var audio_bus_name := "Master"
-var save_file_path = "user://save/"
-
+var save_file_path = "user://save_vol.dat"
 @onready var _bus := AudioServer.get_bus_index(audio_bus_name)
 
 func save():
@@ -12,11 +11,11 @@ func save():
 func load_data():
 	if FileAccess.file_exists(save_file_path):
 		var file = FileAccess.open(save_file_path, FileAccess.READ)
-		value = file.get_var(value)
+		AudioServer.set_bus_volume_db(_bus, linear_to_db(value))
 
 func _ready() -> void:
-	value = db_to_linear(AudioServer.get_bus_volume_db(_bus))
 	load_data()
+	value = db_to_linear(AudioServer.get_bus_volume_db(_bus))
 
 
 func _on_value_changed(value: float) -> void:

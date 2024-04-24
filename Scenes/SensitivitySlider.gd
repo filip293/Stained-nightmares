@@ -1,6 +1,6 @@
 extends HSlider
 @onready var Player := $/root/Node3D/Player
-var save_file_path = "user://save/"
+var save_file_path = "user://save_sens.dat"
 
 func save():
 	var file = FileAccess.open(save_file_path, FileAccess.WRITE)
@@ -9,11 +9,11 @@ func save():
 func load_data():
 	if FileAccess.file_exists(save_file_path):
 		var file = FileAccess.open(save_file_path, FileAccess.READ)
-		value = file.get_var(value)
+		Player.mouse_sensitivity = file.get_var(value)
 
 func _ready() -> void:
-	value = Player.mouse_sensitivity
 	load_data()
+	value = Player.mouse_sensitivity
 	
 func _on_value_changed(value):
 	Player.mouse_sensitivity = value
