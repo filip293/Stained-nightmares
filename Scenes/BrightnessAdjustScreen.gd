@@ -4,12 +4,11 @@ extends Node2D
 @onready var BAScreen = $BrightnessAdjust
 @onready var BAScreenSlider = $BrightnessAdjust/BrightnessSlider
 @onready var BAScreenButton = $BrightnessAdjust/Continue
-@onready var call = $/root/Node3D/Player/Neck/InteractRay
 @onready var Intro = $/root/Node3D/Cutscene
 var alreadydonedid: bool
 
 func _ready():
-	call.load_data()
+	#load_data()
 	if alreadydonedid == true:
 		BAScreenSlider.editable = false
 		BAScreenButton.disabled = true
@@ -33,4 +32,4 @@ func _on_continue_pressed():
 	BAScreenButton.disabled = true
 	BAScreen.visible = false
 	alreadydonedid = true
-	call.save()
+	#save()

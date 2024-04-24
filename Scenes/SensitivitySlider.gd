@@ -1,15 +1,23 @@
 extends HSlider
 @onready var Player := $/root/Node3D/Player
-@onready var call = $/root/Node3D/Player/Neck/InteractRay
-var savestateval
+var save_file_path = "user://save/"
+
+func save():
+	var file = FileAccess.open(save_file_path, FileAccess.WRITE)
+	file.store_var(value)
+	
+func load_data():
+	if FileAccess.file_exists(save_file_path):
+		var file = FileAccess.open(save_file_path, FileAccess.READ)
+		value = file.get_var(value)
 
 func _ready() -> void:
 	value = Player.mouse_sensitivity
-	call.load_data()
+	load_data()
 	
 func _on_value_changed(value):
 	Player.mouse_sensitivity = value
-	call.save()
+	save()
 
 func _on_mouse_exited():
 	pass # Replace with function body.
