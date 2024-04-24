@@ -18,6 +18,7 @@ var MenuStatus: bool = true
 var Crosshair: TextureRect
 var Title: Label
 
+
 func _ready():
 	Player.can_move = false
 	intro = $Scary
@@ -49,6 +50,7 @@ func startgame():
 	$AnimationPlayer.play("Scene")
 	
 func _on_button_pressed():
+	
 	Player.can_move = true
 	MenuStatus = false
 	Title.visible = false
@@ -64,12 +66,19 @@ func _on_button_pressed():
 	is_done = false
 	is_done2 = false
 	Car1.play()
+
 	if $/root/Node3D/CarCutscene/BeepTimer:
 		$/root/Node3D/CarCutscene/BeepTimer.start()
 
 	if $/root/Node3D/CarCutscene/CarNoGo2:
 		$/root/Node3D/CarCutscene/CarNoGo2.start()
-	
+		
+	await get_tree().create_timer(1).timeout
+	DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "bob_in_car")
+	await get_tree().create_timer(10).timeout
+	DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "bob_cargobrr")
+	await get_tree().create_timer(12).timeout
+	DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "bob_see_laun")
 
 
 func _on_quit_pressed():

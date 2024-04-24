@@ -34,6 +34,18 @@ Bob: Why don't you stick around and help me for now, seeing as you don't have an
 		set global.chosen = true
 => END
 
+~ bob_in_car
+You: Man, what a night. But now I gotta face the music. She's gonna be pissed. Should've checked my phone. Okay, deep breaths, gotta own up to it. Maybe flowers? [wait=0.5] [next=auto]
+=> END
+
+~ bob_cargobrr
+You: You're kidding me, right? Now of all times? Great, just great. Well, this night couldn't get any fucking worse. [wait=1] [next=auto]
+=> END
+
+~ bob_see_laun
+You: Huh, a laundromat? Open at this hour? Well, I guess I could kill some time while I figure out what to do about the car. [next=auto]
+=> END
+
 ~ wait
 Bob: Come back to me once you've finished cleaning the floors. \nThe dust ain't gonna clean up itself ya know?
 => END

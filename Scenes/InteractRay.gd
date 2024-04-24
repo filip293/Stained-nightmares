@@ -95,9 +95,11 @@ var broken := false
 var dead := false
 var pow_done := false
 var sound_played := false
+var first34 = true
 		
 
 func _ready():
+	$/root/Node3D/Motel2/Window_frame_10/Cube_317/creature2.visible = false
 	$/root/Node3D/Fusebox/Flicker.play("Flicker")
 	$/root/Node3D/CarCutscene/ShedCreatur2e2.visible = false
 	$/root/Node3D/CarCutscene/StaticBody3D/CollisionShape3D.disabled = true
@@ -232,6 +234,7 @@ func _process(delta):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		player.can_move = true
 		player.tasks = player.task4
+		await get_tree().create_timer(2).timeout
 		$/root/Node3D/Root_Scene/RootNode/Trees_03/ForestSound.play()
 	
 	if Input.is_action_just_released("interact") and SoundSweepPlaying:
@@ -901,3 +904,10 @@ func _on_pow_time_timeout():
 func _lights_off():
 	$/root/Node3D/Root_Scene/RootNode/lamp_001.visible = false
 	$/root/Node3D/Root_Scene/Label3D.visible = false
+
+
+func _on_saw_monster_body_entered(body):
+	if first34 == true and player.error_time == true and havekey == true:
+		$/root/Node3D/SawMonster/SoundMonster.play()
+		$/root/Node3D/Motel2/Window_frame_10/Cube_317/creature2.visible = false
+		first34 = false
