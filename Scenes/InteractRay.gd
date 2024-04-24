@@ -16,6 +16,10 @@ extends RayCast3D
 @onready var KEY = $/root/Node3D/Key
 @onready var OBJ_ID = $/root/Node3D/CarCutscene/OBJ_ID
 @onready var note1 = $/root/Node3D/Note1
+@onready var brightval = $/root/Node3D/BrightnessAdjustScreen/BrightnessAdjust/BrightnessSlider
+@onready var brightset = $/root/Node3D/BrightnessAdjustScreen
+@onready var sensval = $/root/Node3D/PauseScreen/SensitivitySlider
+@onready var volval = $/root/Node3D/PauseScreen/VolumeSlider
 
 var optim = {
 	"dialogue_started": [false, false, false],
@@ -95,24 +99,25 @@ var broken := false
 var dead := false
 var pow_done := false
 var sound_played := false
-
+var file = FileAccess.open(save_file_path, FileAccess.READ)
 var save_file_path = "user://save/"
 
 
 func save():
 	var file = FileAccess.open(save_file_path, FileAccess.WRITE)
-	file.store_var(BRIGHTNESS HERE)
-	file.store_var(IF BRIGHTNESS ALREADY SET)
+	if brightval.savestateval != null:
+		file.store_var(brightval.savestateval)
+	#file.store_var(brightset.alreadydonedid)
+	#file.store_var(sensval.savestateval)
+	#file.store_var(volval.savestateval)
+	print(brightval.savestateval)
 	
 func load_data():
 	if FileAccess.file_exists(save_file_path):
-		var file = FileAccess.open(save_file_path, FileAccess.READ)
-		BRIGHTNESS HERE = file.get_var(BRIGHTNESS HERE)
-		IF BRIGHTNESS ALREADY SET = file.get_var(IF BRIGHTNESS ALREADY SET)\
-	else:
-		BRIGHTNESS HERE = default
-		IF BRIGHTNESS ALREADY SET = default
-		
+		brightval.savestateval = file.get_var(brightval.savestateval)
+		brightset.alreadydonedid = file.get_var(brightset.alreadydonedid)
+		sensval.savestateval = file.get_var(sensval.savestateval)
+		volval.savestateval = file.get_var(volval.savestateval)
 	#CALL save WHEN CUTSCENE IS DONE
 	#CALL load_data ON BEGINING
 		
