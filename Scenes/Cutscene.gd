@@ -73,12 +73,12 @@ func _on_button_pressed():
 	if $/root/Node3D/CarCutscene/CarNoGo2:
 		$/root/Node3D/CarCutscene/CarNoGo2.start()
 		
-	await get_tree().create_timer(1).timeout
-	DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "bob_in_car")
-	await get_tree().create_timer(10).timeout
-	DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "bob_cargobrr")
-	await get_tree().create_timer(12).timeout
-	DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "bob_see_laun")
+	#await get_tree().create_timer(1).timeout
+	#DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "bob_in_car")
+	#await get_tree().create_timer(10).timeout
+	#DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "bob_cargobrr")
+	#await get_tree().create_timer(12).timeout
+	#DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "bob_see_laun")
 
 
 func _on_quit_pressed():
