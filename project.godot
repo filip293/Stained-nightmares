@@ -14,6 +14,7 @@ config/name="Stained Nightmares"
 run/main_scene="res://Scenes/Horror.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 run/max_fps=60
+boot_splash/show_image=false
 boot_splash/image="res://SplashScreen2.png"
 config/icon="res://icon.png"
 
