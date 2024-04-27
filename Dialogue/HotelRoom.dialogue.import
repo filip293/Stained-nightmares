@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_11"
+type="Resource"
+uid="uid://jgvxicqx3h6e"
+path="res://.godot/imported/HotelRoom.dialogue-f5e165ad2e39f02629611f1e59f67212.tres"
+
+[deps]
+
+source_file="res://Dialogue/HotelRoom.dialogue"
+dest_files=["res://.godot/imported/HotelRoom.dialogue-f5e165ad2e39f02629611f1e59f67212.tres"]
+
+[params]
+
+defaults=true

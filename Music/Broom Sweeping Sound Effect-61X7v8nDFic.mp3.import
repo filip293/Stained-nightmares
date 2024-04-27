@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cfotdy08hpma1"
+path="res://.godot/imported/Broom Sweeping Sound Effect-61X7v8nDFic.mp3-43a5a471c9bcca0534a25da6e9f182cb.mp3str"
+
+[deps]
+
+source_file="res://Music/Broom Sweeping Sound Effect-61X7v8nDFic.mp3"
+dest_files=["res://.godot/imported/Broom Sweeping Sound Effect-61X7v8nDFic.mp3-43a5a471c9bcca0534a25da6e9f182cb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
