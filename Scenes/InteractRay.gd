@@ -215,7 +215,7 @@ func _process(delta):
 			KEY.visible = true
 			GuyBob.free()
 	if ShedCutscene == true:
-		$/root/Node3D/Player/ScaryAmb.set_volume_db(-10)
+		$/root/Node3D/Player/ScaryAmb.stop()
 		
 	if "door" in prompt.text and havekey == true:
 		doorprompt.prompt_message = "Open door"
