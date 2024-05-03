@@ -16,6 +16,10 @@ extends RayCast3D
 @onready var KEY = $/root/Node3D/Key
 @onready var OBJ_ID = $/root/Node3D/CarCutscene/OBJ_ID
 @onready var note1 = $/root/Node3D/Note1
+@onready var FuseBoxCollisionCheck = $/root/Node3D/Fusebox/StaticBody3D
+@onready var FuseDoor = $/root/Node3D/Fusebox/FuseDoor
+@onready var FuseONL = $/root/Node3D/Fusebox/OnLights
+@onready var FuseOFL = $/root/Node3D/Fusebox/OffLights
 
 var optim = {
 	"dialogue_started": [false, false, false],
@@ -96,6 +100,7 @@ var dead := false
 var pow_done := false
 var sound_played := false
 var first34 = true
+var fbdc = true
 		
 
 func _ready():
@@ -143,6 +148,7 @@ func _ready():
 	$/root/Node3D/Truck/Truck/Truck.disabled = true
 	$/root/Node3D/Guy/Bob/Pow.visible = false
 	note1.visible = false
+	FuseOFL.visible = false
 	
 # Called every frame
 func _process(delta):
@@ -492,7 +498,21 @@ func _physics_process(delta) -> void:
 				metlacam.visible = true
 				metla_inhand = true
 				metlapromp.prompt_message = "Leave the broom"
-				
+		
+		if "Open fusebox" in prompt.text:
+			if Input.is_action_just_pressed("interact"):
+				fbdc = false
+				$/root/Node3D/Fusebox/DoorAnim.play("door_open")
+				FuseBoxCollisionCheck.set_collision_layer_value(2, true)
+				FuseDoor.prompt_message = "Close fusebox"
+		
+		if "Close fusebox" in prompt.text:
+			if Input.is_action_just_pressed("interact"):
+				fbdc = true
+				$/root/Node3D/Fusebox/DoorAnim.play("door_close")
+				FuseBoxCollisionCheck.set_collision_layer_value(2, false)
+				FuseDoor.prompt_message = "Open fusebox"
+			
 		if "Pick up coins" in prompt.text:
 			if Input.is_action_pressed("interact"):
 				if OBJ_ID.text == "CB1":
