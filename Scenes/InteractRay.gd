@@ -147,7 +147,9 @@ func _ready():
 # Called every frame
 func _process(delta):
 
-	
+	if $/root/Node3D/EndingScreen.visible == true:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		
 	var car_cutscene = $/root/Node3D/CarCutscene
 	# Check if the player is in the car
 	if car_cutscene.in_car == false:
@@ -182,9 +184,9 @@ func _process(delta):
 			$/root/Node3D/EndingScreen.visible = true
 			$/root/Node3D/EndingScreen/EndingText.text = "Secret ending"
 			$/root/Node3D/TextureRect.visible = false
+			player.can_move = false
 			prompt.text = ""
 			player.tasks = ""
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			dead = false
 			
 	if global.in_bathroom == true and first == true:
