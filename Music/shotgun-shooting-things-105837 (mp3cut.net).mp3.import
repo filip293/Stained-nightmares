@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c3k8fbgjt1m66"
+path="res://.godot/imported/shotgun-shooting-things-105837 (mp3cut.net).mp3-33642a960f18fe6ea741435dac804ab1.mp3str"
+
+[deps]
+
+source_file="res://Music/shotgun-shooting-things-105837 (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/shotgun-shooting-things-105837 (mp3cut.net).mp3-33642a960f18fe6ea741435dac804ab1.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

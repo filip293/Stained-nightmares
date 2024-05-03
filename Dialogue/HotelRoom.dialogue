@@ -1,0 +1,31 @@
+~ start
+
+You: Wait... Where do I get a room? I don't see a reception desk.
+You: I should go back and talk to the old man...
+You: Maybe he'll help me out.
+
+=> END
+
+~ forest
+
+You: WHAT [wait=0.3]THE [wait=0.3]FUCK [wait=0.5]WAS THAT!?
+
+=> END
+
+~ note
+
+Note: [shake rate=20 level=7]GO TO THE LAUNDROMAT! KEY HIDDEN IN BASKET! HURRY! [/shake]
+
+=> END
+
+~ run
+
+You: [shake rate=20 level=12]I HAVE TO GO TO THE SHED OUTSIDE, OR TO THE TRUCK!!! [/shake]
+
+=> END
+
+~ end3
+
+You: [shake rate=20 level=10] I MADE IT! PHEW! I WAS GONNA DIE! [/shake][wait=3]Wait... What was that?
+
+=> END
