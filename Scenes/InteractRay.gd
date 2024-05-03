@@ -503,6 +503,7 @@ func _physics_process(delta) -> void:
 		
 		if "Open fusebox" in prompt.text:
 			if Input.is_action_just_pressed("interact"):
+				$/root/Node3D/Fusebox/Open.play()
 				fbdc = false
 				$/root/Node3D/Fusebox/DoorAnim.play("door_open")
 				FuseBoxCollisionCheck.set_collision_layer_value(2, true)
@@ -510,6 +511,7 @@ func _physics_process(delta) -> void:
 		
 		if "Close fusebox" in prompt.text:
 			if Input.is_action_just_pressed("interact"):
+				$/root/Node3D/Fusebox/Close.play()
 				fbdc = true
 				$/root/Node3D/Fusebox/DoorAnim.play("door_close")
 				FuseBoxCollisionCheck.set_collision_layer_value(2, false)
