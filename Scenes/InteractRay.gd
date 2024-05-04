@@ -743,7 +743,7 @@ func _physics_process(delta) -> void:
 				coinbasketbob.visible = true
 				coinbasketcam.visible = false
 				coinbasket_inhand = false
-				if coinbasketfull:
+				if coinbasketfull and player.tasks == player.task10_2:
 					if coinbasketcoll != null:
 						coinbasketcoll.free()
 						player.tasks = player.task11_2
