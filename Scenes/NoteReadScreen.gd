@@ -78,7 +78,7 @@ func _process(delta) -> void:
 			enter_notes_first()
 		if Input.is_action_just_pressed("interact") and disc_shown and !in_menu and !disc_showing:
 			enter_notes()
-		if Input.is_action_just_pressed("esc") and in_menu:
+		if Input.is_action_just_pressed("esc") and in_menu and !disc_showing:
 			if player.tasks == player.task9_2:
 				player.tasks = player.task10_2
 			exit_notes()
@@ -108,5 +108,6 @@ func _physics_process(delta) -> void:
 	if disc_showing:
 		if Input.is_action_just_pressed("cam_drag"):
 			disc.visible = false
+			disc_showing = false
 			resume_after_disclaimer.emit()
 			

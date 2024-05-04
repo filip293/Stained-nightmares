@@ -20,6 +20,7 @@ extends RayCast3D
 @onready var FuseDoor = $/root/Node3D/Fusebox/FuseDoor
 @onready var FuseONL = $/root/Node3D/Fusebox/OnLights
 @onready var FuseOFL = $/root/Node3D/Fusebox/OffLights
+@onready var LL = $/root/Node3D/Root_Scene/RootNode/lamp_001
 
 var optim = {
 	"dialogue_started": [false, false, false],
@@ -149,6 +150,9 @@ func _ready():
 	$/root/Node3D/Guy/Bob/Pow.visible = false
 	note1.visible = false
 	FuseOFL.visible = false
+	LL.visible = true
+	FuseDoor.prompt_message = "Fusebox requires key"
+
 	
 # Called every frame
 func _process(delta):
@@ -500,6 +504,22 @@ func _physics_process(delta) -> void:
 				metlacam.visible = true
 				metla_inhand = true
 				metlapromp.prompt_message = "Leave the broom"
+			
+		if "Turn off lights" in prompt.text:
+			if Input.is_action_just_pressed("interact"):
+				LL.visible = false
+				FuseOFL.visible = true
+				FuseONL.visible = false
+				FuseBoxCollisionCheck.prompt_message = "Turn on lights"
+		
+		if "Turn on lights" in prompt.text:
+			if Input.is_action_just_pressed("interact"):
+				LL.visible = true
+				FuseOFL.visible = false
+				FuseONL.visible = true
+				FuseBoxCollisionCheck.prompt_message = "Turn off lights"
+				if player.tasks == player.task11_2:
+					player.tasks = player.task12_2
 		
 		if "Open fusebox" in prompt.text:
 			if Input.is_action_just_pressed("interact"):
@@ -725,6 +745,21 @@ func _physics_process(delta) -> void:
 					if coinbasketcoll != null:
 						coinbasketcoll.free()
 						player.tasks = player.task11_2
+						LL.visible = false
+						FuseOFL.visible = true
+						FuseONL.visible = false
+						FuseDoor.prompt_message = "Open fusebox"
+						FuseBoxCollisionCheck.prompt_message = "Turn on lights"
+						dip = true
+						player.can_move = false
+						Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+						$/root/Node3D/Player/Neck/AnimationPlayer.stop()
+						$/root/Node3D/Player/Neck/AnimationPlayer.play("turn_the_FUCK?")
+						DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "finished_note")
+						await DialogueManager.dialogue_ended
+						dip = false
+						Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+						player.can_move = true
 				elif !coinbasketfull:
 					coinbasketpromp.prompt_message = "Grab coin basket"
 		
