@@ -156,7 +156,6 @@ func _ready():
 	
 # Called every frame
 func _process(delta):
-
 	if $/root/Node3D/EndingScreen.visible == true:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		
@@ -756,6 +755,8 @@ func _physics_process(delta) -> void:
 						player.can_move = false
 						Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 						$/root/Node3D/Player/Neck/AnimationPlayer.stop()
+						$/root/Node3D/Player/Neck/AnimationPlayer.play("RESET")
+						await get_tree().create_timer(0.1).timeout
 						$/root/Node3D/Player/Neck/AnimationPlayer.play("turn_the_FUCK?")
 						DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "finished_note")
 						await DialogueManager.dialogue_ended
