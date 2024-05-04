@@ -28,7 +28,7 @@ Bob: Why don't you stick around and help me for now, seeing as you don't have an
 		=> END
 	- No, really, I'll be fine!
 		Bob: Alright then, as you wish.
-		Bob: There's a motel nearby, feel free to check the map for directions.
+		Bob: There's a motel nearby, you can find it behind the store.
 		Bob: But don't say I didn't warn you...
 		set global.route = "Motel"
 		set global.chosen = true
