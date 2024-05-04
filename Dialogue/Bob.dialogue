@@ -28,7 +28,7 @@ Bob: Why don't you stick around and help me for now, seeing as you don't have an
 		=> END
 	- No, really, I'll be fine!
 		Bob: Alright then, as you wish.
-		Bob: There's a motel nearby, you can find it behind the store.
+		Bob: There's a motel nearby.
 		Bob: But don't say I didn't warn you...
 		set global.route = "Motel"
 		set global.chosen = true
@@ -88,4 +88,9 @@ Bob: The basket ain't gonna fill up itself youngin.
 ~ bob_gone
 You: What the? [next=1]
 You: Hey [[old man|Bob]], [wait=1]damn it, where is he now!?
+=> END
+
+~ finished_note
+You: Oh for fucks sake, first [[the old man|Bob]] disappears, now the electricity's gone?
+You: Might as well go turn it back on, but this place is creeping me the fuck out...
 => END
