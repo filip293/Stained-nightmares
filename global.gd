@@ -19,7 +19,7 @@ func _ready():
 	var Bobanimplayer = $/root/Node3D/Guy/Bob/AnimationPlayer
 	var Keyanim = $/root/Node3D/Key2/AnimationPlayer
 	var Keyanimtimer = $/root/Node3D/Key2/Timer
-	$/root/Node3D/Guy/Bob/Shotgun_12.visible = false
+	$/root/Node3D/Guy/Shotgun_12.visible = false
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
