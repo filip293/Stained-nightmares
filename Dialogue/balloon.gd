@@ -83,6 +83,11 @@ func _ready() -> void:
 	if responses_menu.next_action.is_empty():
 		responses_menu.next_action = next_action
 
+func _process(delta):
+	if character_label.text == "Bob":
+		character_label.modulate = Color(0, 0, 1)
+	elif character_label.text == "You":
+		character_label.modulate = Color(0, 1, 0)
 
 func _unhandled_input(_event: InputEvent) -> void:
 	# Only the balloon is allowed to handle input while it's showing
