@@ -89,7 +89,6 @@ var WaitCar := false
 var GoingEnding3 := false
 var HasTruckKey := false
 var animedone1 := false
-var animedone2 := false
 var JupscareTimeDone := false
 var JumscareDone := false
 var DoneDone := false
@@ -851,7 +850,10 @@ func _physics_process(delta) -> void:
 			$/root/Node3D/CarCutscene/StaticBody3D/CollisionShape3D.disabled = true
 			$/root/Node3D/CarCutscene/AnimationPlayer.play("CamGoBack")
 			optim["Ending"][3] = true
+			$/root/Node3D/Player/ScaryAmb.set_volume_db(-10)
 			$/root/Node3D/CarCutscene/Car.make_current()
+			$/root/Node3D/Player/FootstepLeftSound.set_volume_db(5)
+			$/root/Node3D/Player/FootstepRightSound.set_volume_db(5)
 			await get_tree().create_timer(5).timeout
 			$/root/Node3D/Player/FootstepLeftSound.play()
 			await get_tree().create_timer(2).timeout
@@ -883,6 +885,8 @@ func _physics_process(delta) -> void:
 		await DialogueManager.dialogue_ended
 		$/root/Node3D/Shed/Ca/AnimationPlayer.play("TurnToMonster")
 		$/root/Node3D/Shed/Ca/Jumpscare/Timer.start()
+		await get_tree().create_timer(3.5).timeout
+		optim["Ending"][2] = true
 	if JupscareTimeDone == true and JumscareDone == false:
 		JumscareDone = true
 		$/root/Node3D/Shed/Ca/Jumpscare.play()
@@ -936,11 +940,6 @@ func _on_area_3d_body_entered(body):
 
 func _on_animation_player_animation_finished(ShedEnding):
 	animedone1 = true
-
-
-func _on_animation_player_animation2_finished(TurnToMonster):
-	animedone2 = true
-	optim["Ending"][2] = true
 
 
 func _on_timerJumpscare_timeout():
