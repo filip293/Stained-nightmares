@@ -13,9 +13,10 @@ func _process(delta):
 		direction = direction.normalized()
 		reset = true
 	
-	
-	if player and player.in_store == true and player.error_time == true:
+	if player and player.in_store == true and player.error_time == true and global.runonce2 == true:
+		await get_tree().create_timer(3.2).timeout
 		var direction = player.global_transform.origin - global_transform.origin
 		direction.y = 0
 		direction = direction.normalized()
 		$/root/Node3D/Guy.look_at(global_transform.origin + direction, Vector3.UP)
+

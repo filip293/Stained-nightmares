@@ -194,7 +194,7 @@ func _process(delta):
 			$/root/Node3D/EndingScreen/EndingText.text = "Secret ending"
 			$/root/Node3D/TextureRect.visible = false
 			player.can_move = false
-			prompt.text = ""
+			prompt.visible = false
 			player.tasks = ""
 			dead = false
 			
