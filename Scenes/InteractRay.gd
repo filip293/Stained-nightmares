@@ -938,14 +938,11 @@ func _on_animation_player_animation_finished(ShedEnding):
 
 func _on_animation_player_animation2_finished(TurnToMonster):
 	animedone2 = true
+	optim["Ending"][2] = true
 
 
 func _on_timerJumpscare_timeout():
 	JupscareTimeDone = true
-
-
-func _on_jumpscare_finished():
-	optim["Ending"][2] = true
 
 
 func _on_buttonQuit_pressed():
