@@ -185,7 +185,7 @@ func _process(delta):
 		global.runonce2 = true
 		$/root/Node3D/Guy/PowTime.start()
 		$/root/Node3D/Guy/Bob/Armature/Skeleton3D/Bobpow.play("Shotgon")
-		$/root/Node3D/Guy/Shotgun_12.visible = true
+		$/root/Node3D/Guy/Bob/Shotgun_12.visible = true
 	if pow_done == true and sound_played == false:
 		$/root/Node3D/Guy/Pow.play()
 		sound_played = true
