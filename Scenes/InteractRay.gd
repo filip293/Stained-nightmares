@@ -506,6 +506,7 @@ func _physics_process(delta) -> void:
 			
 		if "Turn off lights" in prompt.text:
 			if Input.is_action_just_pressed("interact"):
+				$/root/Node3D/Fusebox/Switch.play()
 				LL.visible = false
 				FuseOFL.visible = true
 				FuseONL.visible = false
@@ -513,6 +514,7 @@ func _physics_process(delta) -> void:
 		
 		if "Turn on lights" in prompt.text:
 			if Input.is_action_just_pressed("interact"):
+				$/root/Node3D/Fusebox/Switch.play()
 				LL.visible = true
 				FuseOFL.visible = false
 				FuseONL.visible = true
