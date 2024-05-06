@@ -34,6 +34,9 @@ func _process(delta):
 				DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "ohifuckedup")
 				camera2.make_current()
 				animplayer.play("youdonefuckeduo")
+				$/root/Node3D/Player/FootstepLeftSound.play()
+				await get_tree().create_timer(0.6).timeout
+				$/root/Node3D/Player/FootstepRightSound.play()
 				monster.visible = true
 				await get_tree().create_timer(0.8).timeout
 				$AudioStreamPlayer.play()
@@ -50,7 +53,7 @@ func _on_visible_on_screen_notifier_3d_screen_exited():
 	on_screen = false
 
 func _on_detect_player_body_entered(body):
-	if player.tasks == player.empt_task:
+	#if player.tasks == player.empt_task:
 		await get_tree().create_timer(3.2).timeout
 		animplayer.play("open_thing")
 		await get_tree().create_timer(1.1).timeout
