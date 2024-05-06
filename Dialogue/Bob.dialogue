@@ -1,0 +1,104 @@
+~ start
+
+Bob: [[Why, hello there young fellow!|Hey there buster!|Greetings!]]
+Bob: What brings you here?
+You: My car broke down while I was driving through town.
+You: Can you please help me?
+Bob: Oh, that's just terrible! 
+Bob: I can tow it with my truck nearby, but you'll have to help me in return.
+Bob: Why don't you stick around and help me for now, seeing as you don't have anything else to do?
+- Yeah, sure. Why not.
+	Bob: Great! 
+	Bob: I guess you can go ahead and start with cleaning the floors!
+	Bob: The broom is in the back.
+	set global.route = "BOB"
+	set global.chosen = true
+	=> END
+- It’s alright, I’ll just stay at a motel.
+	Bob: I wouldn't do that if I were you...
+	Bob: Rumor has it that a mysterious figure comes out around this time of night...
+	Bob: People have gone missing, but no one has been found. 
+	Bob: Why don't you stay here instead?
+	- Yeah... sure man.
+		Bob: Great! 
+		Bob: I guess you can go ahead and start with cleaning the floors!
+		Bob: The broom is in the back.
+		set global.route = "BOB"
+		set global.chosen = true
+		=> END
+	- No, really, I'll be fine!
+		Bob: Alright then, as you wish.
+		Bob: There's a motel nearby.
+		Bob: But don't say I didn't warn you...
+		set global.route = "Motel"
+		set global.chosen = true
+=> END
+
+~ bob_in_car
+You: Man, what a night. But now I gotta face the music. She's gonna be pissed. Should've checked my phone. Okay, deep breaths, gotta own up to it. Maybe flowers? [wait=0.5] [next=auto]
+=> END
+
+~ bob_cargobrr
+You: You're kidding me, right? Now of all times? Great, just great. Well, this night couldn't get any fucking worse. [wait=1] [next=auto]
+=> END
+
+~ bob_see_laun
+You: Huh, a laundromat? Open at this hour? Well, I guess I could kill some time while I figure out what to do about the car. [next=auto]
+=> END
+
+~ wait
+Bob: Come back to me once you've finished cleaning the floors. \nThe dust ain't gonna clean up itself ya know?
+=> END
+
+~ wait1
+Bob: The floors are looking spotless, go ahead and leave the broom where you found it and come back and see me.
+=> END
+
+~ finished_sweeping
+Bob: Wow, good job. The floors are looking spotless! 
+set global.bobgiveskey = true
+Bob: Here's the key to the machines. 
+Bob: There’s a basket for the coins below the punch clock.
+Bob: My back is hurting quite a bit, I can't move like I used to. 
+Bob: Collect the coins from the washing machines and once you're done bring the basket back to me.
+=> END
+
+~ wait2
+if global.bobannoyed <= 2
+	Bob: I already told you, my back hurts, can't help ya.
+	do global.bobannoyed += 1
+	=> END
+if global.bobannoyed >= 3 and global.bobannoyed <= 5
+	Bob: Listen here [[youngin|youngster|trickster]]. I can't help ya.
+	do global.bobannoyed += 1
+	=> END
+if global.bobannoyed >= 6 and global.bobannoyed <= 7
+	Bob: ...
+	do global.bobannoyed += 1
+	=> END
+if global.bobannoyed >= 8
+	Bob: ALRIGHT, I'VE HAD ENOUGH OF YA.
+	set global.bobshotgun = true
+	=> END
+
+~ wait3
+Bob: The basket ain't gonna fill up itself youngin. 
+=> END
+
+~ bob_gone
+You: What the? [next=1]
+You: Hey [[old man|Bob]], [wait=1]damn it, where is he now!?
+=> END
+
+~ finished_note
+You: Oh for fucks sake, first [[the old man|Bob]] disappears, now the electricity's gone?
+You: Might as well go turn it back on, but this place is creeping me the fuck out...
+=> END
+
+~ ohifuckedup
+You: What- [next=0.2]
+You: WHY IS THERE A BRAIN? [next=0.6]
+You: AGH FUCK [next=0.3]
+You: Wait... [next=1.8]
+set global.donediddlyfuckedup = true
+=> END

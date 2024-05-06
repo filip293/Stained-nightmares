@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bv35n4euudxwm"
+path="res://.godot/imported/switch-150130 (mp3cut.net).mp3-1585ad8ae65089d5f419e0312e640ff1.mp3str"
+
+[deps]
+
+source_file="res://Music/switch-150130 (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/switch-150130 (mp3cut.net).mp3-1585ad8ae65089d5f419e0312e640ff1.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

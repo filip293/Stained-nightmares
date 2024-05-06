@@ -1,0 +1,7 @@
+~ waking_up
+You: AHH, WHAT THE- [next=1]
+You: Oh, thank god, it was all just... a fucking nightmare. [next=3.1]
+You: My head still hurts from the night out... [next=2.3]
+You: Huh? [next=1]
+You: [shake rate=20 level=2] OH FUUUUUUUUUUUUUUUUUU- [next=0.3] 
+=> END
