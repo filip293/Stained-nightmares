@@ -16,6 +16,7 @@ var is_done2 : bool = true
 var MenuStatus: bool = true
 var Crosshair: TextureRect
 var Title: Label
+var Credits: Label
 
 
 func _ready():
@@ -26,6 +27,7 @@ func _ready():
 	Car3 = $/root/Node3D/CarCutscene/CarNoGo
 	Car = $/root/Node3D/CarCutscene/Car
 	Crosshair = $/root/Node3D/TextureRect
+	Credits = $Label
 	Title = $Title
 	secondary_camera = $SceneCam
 	Crosshair.visible = false
@@ -39,7 +41,6 @@ func _process(delta):
 
 	
 func _on_button_pressed():
-	
 	Player.can_move = true
 	MenuStatus = false
 	Title.visible = false
@@ -54,6 +55,7 @@ func _on_button_pressed():
 	$/root/Node3D/CarCutscene/AnimationPlayer.play("Car")
 	is_done = false
 	is_done2 = false
+	Credits.visible = false
 	Car1.play()
 
 	if $/root/Node3D/CarCutscene/BeepTimer:

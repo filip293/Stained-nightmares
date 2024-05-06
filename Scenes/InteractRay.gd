@@ -20,6 +20,7 @@ extends RayCast3D
 @onready var FuseDoor = $/root/Node3D/Fusebox/FuseDoor
 @onready var FuseONL = $/root/Node3D/Fusebox/OnLights
 @onready var FuseOFL = $/root/Node3D/Fusebox/OffLights
+@onready var FuseTHL = $/root/Node3D/Fusebox/TaskHighlight
 @onready var LL = $/root/Node3D/Root_Scene/RootNode/lamp_001
 
 var optim = {
@@ -101,7 +102,7 @@ var pow_done := false
 var sound_played := false
 var first34 = true
 var fbdc = true
-		
+var basketalreadyleft = false
 
 func _ready():
 	$/root/Node3D/Motel2/Window_frame_10/Cube_317/creature2.visible = false
@@ -151,6 +152,7 @@ func _ready():
 	FuseOFL.visible = false
 	LL.visible = true
 	FuseDoor.prompt_message = "Fusebox requires key"
+	FuseTHL.visible = false
 
 	
 # Called every frame
@@ -410,6 +412,32 @@ func _process(delta):
 				CBGV4_4.set_collision_layer_value(2, false)
 				
 func _physics_process(delta) -> void:
+	if player.tasks == player.task11_2:
+		FuseTHL.visible = true
+	if player.tasks == player.task12_2 and FuseTHL.visible == true:
+		FuseTHL.visible = false
+	if basketalreadyleft and player.tasks == player.task10_2:
+		if coinbasketcoll != null:
+						coinbasketcoll.free()
+						player.tasks = player.task11_2
+						LL.visible = false
+						FuseOFL.visible = true
+						FuseONL.visible = false
+						FuseDoor.prompt_message = "Open fusebox"
+						FuseBoxCollisionCheck.prompt_message = "Turn on lights"
+						dip = true
+						player.can_move = false
+						Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+						$/root/Node3D/Player/Neck/AnimationPlayer.stop()
+						$/root/Node3D/Player/Neck/AnimationPlayer.play("RESET")
+						await get_tree().create_timer(0.1).timeout
+						$/root/Node3D/Player/Neck/AnimationPlayer.play("turn_the_FUCK?")
+						DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "finished_note")
+						await DialogueManager.dialogue_ended
+						dip = false
+						Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+						player.can_move = true
+	
 	if is_colliding():
 		var detected = get_collider()
 		if "Talk" in prompt.text:
@@ -740,31 +768,11 @@ func _physics_process(delta) -> void:
 		
 		if "Leave coin basket" in prompt.text:
 			if Input.is_action_just_pressed("interact"):
+				basketalreadyleft = true
 				coinbasketbob.visible = true
 				coinbasketcam.visible = false
 				coinbasket_inhand = false
-				if coinbasketfull and player.tasks == player.task10_2:
-					if coinbasketcoll != null:
-						coinbasketcoll.free()
-						player.tasks = player.task11_2
-						LL.visible = false
-						FuseOFL.visible = true
-						FuseONL.visible = false
-						FuseDoor.prompt_message = "Open fusebox"
-						FuseBoxCollisionCheck.prompt_message = "Turn on lights"
-						dip = true
-						player.can_move = false
-						Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-						$/root/Node3D/Player/Neck/AnimationPlayer.stop()
-						$/root/Node3D/Player/Neck/AnimationPlayer.play("RESET")
-						await get_tree().create_timer(0.1).timeout
-						$/root/Node3D/Player/Neck/AnimationPlayer.play("turn_the_FUCK?")
-						DialogueManager.show_dialogue_balloon(load("res://Dialogue/Bob.dialogue"), "finished_note")
-						await DialogueManager.dialogue_ended
-						dip = false
-						Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-						player.can_move = true
-				elif !coinbasketfull:
+				if !coinbasketfull:
 					coinbasketpromp.prompt_message = "Grab coin basket"
 		
 		if "Grab kеy" in prompt.text:
@@ -964,9 +972,9 @@ func _lights_off():
 	$/root/Node3D/Root_Scene/RootNode/lamp_001.visible = false
 	$/root/Node3D/Root_Scene/Label3D.visible = false
 
-
 func _on_saw_monster_body_entered(body):
 	if first34 == true and player.error_time == true and havekey == true:
 		$/root/Node3D/SawMonster/SoundMonster.play()
 		$/root/Node3D/Motel2/Window_frame_10/Cube_317/creature2.visible = false
 		first34 = false
+

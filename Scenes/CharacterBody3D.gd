@@ -164,6 +164,8 @@ func _on_store_body_entered(body):
 		tasks = task2
 		times_in_store += 1
 		current_task += 1
+	if tasks == task12_2:
+		tasks = empt_task
 
 func _on_store_body_exited(body):
 	in_store = false
