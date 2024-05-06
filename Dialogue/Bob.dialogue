@@ -94,3 +94,11 @@ You: Hey [[old man|Bob]], [wait=1]damn it, where is he now!?
 You: Oh for fucks sake, first [[the old man|Bob]] disappears, now the electricity's gone?
 You: Might as well go turn it back on, but this place is creeping me the fuck out...
 => END
+
+~ ohifuckedup
+You: What- [next=0.2]
+You: WHY IS THERE A BRAIN? [next=0.6]
+You: AGH FUCK [next=0.3]
+You: Wait... [next=1.8]
+set global.donediddlyfuckedup = true
+=> END

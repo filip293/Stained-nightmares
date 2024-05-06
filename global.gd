@@ -12,6 +12,8 @@ var runonce1 := false
 var runonce2 := false
 var Keyanim: AnimationPlayer
 var Keyanimtimer: Timer
+var getfucked: bool = false
+var donediddlyfuckedup: bool = false
 signal animdone 
 
 # Called when the node enters the scene tree for the first time.

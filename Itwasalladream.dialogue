@@ -1,0 +1,7 @@
+~ waking_up
+You: AHH, WHAT THE-
+You: Oh, thank god, it was all just... a fucking nightmare.
+You: My head still hurts from the night out...
+You: I guess I'll just continue to rest...
+set global.getfucked = true 
+=> END
