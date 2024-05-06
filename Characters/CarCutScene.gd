@@ -23,9 +23,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	print(Player2.can_move)
 	if in_car and Input.is_action_pressed("interact") and Cutscene.MenuStatus == false and canexit == true:
-		print(1)
 		Player.make_current()
 		in_car = false
 		Crosshair.visible = true
