@@ -27,6 +27,7 @@ var is_sprinting: bool = false		#used for state of sprinting
 var can_move: bool = true
 var monster_on_screen: bool = false
 var in_store: bool = false
+var ignorerepeat: bool = false
 
 var task2 = "Task 2: \n Talk to Bob"
 var task3 = "Task 3: \n Go to the motel"
@@ -177,9 +178,12 @@ func get_prompt() -> String:			#Add prompt player for monster detect
 	return "Player"
 
 	pass # Replace with function body.
-
+func _shogoebamkjegosecham():
+	await global.endinganim
+	ignorerepeat = true
+	
 func _on_ambient_noise_finished():
-	if !global.otherambient:
+	if !global.otherambient and !ignorerepeat:
 		$/root/Node3D/Player/AmbientNoise.play()
 		
 	pass # Replace with function body.

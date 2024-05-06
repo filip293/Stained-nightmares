@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_11"
+type="Resource"
+uid="uid://c7gswjgbnmr4e"
+path="res://.godot/imported/Itwasalladream.dialogue-f71a0e3a4c99cf52416e64c9509b3d20.tres"
+
+[deps]
+
+source_file="res://Dialogue/Itwasalladream.dialogue"
+dest_files=["res://.godot/imported/Itwasalladream.dialogue-f71a0e3a4c99cf52416e64c9509b3d20.tres"]
+
+[params]
+
+defaults=true

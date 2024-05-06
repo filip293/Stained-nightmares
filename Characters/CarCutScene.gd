@@ -8,7 +8,7 @@ var in_car: bool = true
 var task: Label
 var creature = Node3D
 var Crosshair: TextureRect
-var canexit = true
+var canexit = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -29,6 +29,7 @@ func _process(delta):
 		Crosshair.visible = true
 		prompt.text = ""
 		Player2.tasks = "Task 1:" + "\n Go to the laundromat"
+		Player2.can_move = true
 
 func _on_animation_player_animation_finished(Car):
 	canexit = true
@@ -36,6 +37,3 @@ func _on_animation_player_animation_finished(Car):
 	creature.visible = false
 	Player2.visible = true    #REMOVE # WHEN GAME IS DONE
 	$/root/Node3D/Player/AmbientNoise.play()
-	Player2.can_move = true
-	
-	

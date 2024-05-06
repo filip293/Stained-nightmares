@@ -15,6 +15,7 @@ var Keyanimtimer: Timer
 var getfucked: bool = false
 var donediddlyfuckedup: bool = false
 signal animdone 
+signal endinganim
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

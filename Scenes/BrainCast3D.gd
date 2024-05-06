@@ -39,6 +39,8 @@ func _process(delta):
 				$AudioStreamPlayer.play()
 				await get_tree().create_timer(4.3).timeout
 				$AudioStreamPlayer2.play()
+				await get_tree().create_timer(0.6).timeout
+				global.endinganim.emit()
 				
 
 func _on_visible_on_screen_notifier_3d_screen_entered():
@@ -48,7 +50,9 @@ func _on_visible_on_screen_notifier_3d_screen_exited():
 	on_screen = false
 
 func _on_detect_player_body_entered(body):
-	animplayer.play("open_thing")
-	await get_tree().create_timer(1.1).timeout
-	itsgotime = true
-	
+	if player.tasks == player.empt_task:
+		animplayer.play("open_thing")
+		await get_tree().create_timer(1.1).timeout
+		itsgotime = true
+	else:
+		print("input ignored")
