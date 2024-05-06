@@ -51,8 +51,10 @@ func _on_visible_on_screen_notifier_3d_screen_exited():
 
 func _on_detect_player_body_entered(body):
 	if player.tasks == player.empt_task:
+		await get_tree().create_timer(3.2).timeout
 		animplayer.play("open_thing")
 		await get_tree().create_timer(1.1).timeout
 		itsgotime = true
+		$/root/Node3D/EndingScreen/EndingText.text = "ENDING 1/4"
 	else:
 		print("input ignored")

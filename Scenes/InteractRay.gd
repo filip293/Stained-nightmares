@@ -27,7 +27,7 @@ var optim = {
 	"dialogue_started": [false, false, false],
 	"dialogue_done": [false, false, false],
 	"DustPatchClean": [false, false, false, false],
-	"Ending": [false, false, false, false]
+	"Ending": [false, false, false, false, false]
 }
 
 var donegoofed = 0.3
@@ -437,7 +437,7 @@ func _physics_process(delta) -> void:
 						dip = false
 						Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 						player.can_move = true
-	
+						note1.visible = false
 	if is_colliding():
 		var detected = get_collider()
 		if "Talk" in prompt.text:

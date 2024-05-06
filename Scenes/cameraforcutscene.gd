@@ -24,4 +24,3 @@ func _process(delta) -> void:
 		await get_tree().create_timer(2).timeout
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		$/root/Node3D/EndingScreen.visible = true
-		$/root/Node3D/EndingScreen/EndingText.text = "ENDING 1/4"
