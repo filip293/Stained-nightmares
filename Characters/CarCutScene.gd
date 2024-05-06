@@ -8,6 +8,7 @@ var in_car: bool = true
 var task: Label
 var creature = Node3D
 var Crosshair: TextureRect
+var canexit = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,7 +23,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if in_car and Input.is_action_pressed("interact") and Cutscene.MenuStatus == false:
+	if in_car and Input.is_action_pressed("interact") and Cutscene.MenuStatus == false and canexit == true:
 		Player.make_current()
 		in_car = false
 		Crosshair.visible = true
@@ -30,6 +31,7 @@ func _process(delta):
 		Player2.tasks = "Task 1:" + "\n Go to the laundromat"
 
 func _on_animation_player_animation_finished(Car):
+	canexit = true
 	prompt.text = "Press E to exit"
 	creature.visible = false
 	Player2.visible = true    #REMOVE # WHEN GAME IS DONE
