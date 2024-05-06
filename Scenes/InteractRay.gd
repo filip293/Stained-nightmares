@@ -433,6 +433,7 @@ func _physics_process(delta) -> void:
 						Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 						player.can_move = true
 						note1.visible = false
+						$/root/Node3D/Note1/CollisionShape3D.disabled = true
 						note1.set_collision_layer_value(2, false)
 	if is_colliding():
 		var detected = get_collider()

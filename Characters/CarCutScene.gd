@@ -32,10 +32,10 @@ func _process(delta):
 		prompt.text = ""
 		Player2.tasks = "Task 1:" + "\n Go to the laundromat"
 		Player2.can_move = true
+		Player2.visible = true
 
 func _on_animation_player_animation_finished(Car):
 	canexit = true
 	prompt.text = "Press E to exit"
 	creature.visible = false
-	Player2.visible = true    #REMOVE # WHEN GAME IS DONE
 	$/root/Node3D/Player/AmbientNoise.play()
