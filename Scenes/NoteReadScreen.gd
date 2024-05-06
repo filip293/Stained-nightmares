@@ -91,7 +91,7 @@ func _process(delta) -> void:
 			enter_notes_first()
 		if Input.is_action_just_pressed("interact") and disc_shown and !in_menu and !disc_showing:
 			enter_notes()
-		if Input.is_action_just_pressed("esc") and in_menu:
+		if Input.is_action_just_pressed("esc") and in_menu and !disc_showing:
 			if $/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D != null:
 				$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D/CollisionShape3D.free()
 			$/root/Node3D/BOBDEAD/Cube_023/StaticBody3D.visible = false

@@ -260,19 +260,14 @@ func _process(delta):
 		SoundSweepPlaying = false
 		
 	if optim["Ending"][1] == true:
-		$/root/Node3D/EndingScreen.visible = true
 		$/root/Node3D/EndingScreen/EndingText.text = "ENDING 2/4"
-		$/root/Node3D/Player/ScaryAmb.set_volume_db(-10)
 		player.tasks = ""
-		$/root/Node3D/TextureRect.visible = false
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		global.endinganim.emit()
 		
 	if optim["Ending"][2] == true:
-		$/root/Node3D/EndingScreen.visible = true
 		$/root/Node3D/EndingScreen/EndingText.text = "ENDING 3/4"
-		$/root/Node3D/TextureRect.visible = false
 		player.tasks = ""
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		global.endinganim.emit()
 		
 	if optim["Ending"][3] == true:
 		player.tasks = ""
@@ -438,6 +433,7 @@ func _physics_process(delta) -> void:
 						Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 						player.can_move = true
 						note1.visible = false
+						note1.set_collision_layer_value(2, false)
 	if is_colliding():
 		var detected = get_collider()
 		if "Talk" in prompt.text:
@@ -875,10 +871,8 @@ func _physics_process(delta) -> void:
 			$/root/Node3D/CarCutscene/ShedCreatur2e2.visible = true
 			$/root/Node3D/CarCutscene/AnimationPlayer.play("Scare")
 			await get_tree().create_timer(0.6).timeout
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			$/root/Node3D/EndingScreen.visible = true
 			$/root/Node3D/EndingScreen/EndingText.text = "ENDING 4/4"
-			$/root/Node3D/Player/ScaryAmb.set_volume_db(-10)
+			global.endinganim.emit()
 
 	if GoingEnding3 == true:
 		ShedCutscene = true
